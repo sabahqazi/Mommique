@@ -34,14 +34,14 @@ const Hero = () => {
       } as React.CSSProperties}
     >
       <div 
-        className="absolute inset-0 bg-[radial-gradient(circle_at_calc(50%+var(--mouse-x,0.5)*30%)_calc(50%+var(--mouse-y,0.5)*30%),var(--tw-gradient-stops))] from-mama-soft via-mama-light to-mama-pink opacity-20 -z-10"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_calc(50%+var(--mouse-x,0.5)*30%)_calc(50%+var(--mouse-y,0.5)*30%),var(--tw-gradient-stops))] from-[#FFDEE2] via-[#FFE6EA] to-[#FFF0F2] opacity-30 -z-10"
         aria-hidden="true"
       />
       
       <div className="container relative z-10 pt-10 md:pt-0">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-4 inline-block animate-fade-in">
-            <span className="bg-mama-soft/30 text-mama-text px-4 py-1.5 rounded-full text-sm font-medium">
+            <span className="bg-[#FFDEE2]/50 text-mama-text px-4 py-1.5 rounded-full text-sm font-medium">
               Postpartum Support Reimagined
             </span>
           </div>
@@ -59,13 +59,13 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-fade-in" style={{ animationDelay: '0.6s' }}>
             <a 
               href="#pricing" 
-              className="w-full sm:w-auto btn-hover-slide bg-mama-soft hover:bg-mama-soft/90 text-mama-text font-medium px-8 py-3.5 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
+              className="w-full sm:w-auto btn-hover-slide bg-[#FFDEE2] hover:bg-[#FFDEE2]/90 text-mama-text font-medium px-8 py-3.5 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
             >
               Join Waitlist
             </a>
             <a 
               href="#features" 
-              className="w-full sm:w-auto border border-mama-soft/50 bg-white/70 backdrop-blur-sm hover:bg-white/90 text-mama-text font-medium px-8 py-3.5 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
+              className="w-full sm:w-auto border border-[#FFDEE2]/70 bg-white/70 backdrop-blur-sm hover:bg-white/90 text-mama-text font-medium px-8 py-3.5 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
             >
               See Features
             </a>
@@ -73,9 +73,9 @@ const Hero = () => {
           
           <div className="relative animate-fade-in-up mt-8" style={{ animationDelay: '0.8s' }}>
             <div className="aspect-video max-w-3xl mx-auto overflow-hidden rounded-2xl shadow-2xl">
-              <div className="relative w-full h-full bg-mama-light/30 flex items-center justify-center">
+              <div className="relative w-full h-full bg-[#FFDEE2]/30 flex items-center justify-center">
                 <div className="blur-card rounded-xl p-6 max-w-md">
-                  <div className="bg-mama-soft/30 rounded-full px-4 py-2 w-fit mb-4">
+                  <div className="bg-[#FFDEE2]/50 rounded-full px-4 py-2 w-fit mb-4">
                     <span className="text-sm font-medium">CaringMommy AI</span>
                   </div>
                   <h3 className="text-lg font-medium mb-2">How can I help you today?</h3>
@@ -92,7 +92,7 @@ const Hero = () => {
         </div>
       </div>
       
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#FFDEE2] to-transparent"></div>
     </section>
   );
 };
