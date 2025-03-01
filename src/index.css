@@ -120,6 +120,10 @@
   .speech-bubble {
     animation: pulse 2s ease-in-out infinite;
   }
+
+  .eye {
+    animation: blink 4s ease-in-out infinite;
+  }
 }
 
 /* Custom gradient backgrounds */
@@ -155,6 +159,18 @@
   }
   50% {
     transform: scale(1.05);
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(1);
+  }
+  97.5% {
+    transform: scaleY(0.1);
   }
 }
 

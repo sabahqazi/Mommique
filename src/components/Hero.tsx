@@ -49,27 +49,46 @@ const Hero = () => {
           
           <div className="flex items-center justify-center gap-6 mb-6">
             <div className="avatar-container relative animate-float hidden md:block">
-              <div className="relative w-32 h-32 rounded-full overflow-hidden bg-gradient-to-r from-[#FFDEE2] to-[#FFE6EA] shadow-lg border-2 border-white">
+              <div className="relative w-36 h-36 rounded-full overflow-hidden bg-gradient-to-r from-[#FFDEE2] to-[#FFE6EA] shadow-lg border-2 border-white">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="avatar-face flex flex-col items-center">
-                    <Heart className="text-[#FF9CAA] mb-1" fill="#FFDEE2" size={24} />
-                    <div className="w-12 h-5 bg-[#FFDEE2] rounded-full mb-1"></div>
-                    <div className="flex space-x-5">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#FF9CAA]"></div>
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#FF9CAA]"></div>
+                    {/* Soft smile */}
+                    <div className="w-24 h-8 rounded-full bg-white flex items-center justify-center mb-1">
+                      <div className="w-20 h-6 bg-[#FFDEE2] rounded-full"></div>
+                    </div>
+                    
+                    {/* Eyes with subtle animation */}
+                    <div className="flex space-x-8 mb-2">
+                      <div className="eye w-3 h-4 rounded-full bg-[#555] flex items-center justify-center relative">
+                        <div className="w-1 h-1 rounded-full bg-white absolute top-0.5 left-0.5"></div>
+                      </div>
+                      <div className="eye w-3 h-4 rounded-full bg-[#555] flex items-center justify-center relative">
+                        <div className="w-1 h-1 rounded-full bg-white absolute top-0.5 left-0.5"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Rosy cheeks */}
+                    <div className="flex w-full justify-between px-4 mb-1">
+                      <div className="w-4 h-2 rounded-full bg-[#FF9CAA] opacity-60"></div>
+                      <div className="w-4 h-2 rounded-full bg-[#FF9CAA] opacity-60"></div>
                     </div>
                   </div>
                 </div>
-                <div className="absolute -bottom-2 left-0 right-0 flex justify-center">
-                  <Baby className="text-[#FF9CAA]" size={24} />
+                
+                <div className="absolute -bottom-1 -right-2 flex justify-center">
+                  <div className="bg-white rounded-full p-1.5 shadow-md">
+                    <Baby className="text-[#FF9CAA]" size={20} />
+                  </div>
                 </div>
               </div>
-              <div className="absolute -right-2 top-0 bg-white p-1 rounded-full shadow-md">
-                <Heart className="text-[#FF9CAA]" fill="#FFDEE2" size={16} />
+              
+              <div className="absolute -left-2 top-2 bg-white p-1.5 rounded-full shadow-md">
+                <Heart className="text-[#FF9CAA]" fill="#FFDEE2" size={18} />
               </div>
-              <div className="speech-bubble absolute left-full top-1/4 bg-white px-3 py-1.5 rounded-lg shadow-sm text-xs max-w-[120px] ml-2">
-                <p className="text-mama-text font-medium">I'm here for you!</p>
-                <div className="absolute top-1/2 -left-2 w-2 h-2 bg-white transform rotate-45 -translate-y-1/2"></div>
+              
+              <div className="speech-bubble absolute left-full top-1/4 bg-white px-4 py-2.5 rounded-lg shadow-md text-sm max-w-[180px] ml-3">
+                <p className="text-mama-text font-medium leading-snug">I'm here for you day and night. You're not alone in this journey.</p>
+                <div className="absolute top-1/2 -left-2 w-3 h-3 bg-white transform rotate-45 -translate-y-1/2"></div>
               </div>
             </div>
             
