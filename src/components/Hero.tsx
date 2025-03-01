@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
+import { Heart, Baby } from 'lucide-react';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -46,9 +47,36 @@ const Hero = () => {
             </span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            Your Personal AI Guide Through Early Motherhood
-          </h1>
+          <div className="flex items-center justify-center gap-6 mb-6">
+            <div className="avatar-container relative animate-float hidden md:block">
+              <div className="relative w-32 h-32 rounded-full overflow-hidden bg-gradient-to-r from-[#FFDEE2] to-[#FFE6EA] shadow-lg border-2 border-white">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="avatar-face flex flex-col items-center">
+                    <Heart className="text-[#FF9CAA] mb-1" fill="#FFDEE2" size={24} />
+                    <div className="w-12 h-5 bg-[#FFDEE2] rounded-full mb-1"></div>
+                    <div className="flex space-x-5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#FF9CAA]"></div>
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#FF9CAA]"></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -bottom-2 left-0 right-0 flex justify-center">
+                  <Baby className="text-[#FF9CAA]" size={24} />
+                </div>
+              </div>
+              <div className="absolute -right-2 top-0 bg-white p-1 rounded-full shadow-md">
+                <Heart className="text-[#FF9CAA]" fill="#FFDEE2" size={16} />
+              </div>
+              <div className="speech-bubble absolute left-full top-1/4 bg-white px-3 py-1.5 rounded-lg shadow-sm text-xs max-w-[120px] ml-2">
+                <p className="text-mama-text font-medium">I'm here for you!</p>
+                <div className="absolute top-1/2 -left-2 w-2 h-2 bg-white transform rotate-45 -translate-y-1/2"></div>
+              </div>
+            </div>
+            
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-0 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              Your Personal AI Guide Through Early Motherhood
+            </h1>
+          </div>
           
           <p className="text-lg md:text-xl text-mama-text/80 mb-8 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.4s' }}>
             Get instant, reliable answers to all your postpartum questions, 
