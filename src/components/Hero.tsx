@@ -35,7 +35,7 @@ const Hero = () => {
       } as React.CSSProperties}
     >
       <div 
-        className="absolute inset-0 bg-[radial-gradient(circle_at_calc(50%+var(--mouse-x,0.5)*30%)_calc(50%+var(--mouse-y,0.5)*30%),var(--tw-gradient-stops))] from-[#FFDEE2] via-[#FFE6EA] to-[#FFF0F2] opacity-30 -z-10"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_calc(50%+var(--mouse-x,0.5)*30%)_calc(50%+var(--mouse-y,0.5)*30%),var(--tw-gradient-stops))] from-white via-gray-50 to-gray-100 opacity-30 -z-10"
         aria-hidden="true"
       />
       
@@ -120,7 +120,7 @@ const Hero = () => {
           
           <div className="relative animate-fade-in-up mt-8" style={{ animationDelay: '0.8s' }}>
             <div className="aspect-video max-w-3xl mx-auto overflow-hidden rounded-2xl shadow-2xl">
-              <div className="relative w-full h-full bg-[#FFDEE2]/30 flex items-center justify-center">
+              <div className="relative w-full h-full bg-gray-100/30 flex items-center justify-center">
                 <div className="blur-card rounded-xl p-6 max-w-md">
                   <div className="bg-[#FFDEE2]/50 rounded-full px-4 py-2 w-fit mb-4">
                     <span className="text-sm font-medium">CaringMommy AI</span>
@@ -139,7 +139,7 @@ const Hero = () => {
         </div>
       </div>
       
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#FFDEE2] to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent"></div>
     </section>
   );
 };
