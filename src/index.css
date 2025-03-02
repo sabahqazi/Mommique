@@ -122,7 +122,13 @@
   }
 
   .eye {
+    position: relative;
     animation: blink 4s ease-in-out infinite;
+  }
+  
+  .pupil {
+    position: relative;
+    animation: look-around 8s ease-in-out infinite;
   }
 }
 
@@ -171,6 +177,21 @@
   }
   97.5% {
     transform: scaleY(0.1);
+  }
+}
+
+@keyframes look-around {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  25% {
+    transform: translateX(1px) translateY(0);
+  }
+  50% {
+    transform: translateX(0) translateY(1px);
+  }
+  75% {
+    transform: translateX(-1px) translateY(0);
   }
 }
 
