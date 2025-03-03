@@ -49,54 +49,62 @@ const Hero = () => {
           
           <div className="flex items-center justify-center gap-6 mb-6">
             <div className="avatar-container relative animate-float hidden md:block">
-              <div className="relative w-36 h-36 rounded-full overflow-hidden bg-gradient-to-r from-[#FFDEE2] to-[#FFE6EA] shadow-lg border-2 border-white">
+              {/* New owl-inspired supportive character avatar */}
+              <div className="relative w-36 h-36 rounded-full overflow-hidden bg-gradient-to-b from-[#F2FCE2] to-[#D3E4FD] shadow-lg border-2 border-white">
+                {/* Avatar body */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="avatar-face flex flex-col items-center">
-                    {/* More realistic face elements */}
-                    <div className="relative w-full h-full">
-                      {/* Hair */}
-                      <div className="absolute top-0 left-0 right-0 h-16 bg-[#8B5A2B] rounded-t-full"></div>
-                      
-                      {/* Face shape */}
-                      <div className="absolute top-8 left-0 right-0 bottom-0 bg-[#F8D5C2] rounded-b-full">
-                        {/* Eyes with more realistic animation */}
-                        <div className="flex justify-center space-x-10 mt-6">
-                          <div className="eye-container relative">
-                            <div className="eye w-5 h-3 bg-white rounded-full flex items-center justify-center overflow-hidden">
-                              <div className="pupil w-2.5 h-2.5 rounded-full bg-[#4B3621]">
-                                <div className="light w-1 h-1 rounded-full bg-white absolute top-0.5 left-0.5"></div>
-                              </div>
-                            </div>
-                            <div className="eyebrow w-6 h-0.5 bg-[#8B5A2B] absolute -top-2 left-1/2 transform -translate-x-1/2 rounded-full"></div>
+                  {/* Owl-inspired body shape */}
+                  <div className="w-full h-full relative">
+                    {/* Main body */}
+                    <div className="absolute inset-0 bg-[#F2FCE2] rounded-full"></div>
+                    
+                    {/* Face/head area */}
+                    <div className="absolute inset-0">
+                      {/* Eyes container */}
+                      <div className="absolute top-1/4 left-0 right-0 flex justify-center space-x-8">
+                        {/* Left eye */}
+                        <div className="relative eye w-7 h-7 bg-white rounded-full flex items-center justify-center">
+                          <div className="pupil w-3 h-3 rounded-full bg-[#4B3621]">
+                            <div className="absolute top-0.5 left-0.5 w-1 h-1 rounded-full bg-white"></div>
                           </div>
-                          <div className="eye-container relative">
-                            <div className="eye w-5 h-3 bg-white rounded-full flex items-center justify-center overflow-hidden">
-                              <div className="pupil w-2.5 h-2.5 rounded-full bg-[#4B3621]">
-                                <div className="light w-1 h-1 rounded-full bg-white absolute top-0.5 left-0.5"></div>
-                              </div>
-                            </div>
-                            <div className="eyebrow w-6 h-0.5 bg-[#8B5A2B] absolute -top-2 left-1/2 transform -translate-x-1/2 rounded-full"></div>
-                          </div>
+                          {/* Eyebrow/eyelid */}
+                          <div className="absolute -top-2 w-8 h-2 bg-[#D3E4FD] rounded-full"></div>
                         </div>
                         
-                        {/* Nose */}
-                        <div className="nose w-2 h-3 bg-[#F3C7B1] rounded-full mx-auto mt-1"></div>
-                        
-                        {/* Mouth - gentle smile */}
-                        <div className="mouth w-10 h-3 mx-auto mt-2 bg-[#F8D5C2] relative">
-                          <div className="w-10 h-3 border-b-2 border-[#D35C5C] rounded-b-full"></div>
-                        </div>
-                        
-                        {/* Rosy cheeks - softer */}
-                        <div className="flex w-full justify-between px-8 mt-1">
-                          <div className="w-4 h-2 rounded-full bg-[#FF9CAA] opacity-40"></div>
-                          <div className="w-4 h-2 rounded-full bg-[#FF9CAA] opacity-40"></div>
+                        {/* Right eye */}
+                        <div className="relative eye w-7 h-7 bg-white rounded-full flex items-center justify-center">
+                          <div className="pupil w-3 h-3 rounded-full bg-[#4B3621]">
+                            <div className="absolute top-0.5 left-0.5 w-1 h-1 rounded-full bg-white"></div>
+                          </div>
+                          {/* Eyebrow/eyelid */}
+                          <div className="absolute -top-2 w-8 h-2 bg-[#D3E4FD] rounded-full"></div>
                         </div>
                       </div>
+                      
+                      {/* Beak/nose */}
+                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/4">
+                        <div className="w-6 h-4 bg-[#FFDEE2] rounded-full"></div>
+                      </div>
+                      
+                      {/* Smile */}
+                      <div className="absolute top-[58%] left-1/2 transform -translate-x-1/2 w-10 h-3">
+                        <div className="w-full h-full border-b-2 border-[#4B3621] rounded-b-full"></div>
+                      </div>
+                      
+                      {/* Cheeks */}
+                      <div className="absolute top-[55%] w-full flex justify-between px-4">
+                        <div className="w-4 h-2 rounded-full bg-[#FFDEE2] opacity-60"></div>
+                        <div className="w-4 h-2 rounded-full bg-[#FFDEE2] opacity-60"></div>
+                      </div>
+                      
+                      {/* Wings/arms */}
+                      <div className="absolute bottom-1 left-0 w-6 h-10 bg-[#D3E4FD] rounded-l-full rounded-br-3xl transform -rotate-12"></div>
+                      <div className="absolute bottom-1 right-0 w-6 h-10 bg-[#D3E4FD] rounded-r-full rounded-bl-3xl transform rotate-12"></div>
                     </div>
                   </div>
                 </div>
                 
+                {/* Baby icon badge */}
                 <div className="absolute -bottom-1 -right-2 flex justify-center">
                   <div className="bg-white rounded-full p-1.5 shadow-md">
                     <Baby className="text-[#FF9CAA]" size={20} />
@@ -104,12 +112,14 @@ const Hero = () => {
                 </div>
               </div>
               
+              {/* Heart icon */}
               <div className="absolute -left-2 top-2 bg-white p-1.5 rounded-full shadow-md">
                 <Heart className="text-[#FF9CAA]" fill="#FFDEE2" size={18} />
               </div>
               
-              <div className="speech-bubble absolute left-full top-1/4 bg-white px-4 py-2.5 rounded-lg shadow-md text-sm max-w-[180px] ml-3">
-                <p className="text-mama-text font-medium leading-snug">I understand what you're going through. I'm here to help whenever you need me.</p>
+              {/* Speech bubble with supportive message */}
+              <div className="speech-bubble absolute left-full top-1/4 bg-white px-4 py-2.5 rounded-lg shadow-md text-sm max-w-[200px] ml-3">
+                <p className="text-mama-text font-medium leading-snug">I'm here day and night to help you through postpartum challenges. You're not alone in this journey.</p>
                 <div className="absolute top-1/2 -left-2 w-3 h-3 bg-white transform rotate-45 -translate-y-1/2"></div>
               </div>
             </div>
