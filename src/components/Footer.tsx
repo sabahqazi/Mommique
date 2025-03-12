@@ -5,22 +5,24 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-white pt-16 pb-8 border-t border-mama-soft/20">
+    <footer className="bg-white pt-16 pb-8 border-t border-gray-100">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div className="md:col-span-2">
-            <a href="#" className="inline-block mb-6">
-              <span className="text-xl font-semibold bg-clip-text text-transparent bg-soft-gradient-static">
-                CaringMommy
-              </span>
+            <a href="#" className="flex items-center mb-6">
+              <img src="public/lovable-uploads/9ff31326-5d71-429a-8545-3a24dfa3f751.png" alt="Thrive Mama Logo" className="h-8 mr-2" />
+              <div className="flex flex-col">
+                <span className="text-xl font-bold text-pink-600">MomPal</span>
+                <span className="text-xs text-gray-600">Empowering Mamas to Thrive in Motherhood</span>
+              </div>
             </a>
-            <p className="text-mama-text/70 mb-6 max-w-md">
+            <p className="text-gray-600 mb-6 max-w-md">
               Your AI-powered postpartum companion, providing personalized support and reliable answers when you need them most.
             </p>
             <div className="flex space-x-4">
               <a 
                 href="#" 
-                className="text-mama-text/60 hover:text-mama-soft transition-colors"
+                className="text-gray-400 hover:text-pink-500 transition-colors"
                 aria-label="Twitter"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -29,7 +31,7 @@ const Footer = () => {
               </a>
               <a 
                 href="#" 
-                className="text-mama-text/60 hover:text-mama-soft transition-colors"
+                className="text-gray-400 hover:text-pink-500 transition-colors"
                 aria-label="Instagram"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -38,7 +40,7 @@ const Footer = () => {
               </a>
               <a 
                 href="#" 
-                className="text-mama-text/60 hover:text-mama-soft transition-colors"
+                className="text-gray-400 hover:text-pink-500 transition-colors"
                 aria-label="Facebook"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -52,22 +54,22 @@ const Footer = () => {
             <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">Links</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#features" className="text-mama-text/70 hover:text-mama-soft transition-colors">
+                <a href="#features" className="text-gray-600 hover:text-pink-500 transition-colors">
                   Features
                 </a>
               </li>
               <li>
-                <a href="#testimonials" className="text-mama-text/70 hover:text-mama-soft transition-colors">
+                <a href="#testimonials" className="text-gray-600 hover:text-pink-500 transition-colors">
                   Testimonials
                 </a>
               </li>
               <li>
-                <a href="#pricing" className="text-mama-text/70 hover:text-mama-soft transition-colors">
+                <a href="#pricing" className="text-gray-600 hover:text-pink-500 transition-colors">
                   Pricing
                 </a>
               </li>
               <li>
-                <a href="#" className="text-mama-text/70 hover:text-mama-soft transition-colors">
+                <a href="#" className="text-gray-600 hover:text-pink-500 transition-colors">
                   About Us
                 </a>
               </li>
@@ -78,22 +80,22 @@ const Footer = () => {
             <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">Legal</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-mama-text/70 hover:text-mama-soft transition-colors">
+                <a href="#" className="text-gray-600 hover:text-pink-500 transition-colors">
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="#" className="text-mama-text/70 hover:text-mama-soft transition-colors">
+                <a href="#" className="text-gray-600 hover:text-pink-500 transition-colors">
                   Terms of Service
                 </a>
               </li>
               <li>
-                <a href="#" className="text-mama-text/70 hover:text-mama-soft transition-colors">
+                <a href="#" className="text-gray-600 hover:text-pink-500 transition-colors">
                   Disclaimer
                 </a>
               </li>
               <li>
-                <a href="#" className="text-mama-text/70 hover:text-mama-soft transition-colors">
+                <a href="#" className="text-gray-600 hover:text-pink-500 transition-colors">
                   Contact Us
                 </a>
               </li>
@@ -101,12 +103,12 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-mama-soft/20 pt-8">
-          <p className="text-center text-sm text-mama-text/60">
-            &copy; {currentYear} CaringMommy. All rights reserved.
+        <div className="border-t border-gray-100 pt-8">
+          <p className="text-center text-sm text-gray-500">
+            &copy; {currentYear} MomPal. All rights reserved.
           </p>
-          <p className="text-center text-xs text-mama-text/50 mt-2">
-            CaringMommy is not a substitute for professional medical advice, diagnosis, or treatment. 
+          <p className="text-center text-xs text-gray-400 mt-2">
+            MomPal is not a substitute for professional medical advice, diagnosis, or treatment. 
             Always seek the advice of your physician or other qualified health provider with any questions 
             you may have regarding a medical condition.
           </p>
