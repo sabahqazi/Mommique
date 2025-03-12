@@ -97,7 +97,7 @@ const Hero = () => {
           <div className="flex flex-col items-center text-center">
             <div className="mb-4 w-60 mx-auto">
               <img 
-                src="/lovable-uploads/63f643c6-ae4d-4372-9f81-2f475d951a6e.png" 
+                src="/lovable-uploads/79afbdd8-32c1-4b06-bca9-c21961dc1e30.png" 
                 alt="Mother and baby whale illustration" 
                 className="w-full"
               />
