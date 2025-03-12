@@ -73,29 +73,6 @@ const Hero = () => {
             </div>
           </div>
         </div>
-        
-        {/* Modal Dialog Preview */}
-        <div className="hidden md:block absolute top-40 right-20 max-w-md">
-          <div className="bg-white rounded-lg p-5 shadow-lg relative">
-            <button className="absolute top-3 right-3 text-gray-400 hover:text-gray-600">×</button>
-            <div className="flex items-center mb-4">
-              <img src="public/lovable-uploads/b2a8897e-8387-4b4e-9fac-e557f1eec311.png" alt="Whale icon" className="w-40" />
-              <div className="ml-4">
-                <h4 className="text-pink-600 font-medium text-lg">So glad to see you here!</h4>
-                <p className="text-gray-700 text-sm">
-                  I understand your postpartum challenges and I'm here for you 24/7. You don't have to face this
-                  journey alone! I've got you!
-                </p>
-              </div>
-            </div>
-            <a
-              href="#features"
-              className="bg-pink-500 text-white w-full block text-center py-2 rounded-lg font-medium"
-            >
-              Try the AI Guide
-            </a>
-          </div>
-        </div>
       </div>
     </section>
   );
