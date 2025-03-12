@@ -1,9 +1,20 @@
 
-import React, { useState } from 'react';
-import { Search } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, X } from 'lucide-react';
+import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [showOverlay, setShowOverlay] = useState(false);
+
+  useEffect(() => {
+    // Show overlay after 3 seconds
+    const timer = setTimeout(() => {
+      setShowOverlay(true);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <section className="min-h-screen pt-28 pb-16 relative overflow-hidden bg-[#f8fafc]">
@@ -74,6 +85,42 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      {/* Overlay Dialog */}
+      <Dialog open={showOverlay} onOpenChange={setShowOverlay}>
+        <DialogContent className="bg-[#E8F4FF] border-none p-6 max-w-md mx-auto rounded-xl">
+          <DialogClose className="absolute right-4 top-4 text-gray-500 hover:text-gray-700">
+            <X className="h-5 w-5" />
+            <span className="sr-only">Close</span>
+          </DialogClose>
+          
+          <div className="flex flex-col items-center text-center">
+            <div className="mb-4 w-60 mx-auto">
+              <img 
+                src="/lovable-uploads/63f643c6-ae4d-4372-9f81-2f475d951a6e.png" 
+                alt="Mother and baby whale illustration" 
+                className="w-full"
+              />
+            </div>
+            
+            <h2 className="text-3xl font-bold text-[#E04D60] mb-4">
+              So glad to see you here!
+            </h2>
+            
+            <p className="text-gray-700 text-lg mb-8">
+              I understand your postpartum challenges and I'm here for you 24/7. You don't have to face this journey alone! I've got you!
+            </p>
+            
+            <a 
+              href="#features"
+              onClick={() => setShowOverlay(false)} 
+              className="bg-[#E04D60] hover:bg-[#d03c50] text-white font-medium px-8 py-3 rounded-lg transition-colors"
+            >
+              Try the AI Guide
+            </a>
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
