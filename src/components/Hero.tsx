@@ -20,7 +20,7 @@ const Hero = () => {
             </span>
           </div>
           
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900">Endless questions in Motherhood? 
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900">Endless questions in Motherhood?  
 We've got you!</h1>
           
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-5 text-gray-900">
