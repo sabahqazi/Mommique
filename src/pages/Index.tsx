@@ -9,6 +9,12 @@ import Footer from '../components/Footer';
 
 const Index = () => {
   useEffect(() => {
+    // Scroll to top when page loads
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
