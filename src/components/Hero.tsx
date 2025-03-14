@@ -110,7 +110,7 @@ const Hero = () => {
             </h2>
             
             <p className="text-gray-700 text-lg mb-8">
-              I understand <span className="font-medium">your</span> unique postpartum challenges and I'm here for <span className="font-medium">you</span> 24/7. <span className="font-medium">Your</span> journey is unique, and you don't have to face it alone! I've got <span className="font-medium">you</span> covered!
+              I understand <span className="font-bold text-black">your</span> postpartum challenges are personal to you! I'm here 24/7 for <span className="font-medium">you</span>! <span className="font-medium">Your</span> journey is unique, and you don't have to face it alone! I've got <span className="font-medium">you</span> covered!
             </p>
             
             <a 
