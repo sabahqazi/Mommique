@@ -17,46 +17,46 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="min-h-screen pt-28 pb-16 relative overflow-hidden bg-[#f8fafc]">
+    <section className="min-h-screen pt-20 pb-10 relative overflow-hidden bg-[#f8fafc]">
       <div className="container relative z-10">
-        <div className="max-w-4xl mx-auto text-center mb-8">
-          <div className="mb-4 inline-block">
+        <div className="max-w-4xl mx-auto text-center mb-6">
+          <div className="mb-3 inline-block">
             <span className="bg-pink-100 text-pink-600 px-4 py-1.5 rounded-full text-sm font-medium">
               Early Access Coming Soon
             </span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900">
-            Your Unique Motherhood Journey Deserves Personalized Support
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900">
+            Endless questions in Motherhood? We've got you! 
           </h1>
           
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-gray-900">
-            An AI partner that adapts to <span className="text-pink-600">your specific</span> postpartum experience
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-5 text-gray-900">
+            Your Personalized AI partner that adapts to <span className="text-black font-bold">your unique</span> <span className="text-pink-600">postpartum journey</span>
           </h2>
           
-          <p className="text-lg md:text-xl text-gray-700 mb-8 max-w-3xl mx-auto">
+          <p className="text-base md:text-lg text-gray-700 mb-6 max-w-3xl mx-auto">
             Get instant, reliable answers to <span className="font-medium">your unique</span> postpartum questions, 
             tailored specifically to <span className="font-medium">your journey</span>, <span className="font-medium">your baby</span>, and <span className="font-medium">your needs</span>. 
             Like having a caring nurse who knows exactly what <span className="italic">you're</span> going through.
           </p>
         </div>
         
-        <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 md:p-10">
-          <div className="text-center mb-6">
-            <h3 className="text-xl font-medium text-gray-800">
+        <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-8">
+          <div className="text-center mb-5">
+            <h3 className="text-lg font-medium text-gray-800">
               Ask me anything about <span className="text-pink-600">your</span> postpartum experience, 
               <span className="text-pink-600">your</span> self-care needs, or <span className="text-pink-600">your</span> baby's health —
               get answers as unique as your motherhood journey!
             </h3>
           </div>
           
-          <div className="relative mb-6">
+          <div className="relative mb-5">
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-gray-400" />
             </div>
             <input
               type="text"
-              className="pl-10 pr-12 py-4 w-full border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-200"
+              className="pl-10 pr-12 py-3 w-full border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-200"
               placeholder="Example: &quot;Why is my c-section scar still painful after 4 weeks OR what sleeping pattern is normal for my 6-week-old &quot;"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -69,7 +69,7 @@ const Hero = () => {
           </div>
           
           <div className="text-center">
-            <p className="text-gray-700 mb-4">Want personalized answers to <span className="italic">your</span> questions? Join our waitlist today</p>
+            <p className="text-gray-700 mb-3">Want personalized answers to <span className="italic">your</span> questions? Join our waitlist today</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a 
                 href="#waitlist" 
