@@ -27,24 +27,26 @@ const Hero = () => {
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900">
-            Endless questions in Motherhood? We've got you!
+            Your Unique Motherhood Journey Deserves Personalized Support
           </h1>
           
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-gray-900">
-            This is your personal AI partner through motherhood
+            An AI partner that adapts to <span className="text-pink-600">your specific</span> postpartum experience
           </h2>
           
           <p className="text-lg md:text-xl text-gray-700 mb-8 max-w-3xl mx-auto">
-            Get instant, reliable answers to all your postpartum questions, personalized to
-            your journey. Like having a caring nurse by your side, always!
+            Get instant, reliable answers to <span className="font-medium">your unique</span> postpartum questions, 
+            tailored specifically to <span className="font-medium">your journey</span>, <span className="font-medium">your baby</span>, and <span className="font-medium">your needs</span>. 
+            Like having a caring nurse who knows exactly what <span className="italic">you're</span> going through.
           </p>
         </div>
         
         <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 md:p-10">
           <div className="text-center mb-6">
             <h3 className="text-xl font-medium text-gray-800">
-              Ask me anything about postpartum, self-care, breastfeeding, or baby health —
-              get personalized answers!
+              Ask me anything about <span className="text-pink-600">your</span> postpartum experience, 
+              <span className="text-pink-600">your</span> self-care needs, or <span className="text-pink-600">your</span> baby's health —
+              get answers as unique as your motherhood journey!
             </h3>
           </div>
           
@@ -55,7 +57,7 @@ const Hero = () => {
             <input
               type="text"
               className="pl-10 pr-12 py-4 w-full border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-200"
-              placeholder="Example: &quot;what is the cause of my breast swelling OR why is my baby crying every 2 hours - give me detailed answers&quot;"
+              placeholder="Example: &quot;Why is my c-section scar still painful after 4 weeks OR what sleeping pattern is normal for my 6-week-old &quot;"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -67,7 +69,7 @@ const Hero = () => {
           </div>
           
           <div className="text-center">
-            <p className="text-gray-700 mb-4">Want to use this experience? Join our waitlist today</p>
+            <p className="text-gray-700 mb-4">Want personalized answers to <span className="italic">your</span> questions? Join our waitlist today</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a 
                 href="#waitlist" 
@@ -108,7 +110,7 @@ const Hero = () => {
             </h2>
             
             <p className="text-gray-700 text-lg mb-8">
-              I understand your postpartum challenges and I'm here for you 24/7. You don't have to face this journey alone! I've got you!
+              I understand <span className="font-medium">your</span> unique postpartum challenges and I'm here for <span className="font-medium">you</span> 24/7. <span className="font-medium">Your</span> journey is unique, and you don't have to face it alone! I've got <span className="font-medium">you</span> covered!
             </p>
             
             <a 

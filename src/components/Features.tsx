@@ -5,7 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const Features = () => {
   const [messages, setMessages] = useState([
-    { role: 'system', content: 'Hello! I\'m your personal postpartum AI guide. How can I help you today?' },
+    { role: 'system', content: 'Hello! I\'m your personal postpartum AI guide, tailored specifically to your needs. How can I help you today?' },
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isRecording, setIsRecording] = useState(false);
@@ -58,15 +58,15 @@ const Features = () => {
     let response = "";
     
     if (question.toLowerCase().includes("diaper rash")) {
-      response = "Diaper rash is common in newborns. For a 2-week-old, try these steps:\n\n• Change diapers frequently\n• Allow air-dry time\n• Use zinc oxide cream\n\nCall your pediatrician if it doesn't improve in 2-3 days or if you notice blisters, pus, or severe discomfort.";
+      response = "Based on your baby's age (2 weeks) and your description, this type of diaper rash is common in newborns. For your specific situation, try these personalized steps:\n\n• Change diapers more frequently, especially for your newborn's sensitive skin\n• Allow air-dry time after each change\n• Apply a thin layer of zinc oxide cream designed for sensitive newborn skin\n\nIf the rash doesn't improve in 2-3 days with these measures or if you notice blisters, pus, or your baby seems uncomfortable, please contact your pediatrician right away.";
     } else if (question.toLowerCase().includes("change diaper")) {
-      response = "For newborns, you should change diapers about 8-10 times per day, or roughly every 2-3 hours. Wet diapers should be changed promptly, and soiled diapers should be changed immediately to prevent diaper rash and discomfort.";
+      response = "For your newborn, I recommend changing diapers about 8-10 times per day, or roughly every 2-3 hours. Since you're asking about frequency, it's important to note that your baby's individual needs might require more frequent changes, especially after feeding times when they're more likely to soil their diaper. Wet diapers should be changed promptly, and soiled diapers should be changed immediately to prevent diaper rash and keep your specific baby comfortable.";
     } else if (question.toLowerCase().includes("exhausted") || question.toLowerCase().includes("tired")) {
-      response = "Feeling exhausted is completely normal for new mothers. Your body is recovering from childbirth while adjusting to a new sleep schedule. Try to:\n\n• Sleep when your baby sleeps\n• Accept help from family and friends\n• Stay hydrated and eat nutritious foods\n\nIf exhaustion is accompanied by feelings of hopelessness or inability to care for yourself or baby, please contact your healthcare provider as this could be a sign of postpartum depression.";
+      response = "Your exhaustion is completely normal and valid for your postpartum journey. Your body is recovering from childbirth while adjusting to a new sleep schedule. Based on your specific situation, I suggest:\n\n• Sleep when your baby sleeps - even short naps help your unique recovery\n• Accept help from family and friends for tasks specific to your household\n• Stay hydrated and focus on nutritious foods that support your individual healing process\n\nIf your exhaustion is accompanied by feelings of hopelessness or inability to care for yourself or your baby, please contact your healthcare provider immediately as this could indicate postpartum depression, which requires personalized support.";
     } else if (question.toLowerCase().includes("latch") || question.toLowerCase().includes("breastfeed")) {
-      response = "Breastfeeding challenges are common. For proper latching:\n\n• Hold baby skin-to-skin\n• Ensure baby's mouth is wide open before latching\n• Position baby's lower lip as far from the base of your nipple as possible\n• Use the C-hold technique to guide your breast\n\nConsider consulting with a lactation consultant if difficulties persist.";
+      response = "I understand how challenging breastfeeding can be for your specific situation. For your latching difficulties, try these personalized techniques:\n\n• Hold your baby skin-to-skin to trigger their natural feeding instincts\n• Ensure your baby's mouth is wide open before latching, like a yawn\n• Position your baby's lower lip as far from the base of your nipple as possible for a deep latch\n• Try the C-hold technique with your thumb and fingers to guide your breast based on your specific anatomy\n\nYour breastfeeding journey is unique, and if these personalized suggestions don't help, I strongly recommend consulting with a lactation consultant who can observe your specific technique and provide customized guidance.";
     } else {
-      response = "Thank you for your question. As a postpartum care specialist, I recommend discussing this with your healthcare provider at your next visit. In the meantime, you may find it helpful to monitor your symptoms and note any changes. Would you like me to provide some general information about postpartum recovery?";
+      response = "Thank you for sharing your specific concern. As your personalized postpartum care specialist, I recommend discussing this particular issue with your healthcare provider at your next visit. In the meantime, you may find it helpful to monitor your symptoms and note any changes unique to your situation. Would you like me to provide some general information tailored to your postpartum recovery journey?";
     }
     
     setIsTyping(false);
@@ -86,7 +86,7 @@ const Features = () => {
     setIsRecording(true);
     toast({
       title: "Voice recording started",
-      description: "Speak clearly into your microphone",
+      description: "Speak clearly about your specific concern",
     });
     
     // Simulate recording for 3 seconds
@@ -100,8 +100,8 @@ const Features = () => {
     setIsProcessing(true);
     
     toast({
-      title: "Processing your audio",
-      description: "Converting speech to text...",
+      title: "Processing your unique question",
+      description: "Converting your specific concern to text...",
     });
     
     // Simulate processing
@@ -112,8 +112,8 @@ const Features = () => {
       setInputMessage(randomQuestion);
       
       toast({
-        title: "Audio processed",
-        description: "Your question has been transcribed",
+        title: "Your question processed",
+        description: "Ready to provide personalized guidance for your situation",
       });
     }, 2000);
   };
@@ -123,15 +123,15 @@ const Features = () => {
       <div className="container">
         <div className="mb-12 text-center">
           <span className="bg-pink-100 text-pink-600 px-4 py-1.5 rounded-full text-sm font-medium">
-            How It Works
+            How It Works For You
           </span>
           <h2 className="text-3xl md:text-4xl font-bold mt-4 mb-6">
-            Your Postpartum Questions, Answered Instantly
+            Your Unique Postpartum Questions, Answered Instantly
           </h2>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            Thrive mama combines medical expertise with advanced AI to provide 
-            personalized support exactly when you need it, helping you navigate the 
-            challenges of early motherhood with confidence.
+            Thrive Mama combines medical expertise with advanced AI to provide 
+            support tailored specifically to <span className="italic">your</span> needs and <span className="italic">your</span> baby, 
+            helping you navigate <span className="italic">your</span> unique motherhood journey with confidence.
           </p>
         </div>
         
@@ -140,9 +140,9 @@ const Features = () => {
             <div className="mb-5 p-3 bg-pink-50 rounded-full inline-block w-fit">
               <MessageSquare className="w-6 h-6 text-pink-500" />
             </div>
-            <h3 className="text-xl font-bold mb-3">Personalized Answers</h3>
+            <h3 className="text-xl font-bold mb-3">Answers Unique To You</h3>
             <p className="text-gray-600">
-              Get responses tailored to your specific situation, medical history, and recovery journey.
+              Get responses tailored to your specific situation, your medical history, and your personal recovery journey.
             </p>
           </div>
           
@@ -150,9 +150,9 @@ const Features = () => {
             <div className="mb-5 p-3 bg-pink-50 rounded-full inline-block w-fit">
               <Clock className="w-6 h-6 text-pink-500" />
             </div>
-            <h3 className="text-xl font-bold mb-3">24/7 Availability through text or voice</h3>
+            <h3 className="text-xl font-bold mb-3">24/7 Support For Your Schedule</h3>
             <p className="text-gray-600">
-              Get instant support, day or night especially during those late nights worries — through text or voice, whenever you need it.
+              Get instant support for your concerns, day or night especially during those late nights with your newborn — through text or voice, whenever you need it.
             </p>
           </div>
           
@@ -160,9 +160,9 @@ const Features = () => {
             <div className="mb-5 p-3 bg-pink-50 rounded-full inline-block w-fit">
               <ShieldCheck className="w-6 h-6 text-pink-500" />
             </div>
-            <h3 className="text-xl font-bold mb-3">Research-backed Answers</h3>
+            <h3 className="text-xl font-bold mb-3">Verified For Your Peace of Mind</h3>
             <p className="text-gray-600">
-              All information is verified by postpartum research docs posted by professional and updated regularly.
+              All information is verified by postpartum research docs to ensure you receive accurate guidance for your specific concerns.
             </p>
           </div>
           
@@ -170,9 +170,9 @@ const Features = () => {
             <div className="mb-5 p-3 bg-pink-50 rounded-full inline-block w-fit">
               <BookOpen className="w-6 h-6 text-pink-500" />
             </div>
-            <h3 className="text-xl font-bold mb-3">Knowledge Library</h3>
+            <h3 className="text-xl font-bold mb-3">Resources For Your Journey</h3>
             <p className="text-gray-600">
-              Access comprehensive resources on postpartum care, breastfeeding, and baby development.
+              Access comprehensive resources tailored to your postpartum stage, your breastfeeding challenges, and your baby's unique development.
             </p>
           </div>
           
@@ -180,9 +180,9 @@ const Features = () => {
             <div className="mb-5 p-3 bg-pink-50 rounded-full inline-block w-fit">
               <Heart className="w-6 h-6 text-pink-500" />
             </div>
-            <h3 className="text-xl font-bold mb-3">Mom & Baby Care</h3>
+            <h3 className="text-xl font-bold mb-3">Care For You & Your Baby</h3>
             <p className="text-gray-600">
-              Complete guidance for both maternal recovery and infant care in one trusted place.
+              Complete guidance for both your maternal recovery and your infant's care needs in one trusted place.
             </p>
           </div>
           
@@ -190,9 +190,9 @@ const Features = () => {
             <div className="mb-5 p-3 bg-pink-50 rounded-full inline-block w-fit">
               <Zap className="w-6 h-6 text-pink-500" />
             </div>
-            <h3 className="text-xl font-bold mb-3">Instant Relief</h3>
+            <h3 className="text-xl font-bold mb-3">Instant Relief For Your Concerns</h3>
             <p className="text-gray-600">
-              Save precious time with immediate answers and support when you need it most.
+              Save precious time with immediate answers to your specific questions when you need them most.
             </p>
           </div>
         </div>
@@ -200,11 +200,11 @@ const Features = () => {
         <div className="mt-24 mb-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
-              <div className="mb-4 text-pink-600 font-medium">Fast. Simple. Always There for You!</div>
-              <h3 className="text-3xl font-bold mb-6">As Easy as Talking to a Friend</h3>
+              <div className="mb-4 text-pink-600 font-medium">Fast. Simple. Personalized For You!</div>
+              <h3 className="text-3xl font-bold mb-6">As Easy as Talking to a Friend Who Knows Your Journey</h3>
               <p className="text-gray-700 mb-6">
-                Just type or speak your question in natural language, and get thoughtful, 
-                personalized answers within seconds. No complicated menus or 
+                Just type or speak your specific question in your own words, and get thoughtful, 
+                personalized answers tailored to your unique situation within seconds. No complicated menus or 
                 learning curve.
               </p>
               
@@ -216,7 +216,7 @@ const Features = () => {
                       <polyline points="22 4 12 14.01 9 11.01"></polyline>
                     </svg>
                   </div>
-                  <div>Ask anything about breastfeeding, sleep, recovery, or baby care</div>
+                  <div>Ask anything about your breastfeeding challenges, your baby's sleep patterns, your recovery concerns, or your specific baby care questions</div>
                 </li>
                 <li className="flex items-start">
                   <div className="mr-3 text-red-500 mt-1">
@@ -225,7 +225,7 @@ const Features = () => {
                       <polyline points="22 4 12 14.01 9 11.01"></polyline>
                     </svg>
                   </div>
-                  <div>Use text or voice for your questions - whatever is easier for you</div>
+                  <div>Use text or voice based on your preference and situation - perfect for those middle-of-the-night concerns</div>
                 </li>
                 <li className="flex items-start">
                   <div className="mr-3 text-red-500 mt-1">
@@ -234,12 +234,12 @@ const Features = () => {
                       <polyline points="22 4 12 14.01 9 11.01"></polyline>
                     </svg>
                   </div>
-                  <div>Get urgent vs. non-urgent guidance on when to call your doctor</div>
+                  <div>Get clear guidance on which of your concerns need immediate medical attention vs. which are normal for your situation</div>
                 </li>
               </ul>
               
               <div className="space-y-2">
-                <p className="font-medium text-gray-700">Try asking about:</p>
+                <p className="font-medium text-gray-700">Try asking about your specific concerns:</p>
                 <div className="flex flex-wrap gap-2">
                   {mockQuestions.map((question, index) => (
                     <button 
