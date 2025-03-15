@@ -15,44 +15,43 @@ const Hero = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  return <section className="min-h-screen pt-20 pb-10 relative overflow-hidden bg-[#f8fafc]">
+  return <section className="min-h-screen pt-16 pb-10 relative overflow-hidden bg-[#f8fafc] flex items-center">
       <div className="container relative z-10">
-        <div className="max-w-4xl mx-auto text-center mb-6">
+        <div className="max-w-4xl mx-auto text-center mb-5">
           <div className="mb-3 inline-block">
             <span className="bg-pink-100 text-pink-600 px-4 py-1.5 rounded-full text-sm font-medium">
               Early Access Coming Soon
             </span>
           </div>
           
-          <div className="bg-white p-8 rounded-xl shadow-sm mb-8">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900 text-center">
-              Endless questions in Motherhood?<br />
-              We've got you!
-            </h1>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 text-gray-900 text-center">
+            Endless questions in Motherhood?<br />
+            We've got you!
+          </h1>
             
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-5 text-gray-900 text-center">
-              <span className="text-pink-600">Your</span>
-              <span className="text-black"> personalized AI partner that adapts to your unique postpartum journey</span>
-            </h2>
-          </div>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-gray-900 text-center">
+            <span className="text-pink-600">Your</span>
+            <span className="text-black"> personalized AI partner that adapts to </span>
+            <span className="text-pink-600">your</span>
+            <span className="text-black"> unique postpartum journey</span>
+          </h2>
           
-          <p className="text-base md:text-lg text-gray-700 mb-6 max-w-3xl mx-auto">
-            Get instant, reliable answers to <span className="font-medium">your unique</span> postpartum questions, 
-            tailored specifically to <span className="font-medium">your journey</span>!
-            Like having a caring nurse who knows exactly what <span className="italic">you're</span> going through.
+          <p className="text-base md:text-lg text-gray-700 mb-5 max-w-3xl mx-auto">
+            Thrive Mama gives research-backed, AI-powered support tailored to you and your baby, 
+            helping you navigate your motherhood journey with confidence!
           </p>
         </div>
         
-        <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-8">
-          <div className="text-center mb-5">
+        <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-5 md:p-6">
+          <div className="text-center mb-4">
             <h3 className="text-lg font-medium text-gray-800">
               Ask me anything about <span className="text-pink-600">your</span> postpartum experience, 
-              <span className="text-pink-600">your</span> self-care needs, or <span className="text-pink-600">your</span> baby's health —
-              get answers as unique as your motherhood journey!
+              <span className="text-pink-600"> your</span> self-care needs, or <span className="text-pink-600"> your</span> baby's health —
+              get answers as to <span className="text-pink-600">your</span> motherhood journey!
             </h3>
           </div>
           
-          <div className="relative mb-5">
+          <div className="relative mb-4">
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-gray-400" />
             </div>
@@ -65,7 +64,7 @@ const Hero = () => {
           </div>
           
           <div className="text-center">
-            <p className="text-gray-700 mb-3">Want personalized answers to <span className="italic">your</span> questions? Join our waitlist today</p>
+            <p className="text-gray-700 mb-3">Want this experience? Join our waitlist today</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a href="#waitlist" className="bg-pink-100 hover:bg-pink-200 text-pink-700 px-6 py-3 rounded-lg font-medium transition-colors">
                 Join Waitlist
