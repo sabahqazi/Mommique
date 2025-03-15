@@ -38,7 +38,7 @@ const Hero = () => {
           
           <p className="text-base md:text-lg text-gray-700 mb-5 max-w-3xl mx-auto">
             Thrive Mama gives research-backed, AI-powered support tailored to you and your baby, 
-            helping you navigate your motherhood journey with confidence!
+            guiding your motherhood journey with confidence!
           </p>
         </div>
         
@@ -95,7 +95,7 @@ const Hero = () => {
             </h2>
             
             <p className="text-gray-700 text-lg mb-8">
-              I understand <span className="font-bold text-black">your</span> postpartum challenges are personal to you! I'm here 24/7 for <span className="font-medium">you</span>! <span className="font-medium">Your</span> journey is unique, and you don't have to face it alone! I've got <span className="font-medium">you</span> covered!
+              Your postpartum challenges are personal to you! You don't have to face it alone! I'm here 24/7 for you!
             </p>
             
             <a href="#features" onClick={() => setShowOverlay(false)} className="bg-[#E04D60] hover:bg-[#d03c50] text-white font-medium px-8 py-3 rounded-lg transition-colors">
