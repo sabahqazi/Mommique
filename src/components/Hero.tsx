@@ -15,7 +15,7 @@ const Hero = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  return <section className="min-h-screen pt-20 pb-10 relative overflow-hidden">
+  return <section className="min-h-screen pt-20 pb-10 relative overflow-hidden bg-[#f8fafc]">
       <div className="container relative z-10">
         <div className="max-w-4xl mx-auto text-center mb-6">
           <div className="mb-3 inline-block">
@@ -31,9 +31,8 @@ const Hero = () => {
             </h1>
             
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-5 text-gray-900 text-center">
-              <span className="text-pink-600">Your Personalized AI partner that adapts to </span>
-              <span className="text-black font-bold">your unique</span>
-              <span className="text-pink-600"> postpartum journey</span>
+              <span className="text-pink-600">Your</span>
+              <span className="text-black"> personalized AI partner that adapts to your unique postpartum journey</span>
             </h2>
           </div>
           

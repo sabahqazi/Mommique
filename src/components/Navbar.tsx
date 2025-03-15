@@ -19,8 +19,7 @@ const Navbar = () => {
   return (
     <nav 
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4",
-        isScrolled ? "bg-white shadow-sm" : "bg-transparent"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 bg-white shadow-sm"
       )}
     >
       <div className="container flex items-center justify-between">
@@ -34,7 +33,7 @@ const Navbar = () => {
           </a>
         </div>
         
-        <div className="hidden md:flex items-center space-x-10">
+        <div className="hidden md:flex items-center space-x-10 mx-auto">
           <a href="#features" className="text-gray-700 hover:text-pink-600 transition-colors font-medium">
             Features
           </a>
