@@ -1,8 +1,7 @@
+
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send, Bot, Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send, Bot } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
-import { Button } from "@/components/ui/button";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const Features = () => {
   const [messages, setMessages] = useState([
@@ -12,10 +11,7 @@ const Features = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
   const messagesEndRef = useRef(null);
-  const videoRef = useRef(null);
   const { toast } = useToast();
 
   // Mock questions for demonstration
@@ -121,44 +117,6 @@ const Features = () => {
       });
     }, 2000);
   };
-
-  const togglePlayPause = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(!isMuted);
-    }
-  };
-
-  useEffect(() => {
-    const video = videoRef.current;
-    
-    if (video) {
-      const handlePlay = () => setIsPlaying(true);
-      const handlePause = () => setIsPlaying(false);
-      const handleEnded = () => setIsPlaying(false);
-      
-      video.addEventListener('play', handlePlay);
-      video.addEventListener('pause', handlePause);
-      video.addEventListener('ended', handleEnded);
-      
-      return () => {
-        video.removeEventListener('play', handlePlay);
-        video.removeEventListener('pause', handlePause);
-        video.removeEventListener('ended', handleEnded);
-      };
-    }
-  }, []);
 
   return (
     <section id="features" className="py-16 bg-[#f8fafc]">
@@ -297,80 +255,100 @@ const Features = () => {
             </div>
             
             <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
-              <div className="bg-pink-100 p-4 flex items-center justify-between">
-                <div className="flex items-center">
-                  <div className="h-10 w-10 rounded-full bg-pink-200 flex items-center justify-center mr-3">
-                    <Bot className="h-6 w-6 text-pink-500" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium">How Thrive Mama Works</h4>
-                    <p className="text-xs text-gray-600">See how our AI helps you in real-time</p>
+              {/* Chat header */}
+              <div className="bg-pink-100 p-4 flex items-center">
+                <div className="h-10 w-10 rounded-full bg-pink-200 flex items-center justify-center mr-3">
+                  <Bot className="h-6 w-6 text-pink-500" />
+                </div>
+                <div>
+                  <h4 className="font-medium">CaringMommy Assistant</h4>
+                  <p className="text-xs text-gray-600">Online • Responds instantly</p>
+                </div>
+              </div>
+              
+              {/* Video/avatar section */}
+              <div className="bg-pink-50 p-4 flex justify-center items-center">
+                <div className="relative rounded-lg overflow-hidden w-full max-w-xs aspect-video bg-gradient-to-r from-pink-100 to-pink-200 flex items-center justify-center">
+                  <img 
+                    src="/lovable-uploads/79afbdd8-32c1-4b06-bca9-c21961dc1e30.png" 
+                    alt="Mother and baby whale illustration" 
+                    className="h-24 animate-float"
+                  />
+                  <div className="absolute bottom-2 right-2 bg-pink-100 text-pink-600 text-xs px-2 py-1 rounded-full">
+                    AI Guide
                   </div>
                 </div>
               </div>
               
-              <div className="relative bg-gray-900">
-                <AspectRatio ratio={16/9} className="w-full">
-                  <video
-                    ref={videoRef}
-                    className="h-full w-full object-cover"
-                    poster="/lovable-uploads/79afbdd8-32c1-4b06-bca9-c21961dc1e30.png"
-                  >
-                    <source 
-                      src="https://framerusercontent.com/modules/assets/XuzMZ3Z1QQHKltPqRjzGnsWs0Sg~YnBHEOWEQBBT_YxMGRCBMQzA-pAVTwH7oa0qNAI.mp4" 
-                      type="video/mp4" 
-                    />
-                    Your browser does not support the video tag.
-                  </video>
-                  
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    {!isPlaying && (
-                      <Button 
-                        onClick={togglePlayPause}
-                        variant="secondary"
-                        className="w-16 h-16 rounded-full bg-white/30 backdrop-blur-sm hover:bg-white/50"
+              {/* Chat messages */}
+              <div className="flex-1 p-4 overflow-y-auto max-h-80 bg-gray-50">
+                <div className="space-y-4">
+                  {messages.map((message, index) => (
+                    <div 
+                      key={index} 
+                      className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div 
+                        className={`max-w-[80%] rounded-lg p-3 ${
+                          message.role === 'user' 
+                            ? 'bg-pink-100 text-gray-800' 
+                            : 'bg-white border border-gray-200 text-gray-800'
+                        }`}
                       >
-                        <Play className="h-8 w-8 text-white" fill="white" />
-                      </Button>
-                    )}
-                  </div>
-                  
-                  <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4">
-                    <Button 
-                      onClick={togglePlayPause}
-                      variant="secondary"
-                      size="icon"
-                      className="bg-white/30 backdrop-blur-sm hover:bg-white/50"
-                    >
-                      {isPlaying ? (
-                        <Pause className="h-5 w-5 text-white" />
-                      ) : (
-                        <Play className="h-5 w-5 text-white" />
-                      )}
-                    </Button>
-                    
-                    <Button 
-                      onClick={toggleMute}
-                      variant="secondary"
-                      size="icon"
-                      className="bg-white/30 backdrop-blur-sm hover:bg-white/50"
-                    >
-                      {isMuted ? (
-                        <VolumeX className="h-5 w-5 text-white" />
-                      ) : (
-                        <Volume2 className="h-5 w-5 text-white" />
-                      )}
-                    </Button>
-                  </div>
-                </AspectRatio>
+                        <p className="whitespace-pre-line">{message.content}</p>
+                      </div>
+                    </div>
+                  ))}
+                  {isTyping && (
+                    <div className="flex justify-start">
+                      <div className="bg-white border border-gray-200 rounded-lg p-3">
+                        <div className="flex items-center space-x-1">
+                          <div className="w-2 h-2 bg-gray-300 rounded-full animate-pulse"></div>
+                          <div className="w-2 h-2 bg-gray-300 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                          <div className="w-2 h-2 bg-gray-300 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  <div ref={messagesEndRef} />
+                </div>
               </div>
               
-              <div className="p-4">
-                <p className="text-sm text-gray-700">
-                  Watch how Thrive Mama provides personalized support for your unique postpartum journey. 
-                  Our AI assistant understands your specific needs and offers tailored guidance just for you.
-                </p>
-              </div>
+              {/* Chat input */}
+              <form onSubmit={handleSubmit} className="p-4 border-t flex items-center gap-2">
+                <button 
+                  type="button" 
+                  onClick={toggleRecording}
+                  disabled={isProcessing}
+                  className={`p-2 rounded-full ${
+                    isRecording 
+                      ? 'bg-red-100 text-red-500 animate-pulse' 
+                      : isProcessing 
+                        ? 'bg-gray-100 text-gray-400' 
+                        : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                  }`}
+                >
+                  {isRecording ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
+                </button>
+                <input 
+                  type="text" 
+                  value={inputMessage} 
+                  onChange={(e) => setInputMessage(e.target.value)} 
+                  placeholder="Type your question here..." 
+                  className="flex-1 border border-gray-200 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-200"
+                />
+                <button 
+                  type="submit" 
+                  disabled={!inputMessage.trim()} 
+                  className={`p-2 rounded-full ${
+                    inputMessage.trim() 
+                      ? 'bg-pink-100 text-pink-500 hover:bg-pink-200' 
+                      : 'bg-gray-100 text-gray-400'
+                  }`}
+                >
+                  <Send className="h-5 w-5" />
+                </button>
+              </form>
             </div>
           </div>
         </div>
