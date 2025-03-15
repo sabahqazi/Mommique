@@ -15,7 +15,7 @@ const Hero = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  return <section className="min-h-screen pt-20 pb-10 relative overflow-hidden bg-[#f8fafc]">
+  return <section className="min-h-screen pt-20 pb-10 relative overflow-hidden">
       <div className="container relative z-10">
         <div className="max-w-4xl mx-auto text-center mb-6">
           <div className="mb-3 inline-block">
@@ -24,18 +24,22 @@ const Hero = () => {
             </span>
           </div>
           
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900">
-            Endless questions in Motherhood?<br />
-            We've got you!
-          </h1>
-          
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-5 text-gray-900">
-            Your Personalized AI partner that adapts to <span className="text-black font-bold">your unique</span> <span className="text-pink-600">postpartum journey</span>
-          </h2>
+          <div className="bg-white p-8 rounded-xl shadow-sm mb-8">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900 text-center">
+              Endless questions in Motherhood?<br />
+              We've got you!
+            </h1>
+            
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-5 text-gray-900 text-center">
+              <span className="text-pink-600">Your Personalized AI partner that adapts to </span>
+              <span className="text-black font-bold">your unique</span>
+              <span className="text-pink-600"> postpartum journey</span>
+            </h2>
+          </div>
           
           <p className="text-base md:text-lg text-gray-700 mb-6 max-w-3xl mx-auto">
             Get instant, reliable answers to <span className="font-medium">your unique</span> postpartum questions, 
-            tailored specifically to <span className="font-medium">your journey</span>, <span className="font-medium">your baby</span>, and <span className="font-medium">your needs</span>. 
+            tailored specifically to <span className="font-medium">your journey</span>!
             Like having a caring nurse who knows exactly what <span className="italic">you're</span> going through.
           </p>
         </div>
