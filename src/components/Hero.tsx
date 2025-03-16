@@ -1,8 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
-import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
 
+// Hero component with popup overlay
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showOverlay, setShowOverlay] = useState(false);
@@ -80,6 +81,7 @@ const Hero = () => {
       {/* Overlay Dialog */}
       <Dialog open={showOverlay} onOpenChange={setShowOverlay}>
         <DialogContent className="bg-[#E8F4FF] border-none p-6 max-w-md mx-auto rounded-xl">
+          <DialogTitle className="sr-only">Welcome Message</DialogTitle>
           <DialogClose className="absolute right-4 top-4 text-gray-500 hover:text-gray-700">
             <X className="h-5 w-5" />
             <span className="sr-only">Close</span>
