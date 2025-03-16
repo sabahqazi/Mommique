@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
@@ -13,7 +12,23 @@ const Pricing = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate API call
+    // Create an object with form data
+    const waitlistEntry = {
+      email,
+      pricingOption: selectedOption,
+      timestamp: new Date().toISOString()
+    };
+    
+    // Get existing entries or initialize empty array
+    const existingEntries = JSON.parse(localStorage.getItem('waitlistEntries') || '[]');
+    
+    // Add new entry
+    existingEntries.push(waitlistEntry);
+    
+    // Save back to localStorage
+    localStorage.setItem('waitlistEntries', JSON.stringify(existingEntries));
+    
+    // Simulate API call delay
     setTimeout(() => {
       setIsSubmitting(false);
       toast({
@@ -22,6 +37,9 @@ const Pricing = () => {
       });
       setEmail("");
       setSelectedOption(null);
+      
+      // Log to console for debugging
+      console.log('Waitlist entries:', existingEntries);
     }, 1500);
   };
 
