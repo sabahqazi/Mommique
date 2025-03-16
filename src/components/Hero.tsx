@@ -38,7 +38,7 @@ const Hero = () => {
           </h2>
           
           <p className="text-base md:text-lg text-gray-700 mb-5 max-w-3xl mx-auto">
-            Mommique gives research-backed, AI-powered support tailored to you and your baby, 
+            momMique.com gives research-backed, AI-powered support tailored to you and your baby, 
             guiding your motherhood journey with confidence!
           </p>
         </div>

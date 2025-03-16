@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 const Footer = () => {
@@ -9,9 +10,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div className="md:col-span-2">
             <a href="#" className="flex items-center mb-6">
-              <img src="public/lovable-uploads/9ff31326-5d71-429a-8545-3a24dfa3f751.png" alt="Mommique Logo" className="h-8 mr-2" />
+              <img src="public/lovable-uploads/9ff31326-5d71-429a-8545-3a24dfa3f751.png" alt="momMique.com Logo" className="h-8 mr-2" />
               <div className="flex flex-col">
-                <span className="text-xl font-bold text-pink-600">Mommique</span>
+                <span className="text-xl font-bold text-pink-600">momMique.com</span>
                 <span className="text-xs text-gray-600">Empowering Mamas to Thrive in Motherhood</span>
               </div>
             </a>
@@ -104,10 +105,10 @@ const Footer = () => {
         
         <div className="border-t border-gray-100 pt-8">
           <p className="text-center text-sm text-gray-500">
-            &copy; {currentYear} Mommique. All rights reserved.
+            &copy; {currentYear} momMique.com. All rights reserved.
           </p>
           <p className="text-center text-xs text-gray-400 mt-2">
-            Mommique is not a substitute for professional medical advice, diagnosis, or treatment. 
+            momMique.com is not a substitute for professional medical advice, diagnosis, or treatment. 
             Always seek the advice of your physician or other qualified health provider with any questions 
             you may have regarding a medical condition.
           </p>

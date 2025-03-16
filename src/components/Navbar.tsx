@@ -25,9 +25,9 @@ const Navbar = () => {
       <div className="container flex items-center justify-between">
         <div className="flex items-center">
           <a href="#" className="flex items-center">
-            <img src="public/lovable-uploads/9ff31326-5d71-429a-8545-3a24dfa3f751.png" alt="Mommique Logo" className="h-8 mr-2" />
+            <img src="public/lovable-uploads/9ff31326-5d71-429a-8545-3a24dfa3f751.png" alt="momMique.com Logo" className="h-8 mr-2" />
             <div className="flex flex-col">
-              <span className="text-xl font-bold text-pink-600">Mommique</span>
+              <span className="text-xl font-bold text-pink-600">momMique.com</span>
               <span className="text-xs text-gray-600">Empowering Mamas to Thrive in Motherhood</span>
             </div>
           </a>
