@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
@@ -72,10 +73,10 @@ const Pricing = () => {
       
       // Only attempt to save to Supabase if it's properly configured
       if (supabaseAvailable) {
-        // Save to Supabase
+        // Save to Supabase - fix: pass the entry as a single object, not an array inside another array
         const { error } = await supabase
           .from('waitlist_entries')
-          .insert([waitlistEntry]);
+          .insert(waitlistEntry);
           
         if (error) {
           console.error('Error saving to Supabase:', error);

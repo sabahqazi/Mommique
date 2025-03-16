@@ -9,6 +9,7 @@ export interface WaitlistEntry {
   email: string;
   pricing_option: string | null;
   created_at: string;
+  [key: string]: unknown; // Add index signature to make it compatible with Record<string, unknown>
 }
 
 // Function to check if the waitlist_entries table exists
@@ -52,7 +53,7 @@ export const checkWaitlistTableExists = async (): Promise<boolean> => {
           `
         });
         
-        if (!error && data && data.success) {
+        if (!error && data && typeof data === 'object' && data !== null && 'success' in data) {
           console.log('✅ SQL check for table existence succeeded:', data);
           return true;
         }
