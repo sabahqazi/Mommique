@@ -24,44 +24,23 @@ export const checkWaitlistTableExists = async (): Promise<boolean> => {
       return false;
     }
     
-    // Most direct approach first - just query the table
-    const { data: directData, error: directError } = await supabase
+    // Most direct approach - just query the table
+    const { data, error } = await supabase
       .from('waitlist_entries')
       .select('id')
       .limit(1);
     
-    if (!directError) {
+    if (!error) {
       console.log('✅ Waitlist table exists (confirmed by direct query)');
       return true;
     }
     
-    console.log('Direct query error:', directError);
+    console.log('Table query check result:', error);
     
-    // If that didn't work, try checking via SQL if we have the SQL function available
-    try {
-      // See if our SQL execution function works
-      const sqlExecWorks = await createSqlExecFunction();
-      
-      if (sqlExecWorks) {
-        const { data, error } = await supabase.rpc('execute_sql', {
-          sql_query: `
-            SELECT EXISTS (
-              SELECT FROM information_schema.tables 
-              WHERE table_schema = 'public'
-              AND table_name = 'waitlist_entries'
-            );
-          `
-        });
-        
-        if (!error && data && typeof data === 'object' && data !== null && 'success' in data) {
-          console.log('✅ SQL check for table existence succeeded:', data);
-          return true;
-        }
-        
-        console.log('Error checking table with RPC:', error);
-      }
-    } catch (sqlCheckError) {
-      console.error('Exception during SQL check:', sqlCheckError);
+    // If table doesn't exist, it will return an error with code 42P01
+    if (error && error.code === '42P01') {
+      console.log('❌ Table does not exist yet (confirmed by error code)');
+      return false;
     }
     
     return false;
@@ -76,102 +55,93 @@ export const createWaitlistTable = async (): Promise<boolean> => {
   console.log('⏳ Creating waitlist_entries table...');
   
   try {
-    // First, ensure we have a working Supabase connection
-    const connectionTest = await testSupabaseConnection();
-    if (!connectionTest.success) {
-      console.error('❌ Cannot create waitlist table: Supabase connection failed');
+    // First try using direct SQL execution 
+    console.log('👉 Using direct table creation...');
+    
+    // Create the table using raw SQL via Supabase's REST API
+    const createTableSQL = `
+      CREATE TABLE IF NOT EXISTS public.waitlist_entries (
+        id SERIAL PRIMARY KEY,
+        email TEXT NOT NULL,
+        pricing_option TEXT,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        UNIQUE(email)
+      );
+      
+      -- Add RLS policies
+      ALTER TABLE public.waitlist_entries ENABLE ROW LEVEL SECURITY;
+      
+      -- Create policy for inserting data
+      CREATE POLICY "Allow anonymous inserts"
+      ON public.waitlist_entries
+      FOR INSERT
+      TO authenticated, anon
+      WITH CHECK (true);
+      
+      -- Create policy for reading data (restricted to authenticated users)
+      CREATE POLICY "Allow authenticated read"
+      ON public.waitlist_entries
+      FOR SELECT
+      TO authenticated
+      USING (true);
+    `;
+    
+    // Try calling a stored function to execute SQL if it exists
+    const { data: functionResult, error: functionError } = await supabase.rpc('exec_sql', {
+      sql: createTableSQL
+    });
+    
+    if (!functionError) {
+      console.log('✅ Table created via RPC function');
       toast({
-        title: "Database Connection Error",
-        description: "Unable to create waitlist table due to connection issues.",
-        variant: "destructive"
+        title: "Table Created",
+        description: "Waitlist table created successfully via RPC function.",
       });
-      return false;
+      return true;
     }
     
-    // First, ensure we have the SQL execution function
+    console.log('RPC function failed, trying direct SQL with custom function...');
+    
+    // Try creating the function first
     await createSqlExecFunction();
     
-    // Try approaches in sequence until one works
-    
-    // 1. First try using direct SQL execution
-    console.log('👉 Approach 1: Using direct SQL execution...');
+    // Then try executing the SQL
     const directResult = await createWaitlistTableDirectly();
     if (directResult.success) {
-      console.log('✅ Waitlist table created successfully via direct SQL');
+      console.log('✅ Table created via direct SQL');
       toast({
         title: "Table Created",
-        description: "Waitlist table created successfully via SQL.",
+        description: "Waitlist table created successfully.",
       });
       return true;
     }
     
-    console.log('Direct SQL approach failed, trying RPC method...');
+    // If all else fails, try a simple POST request
+    const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/waitlist_entries`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({})
+    });
     
-    // 2. Try the RPC function approach
-    console.log('👉 Approach 2: Creating and calling RPC function...');
-    const rpcCreated = await createRpcFunction();
-    if (rpcCreated) {
-      const { error } = await supabase.rpc('create_waitlist_table', {});
-      
-      if (!error) {
-        console.log('✅ Waitlist table created successfully via RPC');
-        toast({
-          title: "Table Created",
-          description: "Waitlist table created successfully via RPC function.",
-        });
-        return true;
-      }
-      
-      console.error('Error calling waitlist table RPC function:', error);
-    }
-    
-    // 3. Try direct REST API approach
-    console.log('👉 Approach 3: Using direct REST API...');
-    const restResult = await createTableDirectly();
-    if (restResult) {
-      console.log('✅ Waitlist table created successfully via REST API');
+    // If we got a 201 Created or a 409 Conflict (already exists), then it worked
+    if (response.status === 201 || response.status === 409) {
+      console.log('✅ Table confirmed via REST API');
       toast({
-        title: "Table Created",
-        description: "Waitlist table created successfully via REST API.",
+        title: "Table Ready",
+        description: "Waitlist table is ready to use.",
       });
       return true;
     }
     
-    // If we get here, all methods failed
     console.error('❌ All table creation methods failed');
-    
-    // Create a manual SQL to show the user
-    const manualSQL = `
--- Run this in Supabase SQL Editor:
-CREATE TABLE IF NOT EXISTS public.waitlist_entries (
-  id SERIAL PRIMARY KEY,
-  email TEXT NOT NULL,
-  pricing_option TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  UNIQUE(email)
-);
-
--- Add RLS policies
-ALTER TABLE public.waitlist_entries ENABLE ROW LEVEL SECURITY;
-
--- Create policy for inserting data
-CREATE POLICY "Allow anonymous inserts"
-ON public.waitlist_entries
-FOR INSERT
-TO authenticated, anon
-WITH CHECK (true);
-
--- Create policy for reading data (restricted to authenticated users)
-CREATE POLICY "Allow authenticated read"
-ON public.waitlist_entries
-FOR SELECT
-TO authenticated
-USING (true);
-`;
-    console.log('Manual SQL for table creation:', manualSQL);
     toast({
       title: "Table Creation Failed",
-      description: "Could not create the waitlist table automatically. Please check console for SQL to run manually.",
+      description: "Could not create the waitlist table. Please check console for details.",
       variant: "destructive"
     });
     return false;
@@ -211,36 +181,6 @@ export const initializeSchema = async (): Promise<void> => {
         console.log('Table existence after creation attempt:', verifyExists);
       } else {
         console.error('❌ Failed to create table after all attempts');
-        
-        // Create a manual SQL to show the user
-        const manualSQL = `
--- Run this in Supabase SQL Editor:
-CREATE TABLE IF NOT EXISTS public.waitlist_entries (
-  id SERIAL PRIMARY KEY,
-  email TEXT NOT NULL,
-  pricing_option TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  UNIQUE(email)
-);
-
--- Add RLS policies
-ALTER TABLE public.waitlist_entries ENABLE ROW LEVEL SECURITY;
-
--- Create policy for inserting data
-CREATE POLICY "Allow anonymous inserts"
-ON public.waitlist_entries
-FOR INSERT
-TO authenticated, anon
-WITH CHECK (true);
-
--- Create policy for reading data (restricted to authenticated users)
-CREATE POLICY "Allow authenticated read"
-ON public.waitlist_entries
-FOR SELECT
-TO authenticated
-USING (true);
-`;
-        console.log('Manual SQL for table creation:', manualSQL);
       }
     } else {
       console.log('✅ Waitlist table already exists');

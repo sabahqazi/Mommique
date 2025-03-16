@@ -45,9 +45,21 @@ export const testSupabaseConnection = async () => {
   
   try {
     console.log('🔍 Testing Supabase connection...');
-    const { data, error } = await supabase.from('_tables').select('*').limit(1);
+    // Use a more reliable API endpoint that should exist on all Supabase projects
+    const { data, error } = await supabase.from('waitlist_entries').select('count').limit(0).single();
     
-    if (error) {
+    if (error && error.code !== 'PGRST116') {
+      // If the error is something other than table not existing
+      if (error.code === '42P01') {
+        // If the error is specifically about the table not existing, that's fine - we'll create it
+        console.log('⚠️ Table does not exist yet, but connection is working');
+        toast({
+          title: "Database Connected",
+          description: "Connected to Supabase, but the waitlist table needs to be created",
+        });
+        return { success: true, tableExists: false };
+      }
+      
       console.error('❌ Supabase connection test failed:', error);
       toast({
         title: "Database Connection Failed",
@@ -57,12 +69,12 @@ export const testSupabaseConnection = async () => {
       return { success: false, error };
     }
     
-    console.log('✅ Supabase connection test successful:', data);
+    console.log('✅ Supabase connection test successful');
     toast({
       title: "Database Connected",
-      description: "Successfully connected to Supabase",
+      description: "Successfully connected to Supabase and found waitlist table",
     });
-    return { success: true, data };
+    return { success: true, tableExists: true, data };
   } catch (error) {
     console.error('❌ Exception testing Supabase connection:', error);
     toast({
