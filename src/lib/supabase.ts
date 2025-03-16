@@ -68,7 +68,7 @@ export const testSupabaseConnection = async () => {
       title: "Database Connected",
       description: "Successfully connected to Supabase API",
     });
-    return { success: true };
+    return { success: true, data };
   } catch (error) {
     console.error('❌ Exception testing Supabase connection:', error);
     toast({

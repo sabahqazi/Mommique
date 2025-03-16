@@ -41,6 +41,7 @@ const Pricing = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    console.log('Form submission started with values:', { email, selectedOption });
     
     try {
       // Create a waitlist entry object with field names matching the waitlist_interest table
@@ -54,6 +55,7 @@ const Pricing = () => {
       const existingEntries = JSON.parse(localStorage.getItem('waitlistEntries') || '[]');
       existingEntries.push(waitlistEntry);
       localStorage.setItem('waitlistEntries', JSON.stringify(existingEntries));
+      console.log('Entry saved to localStorage:', waitlistEntry);
       
       // Get Google Form data
       const formUrl = "https://docs.google.com/forms/d/1OUXnGQgO_w9-WdtJKSzPT1ZCj1AdtHzdwlUhLU5bQpU/formResponse";
@@ -70,19 +72,21 @@ const Pricing = () => {
         mode: 'no-cors',
         body: formData
       });
+      console.log('Data sent to Google Form');
       
       // Only attempt to save to Supabase if it's properly configured
       if (supabaseAvailable) {
-        console.log('Saving to Supabase waitlist_interest table:', waitlistEntry);
+        console.log('Attempting to save to Supabase waitlist_interest table:', waitlistEntry);
         
         // Insert into waitlist_interest table with matching field names
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from('waitlist_interest')
-          .insert({
+          .insert([{  // Note: Wrapping in array as required by Supabase
             email_address: email,
             pricing: selectedOption,
             created_at: new Date().toISOString()
-          });
+          }])
+          .select();
           
         if (error) {
           console.error('Error saving to Supabase:', error);
@@ -94,7 +98,11 @@ const Pricing = () => {
             variant: "destructive"
           });
         } else {
-          console.log('Waitlist entry saved to Supabase waitlist_interest table');
+          console.log('Waitlist entry saved to Supabase waitlist_interest table:', data);
+          toast({
+            title: "Success!",
+            description: "Your information has been successfully saved to our database.",
+          });
         }
       } else {
         console.log('Supabase not configured. Entry saved to localStorage and Google Form only.');

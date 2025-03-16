@@ -5,8 +5,8 @@ import { toast } from '@/hooks/use-toast';
 // Type definition for waitlist entries to match the existing waitlist_interest table
 export interface WaitlistEntry {
   id?: number;
-  email_address: string;  // Changed from email to email_address to match the table
-  pricing: string | null; // Changed from pricing_option to pricing to match the table
+  email_address: string;  // Match the table column name
+  pricing: string | null; // Match the table column name
   created_at: string;
   [key: string]: unknown; // Index signature to make it compatible with Record<string, unknown>
 }
