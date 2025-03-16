@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
@@ -8,39 +9,62 @@ const Pricing = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Create an object with form data
-    const waitlistEntry = {
-      email,
-      pricingOption: selectedOption,
-      timestamp: new Date().toISOString()
-    };
-    
-    // Get existing entries or initialize empty array
-    const existingEntries = JSON.parse(localStorage.getItem('waitlistEntries') || '[]');
-    
-    // Add new entry
-    existingEntries.push(waitlistEntry);
-    
-    // Save back to localStorage
-    localStorage.setItem('waitlistEntries', JSON.stringify(existingEntries));
-    
-    // Simulate API call delay
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      // Create an object with form data
+      const waitlistEntry = {
+        email,
+        pricingOption: selectedOption,
+        timestamp: new Date().toISOString()
+      };
+      
+      // Save to localStorage as a backup
+      const existingEntries = JSON.parse(localStorage.getItem('waitlistEntries') || '[]');
+      existingEntries.push(waitlistEntry);
+      localStorage.setItem('waitlistEntries', JSON.stringify(existingEntries));
+      
+      // Get Google Form data
+      const formUrl = "https://docs.google.com/forms/d/e/YOUR_GOOGLE_FORM_ID/formResponse";
+      
+      // Map your form fields to Google Form fields
+      // You need to replace these with your actual Google Form field ids
+      const formData = new FormData();
+      formData.append('entry.123456789', email); // Replace with your email field entry ID
+      formData.append('entry.987654321', selectedOption || 'No option selected'); // Replace with your pricing option field entry ID
+      
+      // Send the data to Google Form
+      // Note: Using no-cors mode since Google Forms doesn't support CORS
+      await fetch(formUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+      });
+      
+      // Show success message
       toast({
         title: "Thank you for your interest!",
         description: "We've added you to our waitlist and will notify you when we launch.",
       });
+      
+      // Reset form
       setEmail("");
       setSelectedOption(null);
       
       // Log to console for debugging
       console.log('Waitlist entries:', existingEntries);
-    }, 1500);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: "Submission Error",
+        description: "There was a problem submitting your information. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
