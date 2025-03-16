@@ -9,8 +9,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div className="md:col-span-2">
             <a href="#" className="flex flex-col mb-6">
-              <span className="font-['Comfortaa'] text-xl font-bold text-pink-600">mommique</span>
-              <span className="font-['Roboto'] text-xs font-bold text-black">every mom is unique</span>
+              <span className="font-['Poppins'] text-xl font-extrabold text-pink-600">mommique</span>
+              <span className="font-['Roboto'] text-xs font-bold text-black text-center">every mom is unique</span>
             </a>
             <p className="text-gray-600 mb-6 max-w-md">
               Your AI-powered postpartum companion, providing personalized support and reliable answers when you need them most.

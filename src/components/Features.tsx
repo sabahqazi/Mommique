@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send, Bot } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
@@ -14,7 +13,6 @@ const Features = () => {
   const messagesEndRef = useRef(null);
   const { toast } = useToast();
 
-  // Mock questions for demonstration
   const mockQuestions = [
     "My baby is 2 weeks old and has a really red diaper rash. Is this normal?",
     "How often should I change diapers for my newborn?",
@@ -23,7 +21,6 @@ const Features = () => {
   ];
 
   useEffect(() => {
-    // Scroll to the bottom whenever messages change
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
@@ -36,7 +33,6 @@ const Features = () => {
     setInputMessage('');
     setIsTyping(true);
     
-    // Simulate AI response
     setTimeout(() => {
       simulateResponse(inputMessage);
     }, 1500);
@@ -48,7 +44,6 @@ const Features = () => {
     setMessages(prev => [...prev, newMessage]);
     setIsTyping(true);
     
-    // Simulate AI response
     setTimeout(() => {
       simulateResponse(question);
     }, 1500);
@@ -82,14 +77,12 @@ const Features = () => {
   };
 
   const startRecording = () => {
-    // In a real implementation, this would use the Web Audio API and speech recognition
     setIsRecording(true);
     toast({
       title: "Voice recording started",
       description: "Speak clearly about your specific concern",
     });
     
-    // Simulate recording for 3 seconds
     setTimeout(() => {
       stopRecording();
     }, 3000);
@@ -104,10 +97,8 @@ const Features = () => {
       description: "Converting your specific concern to text...",
     });
     
-    // Simulate processing
     setTimeout(() => {
       setIsProcessing(false);
-      // Randomly select a mock question
       const randomQuestion = mockQuestions[Math.floor(Math.random() * mockQuestions.length)];
       setInputMessage(randomQuestion);
       
@@ -140,7 +131,7 @@ const Features = () => {
             <div className="mb-5 p-3 bg-pink-50 rounded-full inline-block w-fit">
               <MessageSquare className="w-6 h-6 text-pink-500" />
             </div>
-            <h3 className="text-xl font-bold mb-3">Answers Unique To You</h3>
+            <h3 className="text-xl font-bold mb-3">Personalized Answers</h3>
             <p className="text-gray-600">
               Get responses tailored to your specific situation, your medical history, and your personal recovery journey.
             </p>
@@ -150,7 +141,7 @@ const Features = () => {
             <div className="mb-5 p-3 bg-pink-50 rounded-full inline-block w-fit">
               <Clock className="w-6 h-6 text-pink-500" />
             </div>
-            <h3 className="text-xl font-bold mb-3">24/7 Support For Your Schedule</h3>
+            <h3 className="text-xl font-bold mb-3">24/7 Support</h3>
             <p className="text-gray-600">
               Get instant support for your concerns, day or night especially during those late nights with your newborn — through text or voice, whenever you need it.
             </p>
@@ -160,7 +151,7 @@ const Features = () => {
             <div className="mb-5 p-3 bg-pink-50 rounded-full inline-block w-fit">
               <ShieldCheck className="w-6 h-6 text-pink-500" />
             </div>
-            <h3 className="text-xl font-bold mb-3">Verified For Your Peace of Mind</h3>
+            <h3 className="text-xl font-bold mb-3">Research-Verified</h3>
             <p className="text-gray-600">
               All information is verified by postpartum research docs to ensure you receive accurate guidance for your specific concerns.
             </p>
@@ -170,7 +161,7 @@ const Features = () => {
             <div className="mb-5 p-3 bg-pink-50 rounded-full inline-block w-fit">
               <BookOpen className="w-6 h-6 text-pink-500" />
             </div>
-            <h3 className="text-xl font-bold mb-3">Resources For Your Journey</h3>
+            <h3 className="text-xl font-bold mb-3">Knowledge Library</h3>
             <p className="text-gray-600">
               Access comprehensive resources tailored to your postpartum stage, your breastfeeding challenges, and your baby's unique development.
             </p>
@@ -180,7 +171,7 @@ const Features = () => {
             <div className="mb-5 p-3 bg-pink-50 rounded-full inline-block w-fit">
               <Heart className="w-6 h-6 text-pink-500" />
             </div>
-            <h3 className="text-xl font-bold mb-3">Care For You & Your Baby</h3>
+            <h3 className="text-xl font-bold mb-3">Mom & Baby Care</h3>
             <p className="text-gray-600">
               Complete guidance for both your maternal recovery and your infant's care needs in one trusted place.
             </p>
@@ -190,7 +181,7 @@ const Features = () => {
             <div className="mb-5 p-3 bg-pink-50 rounded-full inline-block w-fit">
               <Zap className="w-6 h-6 text-pink-500" />
             </div>
-            <h3 className="text-xl font-bold mb-3">Instant Relief For Your Concerns</h3>
+            <h3 className="text-xl font-bold mb-3">Instant Relief</h3>
             <p className="text-gray-600">
               Save precious time with immediate answers to your specific questions when you need them most.
             </p>
@@ -255,7 +246,6 @@ const Features = () => {
             </div>
             
             <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
-              {/* Chat header */}
               <div className="bg-pink-100 p-4 flex items-center">
                 <div className="h-10 w-10 rounded-full bg-pink-200 flex items-center justify-center mr-3">
                   <Bot className="h-6 w-6 text-pink-500" />
@@ -266,7 +256,6 @@ const Features = () => {
                 </div>
               </div>
               
-              {/* Video/avatar section */}
               <div className="bg-pink-50 p-4 flex justify-center items-center">
                 <div className="relative rounded-lg overflow-hidden w-full max-w-xs aspect-video bg-gradient-to-r from-pink-100 to-pink-200 flex items-center justify-center">
                   <img 
@@ -280,7 +269,6 @@ const Features = () => {
                 </div>
               </div>
               
-              {/* Chat messages */}
               <div className="flex-1 p-4 overflow-y-auto max-h-80 bg-gray-50">
                 <div className="space-y-4">
                   {messages.map((message, index) => (
@@ -314,7 +302,6 @@ const Features = () => {
                 </div>
               </div>
               
-              {/* Chat input */}
               <form onSubmit={handleSubmit} className="p-4 border-t flex items-center gap-2">
                 <button 
                   type="button" 

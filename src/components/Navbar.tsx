@@ -1,7 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { cn } from "@/lib/utils";
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -11,12 +14,13 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+  
   return <nav className={cn("fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 bg-white shadow-sm")}>
       <div className="container flex items-center justify-between">
         <div className="flex items-center">
           <a href="#" className="flex flex-col">
-            <span className="font-['Comfortaa'] text-pink-600 font-extrabold text-2xl text-justify">mommique</span>
-            <span className="font-['Roboto'] text-xs font-bold text-black">every mom is unique</span>
+            <span className="font-['Poppins'] text-pink-600 font-extrabold text-2xl">mommique</span>
+            <span className="font-['Roboto'] text-xs font-bold text-black text-center">every mom is unique</span>
           </a>
         </div>
         
@@ -38,4 +42,5 @@ const Navbar = () => {
       </div>
     </nav>;
 };
+
 export default Navbar;
