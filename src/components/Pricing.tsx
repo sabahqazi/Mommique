@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
@@ -29,11 +28,10 @@ const Pricing = () => {
       // Get Google Form data
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfbK1J8223gzS7RfLSu9ZNX-YXUjqXt46puFjMJI3vZV39C3g/formResponse";
       
-      // Map your form fields to Google Form fields
-      // You need to replace these with your actual Google Form field ids
+      // Map your form fields to Google Form fields with the correct entry IDs
       const formData = new FormData();
-      formData.append('entry.123456789', email); // Replace with your email field entry ID
-      formData.append('entry.987654321', selectedOption || 'No option selected'); // Replace with your pricing option field entry ID
+      formData.append('entry.1776647972', email); // Email field entry ID
+      formData.append('entry.1442464782', selectedOption || 'No option selected'); // Pricing option field entry ID
       
       // Send the data to Google Form
       // Note: Using no-cors mode since Google Forms doesn't support CORS
