@@ -26,7 +26,7 @@ const Pricing = () => {
       localStorage.setItem('waitlistEntries', JSON.stringify(existingEntries));
       
       // Get Google Form data
-      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfbK1J8223gzS7RfLSu9ZNX-YXUjqXt46puFjMJI3vZV39C3g/formResponse";
+      const formUrl = "https://docs.google.com/forms/d/1OUXnGQgO_w9-WdtJKSzPT1ZCj1AdtHzdwlUhLU5bQpU/formResponse";
       
       // Map your form fields to Google Form fields with the correct entry IDs
       const formData = new FormData();
