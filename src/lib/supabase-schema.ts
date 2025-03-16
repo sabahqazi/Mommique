@@ -1,6 +1,7 @@
 
-import { supabase } from './supabase';
+import { supabase, testSupabaseConnection } from './supabase';
 import { createWaitlistTableDirectly, createRpcFunction, createTableDirectly, createSqlExecFunction } from './supabase';
+import { toast } from '@/hooks/use-toast';
 
 // Type definition for waitlist entries
 export interface WaitlistEntry {
@@ -13,7 +14,14 @@ export interface WaitlistEntry {
 // Function to check if the waitlist_entries table exists
 export const checkWaitlistTableExists = async (): Promise<boolean> => {
   try {
-    console.log('Checking if waitlist table exists...');
+    console.log('🔍 Checking if waitlist table exists...');
+    
+    // First, ensure we have a working Supabase connection
+    const connectionTest = await testSupabaseConnection();
+    if (!connectionTest.success) {
+      console.error('❌ Cannot check waitlist table: Supabase connection failed');
+      return false;
+    }
     
     // Most direct approach first - just query the table
     const { data: directData, error: directError } = await supabase
@@ -67,6 +75,18 @@ export const createWaitlistTable = async (): Promise<boolean> => {
   console.log('⏳ Creating waitlist_entries table...');
   
   try {
+    // First, ensure we have a working Supabase connection
+    const connectionTest = await testSupabaseConnection();
+    if (!connectionTest.success) {
+      console.error('❌ Cannot create waitlist table: Supabase connection failed');
+      toast({
+        title: "Database Connection Error",
+        description: "Unable to create waitlist table due to connection issues.",
+        variant: "destructive"
+      });
+      return false;
+    }
+    
     // First, ensure we have the SQL execution function
     await createSqlExecFunction();
     
@@ -77,6 +97,10 @@ export const createWaitlistTable = async (): Promise<boolean> => {
     const directResult = await createWaitlistTableDirectly();
     if (directResult.success) {
       console.log('✅ Waitlist table created successfully via direct SQL');
+      toast({
+        title: "Table Created",
+        description: "Waitlist table created successfully via SQL.",
+      });
       return true;
     }
     
@@ -90,6 +114,10 @@ export const createWaitlistTable = async (): Promise<boolean> => {
       
       if (!error) {
         console.log('✅ Waitlist table created successfully via RPC');
+        toast({
+          title: "Table Created",
+          description: "Waitlist table created successfully via RPC function.",
+        });
         return true;
       }
       
@@ -101,14 +129,58 @@ export const createWaitlistTable = async (): Promise<boolean> => {
     const restResult = await createTableDirectly();
     if (restResult) {
       console.log('✅ Waitlist table created successfully via REST API');
+      toast({
+        title: "Table Created",
+        description: "Waitlist table created successfully via REST API.",
+      });
       return true;
     }
     
     // If we get here, all methods failed
     console.error('❌ All table creation methods failed');
+    
+    // Create a manual SQL to show the user
+    const manualSQL = `
+-- Run this in Supabase SQL Editor:
+CREATE TABLE IF NOT EXISTS public.waitlist_entries (
+  id SERIAL PRIMARY KEY,
+  email TEXT NOT NULL,
+  pricing_option TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  UNIQUE(email)
+);
+
+-- Add RLS policies
+ALTER TABLE public.waitlist_entries ENABLE ROW LEVEL SECURITY;
+
+-- Create policy for inserting data
+CREATE POLICY "Allow anonymous inserts"
+ON public.waitlist_entries
+FOR INSERT
+TO authenticated, anon
+WITH CHECK (true);
+
+-- Create policy for reading data (restricted to authenticated users)
+CREATE POLICY "Allow authenticated read"
+ON public.waitlist_entries
+FOR SELECT
+TO authenticated
+USING (true);
+`;
+    console.log('Manual SQL for table creation:', manualSQL);
+    toast({
+      title: "Table Creation Failed",
+      description: "Could not create the waitlist table automatically. Please check console for SQL to run manually.",
+      variant: "destructive"
+    });
     return false;
   } catch (error) {
     console.error('Exception creating waitlist table:', error);
+    toast({
+      title: "Table Creation Error",
+      description: `Error: ${error instanceof Error ? error.message : String(error)}`,
+      variant: "destructive"
+    });
     return false;
   }
 };
@@ -118,6 +190,13 @@ export const initializeSchema = async (): Promise<void> => {
   console.log('⏳ Initializing database schema...');
   
   try {
+    // First, test the Supabase connection
+    const connectionTest = await testSupabaseConnection();
+    if (!connectionTest.success) {
+      console.error('❌ Cannot initialize schema: Supabase connection failed');
+      return;
+    }
+    
     const tableExists = await checkWaitlistTableExists();
     
     if (!tableExists) {
