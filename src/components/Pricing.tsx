@@ -51,6 +51,8 @@ const Pricing = () => {
         created_at: new Date().toISOString()
       };
       
+      console.log('Created waitlist entry object:', waitlistEntry);
+      
       // Save to localStorage as a backup
       const existingEntries = JSON.parse(localStorage.getItem('waitlistEntries') || '[]');
       existingEntries.push(waitlistEntry);
@@ -89,22 +91,43 @@ const Pricing = () => {
           throw new Error('Supabase configuration is incomplete');
         }
         
+        console.log('Supabase configuration valid, proceeding with insert');
+        
+        // Let's log the Supabase instance to verify it's properly initialized
+        console.log('Supabase client initialized:', !!supabase);
+        
         // Insert into waitlist_interest table with matching field names
-        const { data, error } = await supabase
+        console.log('About to insert record with data:', {
+          email_address: email,
+          pricing: selectedOption,
+          created_at: new Date().toISOString()
+        });
+        
+        const { data, error, status } = await supabase
           .from('waitlist_interest')
           .insert([{  // Note: Wrapping in array as required by Supabase
             email_address: email,
             pricing: selectedOption,
             created_at: new Date().toISOString()
-          }]);
+          }])
+          .select();
           
+        console.log('Supabase insert response - Status:', status);
+        
         if (error) {
           console.error('Error saving to Supabase:', error);
+          console.error('Error details:', {
+            code: error.code,
+            message: error.message,
+            details: error.details,
+            hint: error.hint
+          });
           throw new Error(`Database error: ${error.message}`);
         } else {
           console.log('Waitlist entry saved successfully to Supabase!', data);
           
           // Verify the record was added by querying it back
+          console.log('Verifying record was added by querying it back...');
           const { data: verifyData, error: verifyError } = await supabase
             .from('waitlist_interest')
             .select('*')
@@ -115,7 +138,8 @@ const Pricing = () => {
           if (verifyError) {
             console.warn('Could not verify record was added:', verifyError);
           } else {
-            console.log('Verified record exists in database:', verifyData);
+            console.log('Verify query result:', verifyData);
+            console.log('Verified record exists in database:', verifyData && verifyData.length > 0);
           }
           
           toast({
