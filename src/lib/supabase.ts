@@ -1,3 +1,4 @@
+
 import { createClient } from '@supabase/supabase-js';
 import { toast } from '@/hooks/use-toast';
 
@@ -15,34 +16,35 @@ console.log('VITE_SUPABASE_ANON_KEY exists:', !!import.meta.env.VITE_SUPABASE_AN
 
 try {
   if (!supabaseUrl || !supabaseAnonKey) {
-    console.error('❌ Supabase URL or Anonymous key is missing. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables.');
-    console.error('Current values - URL:', supabaseUrl ? 'Exists (hidden)' : 'Missing', 'Key:', supabaseAnonKey ? 'Exists (hidden)' : 'Missing');
-    throw new Error('Supabase configuration is incomplete. Check console for details.');
+    console.warn('⚠️ Supabase URL or Anonymous key is missing. Some features will be limited.');
+    console.warn('Current values - URL:', supabaseUrl ? 'Exists (hidden)' : 'Missing', 'Key:', supabaseAnonKey ? 'Exists (hidden)' : 'Missing');
+  } else {
+    supabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+      },
+    });
+    console.log('✅ Supabase client created successfully');
   }
-  
-  supabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-    },
-  });
-  console.log('✅ Supabase client created successfully');
 } catch (error) {
-  console.error('❌ Failed to create Supabase client:', error);
+  console.warn('⚠️ Failed to create Supabase client:', error);
 }
 
+// Provide a fallback client - this won't actually connect to Supabase,
+// but it prevents the app from crashing when methods are called on it
 export const supabase = supabaseClient || createClient('', '', {});
 
 // Add a simple function to check if Supabase is properly configured
 export const isSupabaseConfigured = () => {
   if (!supabaseUrl || !supabaseAnonKey) {
-    console.error('❌ Supabase environment variables are missing');
-    console.error('Current environment:', import.meta.env.MODE);
+    console.warn('⚠️ Supabase environment variables are missing');
+    console.warn('Current environment:', import.meta.env.MODE);
     
     toast({
-      title: "Supabase Configuration Error",
-      description: "VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables are required",
-      variant: "destructive"
+      title: "Supabase Configuration Note",
+      description: "Environment variables are missing. Some features will be limited.",
+      variant: "default"
     });
     return false;
   }
@@ -57,12 +59,10 @@ export const testSupabaseConnection = async () => {
   
   try {
     console.log('🔍 Testing Supabase connection...');
-    console.log('Using URL starting with:', supabaseUrl.substring(0, 8) + '...');
-    console.log('Using client:', !!supabaseClient);
     
     // Check if supabaseClient exists
     if (!supabaseClient) {
-      console.error('❌ Supabase client is null or undefined');
+      console.warn('⚠️ Supabase client is null or undefined');
       return { success: false, error: 'Supabase client is not initialized' };
     }
     
@@ -76,8 +76,8 @@ export const testSupabaseConnection = async () => {
     console.log('Query response status:', status);
     
     if (error) {
-      console.error('❌ Supabase connection test query failed:', error);
-      console.error('Error details:', {
+      console.warn('⚠️ Supabase connection test query failed:', error);
+      console.warn('Error details:', {
         code: error.code, 
         message: error.message,
         details: error.details,
@@ -93,9 +93,9 @@ export const testSupabaseConnection = async () => {
       if (error.code !== '42P01') {
         // If error is not "relation does not exist", it's a connection issue
         toast({
-          title: "Database Connection Failed",
-          description: `Error: ${error.message}`,
-          variant: "destructive"
+          title: "Database Connection Note",
+          description: `Error: ${error.message}. Some features may be limited.`,
+          variant: "default"
         });
         return { success: false, error: error.message };
       }
@@ -127,12 +127,12 @@ export const testSupabaseConnection = async () => {
         });
         
         if (testResponse.error.code === '42501' || testResponse.error.message.includes('permission')) {
-          console.error('🔐 This is a Row Level Security (RLS) issue. You need to update your table policies.');
-          console.error('🔐 Make sure you have a policy that allows anonymous inserts to the waitlist_interest table');
+          console.warn('🔐 This is a Row Level Security (RLS) issue. You need to update your table policies.');
+          console.warn('🔐 Make sure you have a policy that allows anonymous inserts to the waitlist_interest table');
           toast({
-            title: "Database Permission Issue",
+            title: "Database Permission Note",
             description: "Your anonymous role doesn't have permission to write to the table. Check your RLS policies.",
-            variant: "destructive"
+            variant: "default"
           });
         }
       } else {
@@ -156,14 +156,14 @@ export const testSupabaseConnection = async () => {
     });
     return { success: true, data };
   } catch (error) {
-    console.error('❌ Exception testing Supabase connection:', error);
-    console.error('Error type:', typeof error);
-    console.error('Error details:', error instanceof Error ? error.message : String(error));
+    console.warn('⚠️ Exception testing Supabase connection:', error);
+    console.warn('Error type:', typeof error);
+    console.warn('Error details:', error instanceof Error ? error.message : String(error));
     
     toast({
-      title: "Database Connection Error",
-      description: `Unexpected error: ${error instanceof Error ? error.message : String(error)}`,
-      variant: "destructive"
+      title: "Database Connection Note",
+      description: `Issue connecting to database: ${error instanceof Error ? error.message : String(error)}`,
+      variant: "default"
     });
     return { success: false, error };
   }

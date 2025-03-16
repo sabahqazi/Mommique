@@ -19,7 +19,7 @@ export const checkWaitlistTableExists = async (): Promise<boolean> => {
     // First, ensure we have a working Supabase connection
     const connectionTest = await testSupabaseConnection();
     if (!connectionTest.success) {
-      console.error('❌ Cannot check waitlist table: Supabase connection failed');
+      console.warn('⚠️ Cannot check waitlist table: Supabase connection failed');
       return false;
     }
     
@@ -34,13 +34,17 @@ export const checkWaitlistTableExists = async (): Promise<boolean> => {
       
       // Print table definition
       console.log('Trying to get table information...');
-      const { data: tableInfo, error: tableError } = await supabase
-        .rpc('get_table_definition', { table_name: 'waitlist_interest' });
-        
-      if (tableError) {
-        console.log('Could not get table definition:', tableError);
-      } else {
-        console.log('Table definition:', tableInfo);
+      try {
+        const { data: tableInfo, error: tableError } = await supabase
+          .rpc('get_table_definition', { table_name: 'waitlist_interest' });
+          
+        if (tableError) {
+          console.log('Could not get table definition:', tableError);
+        } else {
+          console.log('Table definition:', tableInfo);
+        }
+      } catch (e) {
+        console.log('Error getting table definition:', e);
       }
       
       return true;
@@ -52,10 +56,10 @@ export const checkWaitlistTableExists = async (): Promise<boolean> => {
       return false;
     }
     
-    console.error('Unexpected error checking table:', error);
+    console.warn('Unexpected error checking table:', error);
     return false;
   } catch (error) {
-    console.error('Exception checking waitlist table:', error);
+    console.warn('Exception checking waitlist table:', error);
     return false;
   }
 };
@@ -86,11 +90,11 @@ export const createWaitlistTable = async (): Promise<boolean> => {
           .select();
           
         if (error) {
-          console.error('❌ Test insert failed. Check RLS policies:', error);
+          console.warn('⚠️ Test insert failed. Check RLS policies:', error);
           toast({
-            title: "Database Permission Issue",
+            title: "Database Permission Note",
             description: "The table exists but we can't insert records. Check your Supabase RLS policies.",
-            variant: "destructive"
+            variant: "default"
           });
         } else {
           console.log('✅ Test insert successful');
@@ -106,7 +110,7 @@ export const createWaitlistTable = async (): Promise<boolean> => {
           }
         }
       } catch (e) {
-        console.error('Error during test insert:', e);
+        console.warn('Error during test insert:', e);
       }
       
       toast({
@@ -121,16 +125,16 @@ export const createWaitlistTable = async (): Promise<boolean> => {
     toast({
       title: "Table Required",
       description: "Please create a 'waitlist_interest' table in your Supabase project with columns: id, email_address, pricing, created_at.",
-      variant: "destructive"
+      variant: "default"
     });
     
     return false;
   } catch (error) {
-    console.error('Exception creating waitlist table:', error);
+    console.warn('Exception creating waitlist table:', error);
     toast({
-      title: "Table Setup Issue",
+      title: "Table Setup Note",
       description: `Error: ${error instanceof Error ? error.message : String(error)}`,
-      variant: "destructive"
+      variant: "default"
     });
     return false;
   }
@@ -144,7 +148,7 @@ export const initializeSchema = async (): Promise<void> => {
     // First, test the Supabase connection
     const connectionTest = await testSupabaseConnection();
     if (!connectionTest.success) {
-      console.error('❌ Cannot initialize schema: Supabase connection failed');
+      console.warn('⚠️ Cannot initialize schema: Supabase connection failed');
       return;
     }
     
@@ -158,14 +162,14 @@ export const initializeSchema = async (): Promise<void> => {
         description: "Waitlist table is ready to receive entries.",
       });
     } else {
-      console.error('❌ Could not setup waitlist table');
+      console.warn('⚠️ Could not setup waitlist table');
       toast({
-        title: "Table Setup Failed",
+        title: "Table Setup Note",
         description: "Could not setup the waitlist table. Form will save locally only.",
-        variant: "destructive"
+        variant: "default"
       });
     }
   } catch (error) {
-    console.error('Error initializing schema:', error);
+    console.warn('Error initializing schema:', error);
   }
 };
