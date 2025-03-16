@@ -1,6 +1,8 @@
+
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
 const Pricing = () => {
   const [email, setEmail] = useState("");
@@ -16,8 +18,8 @@ const Pricing = () => {
       // Create an object with form data
       const waitlistEntry = {
         email,
-        pricingOption: selectedOption,
-        timestamp: new Date().toISOString()
+        pricing_option: selectedOption,
+        created_at: new Date().toISOString()
       };
       
       // Save to localStorage as a backup
@@ -41,6 +43,16 @@ const Pricing = () => {
         body: formData
       });
       
+      // Save to Supabase
+      const { error } = await supabase
+        .from('waitlist_entries')
+        .insert([waitlistEntry]);
+        
+      if (error) {
+        console.error('Error saving to Supabase:', error);
+        throw new Error('Failed to save to database');
+      }
+      
       // Show success message
       toast({
         title: "Thank you for your interest!",
@@ -52,7 +64,7 @@ const Pricing = () => {
       setSelectedOption(null);
       
       // Log to console for debugging
-      console.log('Waitlist entries:', existingEntries);
+      console.log('Waitlist entry saved to Supabase:', waitlistEntry);
     } catch (error) {
       console.error('Error submitting form:', error);
       toast({
