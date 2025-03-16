@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
@@ -56,22 +57,27 @@ const Pricing = () => {
       localStorage.setItem('waitlistEntries', JSON.stringify(existingEntries));
       console.log('Entry saved to localStorage:', waitlistEntry);
       
-      // Get Google Form data
-      const formUrl = "https://docs.google.com/forms/d/1OUXnGQgO_w9-WdtJKSzPT1ZCj1AdtHzdwlUhLU5bQpU/formResponse";
-      
-      // Map your form fields to Google Form fields with the correct entry IDs
-      const formData = new FormData();
-      formData.append('entry.1776647972', email); // Email field entry ID
-      formData.append('entry.1442464782', selectedOption || 'No option selected'); // Pricing option field entry ID
-      
-      // Send the data to Google Form
-      // Note: Using no-cors mode since Google Forms doesn't support CORS
-      await fetch(formUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData
-      });
-      console.log('Data sent to Google Form');
+      // Send to Google Form if configured
+      try {
+        const formUrl = "https://docs.google.com/forms/d/1OUXnGQgO_w9-WdtJKSzPT1ZCj1AdtHzdwlUhLU5bQpU/formResponse";
+        
+        // Map your form fields to Google Form fields with the correct entry IDs
+        const formData = new FormData();
+        formData.append('entry.1776647972', email); // Email field entry ID
+        formData.append('entry.1442464782', selectedOption || 'No option selected'); // Pricing option field entry ID
+        
+        // Send the data to Google Form
+        // Note: Using no-cors mode since Google Forms doesn't support CORS
+        await fetch(formUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: formData
+        });
+        console.log('Data sent to Google Form');
+      } catch (error) {
+        console.warn('Failed to submit to Google Form:', error);
+        // Continue processing as Google Form is just a backup
+      }
       
       // Only attempt to save to Supabase if it's properly configured
       if (supabaseAvailable) {
@@ -90,20 +96,28 @@ const Pricing = () => {
             email_address: email,
             pricing: selectedOption,
             created_at: new Date().toISOString()
-          }])
-          .select();
+          }]);
           
         if (error) {
           console.error('Error saving to Supabase:', error);
-          // Continue instead of throwing, since we still saved to localStorage and Google Forms
-          console.warn('Entry saved to localStorage and Google Form but not to Supabase');
-          toast({
-            title: "Database Error",
-            description: `Could not save to database: ${error.message}. Your response was still recorded.`,
-            variant: "destructive"
-          });
+          throw new Error(`Database error: ${error.message}`);
         } else {
-          console.log('Waitlist entry saved to Supabase waitlist_interest table:', data);
+          console.log('Waitlist entry saved successfully to Supabase!', data);
+          
+          // Verify the record was added by querying it back
+          const { data: verifyData, error: verifyError } = await supabase
+            .from('waitlist_interest')
+            .select('*')
+            .eq('email_address', email)
+            .order('created_at', { ascending: false })
+            .limit(1);
+            
+          if (verifyError) {
+            console.warn('Could not verify record was added:', verifyError);
+          } else {
+            console.log('Verified record exists in database:', verifyData);
+          }
+          
           toast({
             title: "Success!",
             description: "Your information has been successfully saved to our database.",
@@ -127,7 +141,7 @@ const Pricing = () => {
       console.error('Error submitting form:', error);
       toast({
         title: "Submission Error",
-        description: "There was a problem submitting your information. Please try again.",
+        description: error instanceof Error ? error.message : "There was a problem submitting your information. Please try again.",
         variant: "destructive"
       });
     } finally {

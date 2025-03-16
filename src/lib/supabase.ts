@@ -21,7 +21,15 @@ try {
     throw new Error('Supabase configuration is incomplete. Check console for details.');
   }
   
-  supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+  supabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+    },
+    db: {
+      schema: 'public',
+    },
+  });
   console.log('✅ Supabase client created successfully');
 } catch (error) {
   console.error('❌ Failed to create Supabase client:', error);
@@ -45,7 +53,7 @@ export const isSupabaseConfigured = () => {
   return true;
 };
 
-// Simplified version of the connection test
+// Improved connection test
 export const testSupabaseConnection = async () => {
   if (!isSupabaseConfigured()) {
     return { success: false, error: 'Supabase not configured' };
@@ -54,21 +62,57 @@ export const testSupabaseConnection = async () => {
   try {
     console.log('🔍 Testing Supabase connection...');
     
-    // Use the API directly to test connection with the correct table name
+    // Use a simple query to test connection
     const { data, error } = await supabase
-      .from('waitlist_interest')  // Use the correct table name
+      .from('waitlist_interest')
       .select('id')
       .limit(1);
     
     if (error && error.code !== '42P01') {
       // If error is not "relation does not exist", it's a connection issue
       console.error('❌ Supabase connection test failed:', error);
+      console.error('Error details:', error.code, error.message, error.details);
+      
       toast({
         title: "Database Connection Failed",
         description: `Error: ${error.message}`,
         variant: "destructive"
       });
       return { success: false, error: error.message };
+    }
+    
+    // Check permissions by trying a write operation
+    try {
+      const testResponse = await supabase
+        .from('waitlist_interest')
+        .insert([{ 
+          email_address: 'permission_test@example.com',
+          pricing: 'test',
+          created_at: new Date().toISOString()
+        }])
+        .select();
+        
+      if (testResponse.error) {
+        console.warn('Write permission test failed:', testResponse.error);
+        
+        if (testResponse.error.code === '42501' || testResponse.error.message.includes('permission')) {
+          toast({
+            title: "Database Permission Issue",
+            description: "Your anonymous role doesn't have permission to write to the table. Check your RLS policies.",
+            variant: "destructive"
+          });
+        }
+      } else {
+        console.log('✅ Write permission test successful');
+        
+        // Clean up test data
+        await supabase
+          .from('waitlist_interest')
+          .delete()
+          .eq('email_address', 'permission_test@example.com');
+      }
+    } catch (e) {
+      console.warn('Error during permission test:', e);
     }
     
     console.log('✅ Supabase connection test successful');

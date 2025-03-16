@@ -31,6 +31,18 @@ export const checkWaitlistTableExists = async (): Promise<boolean> => {
     
     if (!error) {
       console.log('✅ Waitlist table exists (waitlist_interest)');
+      
+      // Print table definition
+      console.log('Trying to get table information...');
+      const { data: tableInfo, error: tableError } = await supabase
+        .rpc('get_table_definition', { table_name: 'waitlist_interest' });
+        
+      if (tableError) {
+        console.log('Could not get table definition:', tableError);
+      } else {
+        console.log('Table definition:', tableInfo);
+      }
+      
       return true;
     }
     
@@ -59,6 +71,44 @@ export const createWaitlistTable = async (): Promise<boolean> => {
     // If it exists, nothing to do
     if (tableExists) {
       console.log('✅ Waitlist table already exists (waitlist_interest)');
+      
+      // Test the ability to insert
+      try {
+        const testEntry = {
+          email_address: 'test@example.com',
+          pricing: 'test',
+          created_at: new Date().toISOString()
+        };
+        
+        const { error } = await supabase
+          .from('waitlist_interest')
+          .insert([testEntry])
+          .select();
+          
+        if (error) {
+          console.error('❌ Test insert failed. Check RLS policies:', error);
+          toast({
+            title: "Database Permission Issue",
+            description: "The table exists but we can't insert records. Check your Supabase RLS policies.",
+            variant: "destructive"
+          });
+        } else {
+          console.log('✅ Test insert successful');
+          
+          // Delete the test entry
+          const { error: deleteError } = await supabase
+            .from('waitlist_interest')
+            .delete()
+            .eq('email_address', 'test@example.com');
+            
+          if (deleteError) {
+            console.warn('Could not delete test entry:', deleteError);
+          }
+        }
+      } catch (e) {
+        console.error('Error during test insert:', e);
+      }
+      
       toast({
         title: "Table Ready",
         description: "Waitlist table is already set up and ready to use.",
