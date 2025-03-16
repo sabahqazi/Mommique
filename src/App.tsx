@@ -18,97 +18,97 @@ const App = () => {
   const [schemaInitialized, setSchemaInitialized] = useState(false);
   const [connectionTested, setConnectionTested] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   // Test connection first, then initialize schema
   useEffect(() => {
     // Additional debugging to verify environment variables loading
     console.log('App Component - Environment checks:');
     console.log('Running in mode:', import.meta.env.MODE);
-    console.log('VITE_SUPABASE_URL exists:', !!import.meta.env.VITE_SUPABASE_URL);
-    console.log('VITE_SUPABASE_ANON_KEY exists:', !!import.meta.env.VITE_SUPABASE_ANON_KEY);
     
     const setupDatabase = async () => {
       try {
+        // Set loading state
         setIsLoading(true);
         
+        // Check if Supabase is configured - if not, continue loading the app anyway
         if (!isSupabaseConfigured()) {
-          console.warn('⚠️ Supabase is not configured properly. App will continue without database functionality.');
+          console.log('Supabase is not configured. App will continue without database functionality.');
+          // Continue loading the app even without Supabase
           setIsLoading(false);
           return;
         }
         
-        console.log('🔍 Testing Supabase connection from App component...');
+        console.log('Testing Supabase connection...');
         
         try {
-          const connectionResult = await testSupabaseConnection();
+          // Try to test the connection but don't block app loading on failure
+          const connectionResult = await Promise.race([
+            testSupabaseConnection(),
+            // Timeout after 5 seconds to prevent blocking the app load
+            new Promise(resolve => setTimeout(() => resolve({ 
+              success: false, 
+              error: 'Connection timeout' 
+            }), 5000))
+          ]);
+          
           setConnectionTested(true);
           
           if (!connectionResult.success) {
-            console.warn('⚠️ Supabase connection test failed:', connectionResult.error);
-            toast({
-              title: "Connection Failed",
-              description: `Could not connect to Supabase, but app will continue working. Error: ${connectionResult.error}`,
-              variant: "destructive"
-            });
+            console.log('Supabase connection issue, but app will continue working.');
             setIsLoading(false);
             return;
           }
           
-          console.log('✅ Supabase connection test successful');
-          toast({
-            title: "Connected to Supabase",
-            description: "Successfully connected to your Supabase project"
-          });
+          console.log('Supabase connection successful');
           
-          // Initialize schema
+          // Try to initialize schema but don't block app loading on failure
           try {
-            console.log('⏳ Initializing database schema from App component...');
             await initializeSchema();
-            console.log('✅ Schema initialization completed');
             setSchemaInitialized(true);
-            
-            // Test the table exists after initialization
-            const { data, error, count } = await supabase
-              .from('waitlist_interest')
-              .select('count', { count: 'exact' })
-              .limit(0);
-            
-            if (error) {
-              console.warn('⚠️ Table check after init failed:', error);
-              toast({
-                title: "Table Access Issue",
-                description: `Could not verify the waitlist table, but app will continue. ${error.message}`,
-              });
-            } else {
-              console.log(`✅ Table exists with ${count} entries`);
-              toast({
-                title: "Database Ready",
-                description: `Waitlist table initialized with ${count} entries`,
-              });
-            }
           } catch (err) {
-            console.warn('⚠️ Schema initialization issue:', err);
-            toast({
-              title: "Database Setup Note",
-              description: "There was an issue with database tables, but app will continue working.",
-            });
+            console.log('Schema initialization issue, but app will continue working:', err);
           }
         } catch (connErr) {
-          console.warn('⚠️ Error during connection test:', connErr);
-          toast({
-            title: "Connection Issue",
-            description: "Could not test database connection, but app will continue working.",
-          });
+          console.log('Connection test error, but app will continue working:', connErr);
         }
       } catch (e) {
-        console.warn('⚠️ Unexpected error in setup:', e);
+        console.log('Unexpected error in setup, but app will continue working:', e);
+        setHasError(true);
       } finally {
+        // Always ensure app loads regardless of Supabase status
         setIsLoading(false);
       }
     };
     
-    setupDatabase();
+    // Setup with a short timeout to ensure app loads even if there are issues
+    setTimeout(() => {
+      setupDatabase().catch(error => {
+        console.log('Database setup failed, but app will continue working:', error);
+        setIsLoading(false);
+      });
+      
+      // Fallback to ensure app loads even if the above fails
+      setTimeout(() => {
+        if (isLoading) {
+          console.log('Force loading completion after timeout');
+          setIsLoading(false);
+        }
+      }, 8000);
+    }, 100);
   }, []);
+
+  // For safety, add a secondary useEffect that will force the app to load if the first one fails
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (isLoading) {
+        console.log('Fallback timer triggered: forcing app to load');
+        setIsLoading(false);
+      }
+    }, 10000);
+    
+    return () => clearTimeout(timer);
+  }, [isLoading]);
 
   return (
     <QueryClientProvider client={queryClient}>
