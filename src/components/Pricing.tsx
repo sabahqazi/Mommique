@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
+import { initializeSchema, WaitlistEntry } from '@/lib/supabase-schema';
 
 const Pricing = () => {
   const [email, setEmail] = useState("");
@@ -13,7 +14,15 @@ const Pricing = () => {
 
   useEffect(() => {
     // Check if Supabase is configured on component mount
-    setSupabaseAvailable(isSupabaseConfigured());
+    const isConfigured = isSupabaseConfigured();
+    setSupabaseAvailable(isConfigured);
+    
+    // If Supabase is configured, initialize the schema
+    if (isConfigured) {
+      initializeSchema().catch(err => {
+        console.error('Failed to initialize schema:', err);
+      });
+    }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -22,7 +31,7 @@ const Pricing = () => {
     
     try {
       // Create an object with form data
-      const waitlistEntry = {
+      const waitlistEntry: WaitlistEntry = {
         email,
         pricing_option: selectedOption,
         created_at: new Date().toISOString()
