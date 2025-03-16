@@ -22,6 +22,7 @@ const App = () => {
     const setupDatabase = async () => {
       if (!isSupabaseConfigured()) {
         console.error('❌ Supabase is not configured properly. Please check your environment variables.');
+        console.log('Supabase configuration status:', isSupabaseConfigured());
         toast({
           title: "Missing Configuration",
           description: "Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your environment.",
@@ -31,16 +32,27 @@ const App = () => {
       }
       
       console.log('🔍 Testing Supabase connection from App component...');
+      console.log('Using SUPABASE_URL:', import.meta.env.VITE_SUPABASE_URL);
+      console.log('ANON_KEY exists:', !!import.meta.env.VITE_SUPABASE_ANON_KEY);
       
       const connectionResult = await testSupabaseConnection();
       setConnectionTested(true);
       
       if (!connectionResult.success) {
         console.error('❌ Supabase connection test failed:', connectionResult.error);
+        toast({
+          title: "Connection Failed",
+          description: `Could not connect to Supabase: ${connectionResult.error}`,
+          variant: "destructive"
+        });
         return;
       }
       
       console.log('✅ Supabase connection test successful');
+      toast({
+        title: "Connected to Supabase",
+        description: "Successfully connected to your Supabase project"
+      });
       
       // Initialize schema
       try {
