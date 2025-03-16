@@ -9,9 +9,15 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 // Create a single supabase client for interacting with your database
 let supabaseClient: ReturnType<typeof createClient> | null = null;
 
+// Logging environment variables presence for debugging
+console.log('Environment variables check:');
+console.log('VITE_SUPABASE_URL exists:', !!import.meta.env.VITE_SUPABASE_URL);
+console.log('VITE_SUPABASE_ANON_KEY exists:', !!import.meta.env.VITE_SUPABASE_ANON_KEY);
+
 try {
   if (!supabaseUrl || !supabaseAnonKey) {
     console.error('❌ Supabase URL or Anonymous key is missing. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables.');
+    console.error('Current values - URL:', supabaseUrl ? 'Exists (hidden)' : 'Missing', 'Key:', supabaseAnonKey ? 'Exists (hidden)' : 'Missing');
     throw new Error('Supabase configuration is incomplete. Check console for details.');
   }
   
@@ -27,6 +33,8 @@ export const supabase = supabaseClient || ({} as ReturnType<typeof createClient>
 export const isSupabaseConfigured = () => {
   if (!supabaseUrl || !supabaseAnonKey) {
     console.error('❌ Supabase environment variables are missing');
+    console.error('Current environment:', import.meta.env.MODE);
+    
     toast({
       title: "Supabase Configuration Error",
       description: "VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables are required",

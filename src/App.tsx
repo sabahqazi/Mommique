@@ -19,6 +19,12 @@ const App = () => {
 
   // Test connection first, then initialize schema
   useEffect(() => {
+    // Additional debugging to verify environment variables loading
+    console.log('App Component - Environment checks:');
+    console.log('Running in mode:', import.meta.env.MODE);
+    console.log('VITE_SUPABASE_URL exists:', !!import.meta.env.VITE_SUPABASE_URL);
+    console.log('VITE_SUPABASE_ANON_KEY exists:', !!import.meta.env.VITE_SUPABASE_ANON_KEY);
+    
     const setupDatabase = async () => {
       if (!isSupabaseConfigured()) {
         console.error('❌ Supabase is not configured properly. Please check your environment variables.');
@@ -32,7 +38,7 @@ const App = () => {
       }
       
       console.log('🔍 Testing Supabase connection from App component...');
-      console.log('Using SUPABASE_URL:', import.meta.env.VITE_SUPABASE_URL);
+      console.log('Using SUPABASE_URL:', import.meta.env.VITE_SUPABASE_URL?.substring(0, 8) + '...');
       console.log('ANON_KEY exists:', !!import.meta.env.VITE_SUPABASE_ANON_KEY);
       
       const connectionResult = await testSupabaseConnection();

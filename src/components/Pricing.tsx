@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
@@ -17,18 +16,18 @@ const Pricing = () => {
     // Check if Supabase is configured on component mount
     const isConfigured = isSupabaseConfigured();
     setSupabaseAvailable(isConfigured);
-    console.log('Supabase configuration status:', isConfigured);
+    console.log('Supabase configuration status in Pricing component:', isConfigured);
     
     // If Supabase is configured, initialize the schema
     if (isConfigured) {
-      console.log('Initializing Supabase schema...');
+      console.log('Initializing Supabase schema from Pricing component...');
       initializeSchema()
         .then(() => {
-          console.log('Schema initialization completed');
+          console.log('Schema initialization completed in Pricing component');
           setTableInitialized(true);
         })
         .catch(err => {
-          console.error('Failed to initialize schema:', err);
+          console.error('Failed to initialize schema from Pricing component:', err);
           toast({
             title: "Database Setup Issue",
             description: "There was an issue setting up the database. Data will be stored locally for now.",
@@ -77,6 +76,12 @@ const Pricing = () => {
       // Only attempt to save to Supabase if it's properly configured
       if (supabaseAvailable) {
         console.log('Attempting to save to Supabase waitlist_interest table:', waitlistEntry);
+        
+        // Double check Supabase configuration
+        if (!isSupabaseConfigured()) {
+          console.error('Supabase was marked as available but configuration check failed');
+          throw new Error('Supabase configuration is incomplete');
+        }
         
         // Insert into waitlist_interest table with matching field names
         const { data, error } = await supabase
