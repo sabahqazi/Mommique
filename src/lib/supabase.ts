@@ -45,32 +45,30 @@ export const testSupabaseConnection = async () => {
   
   try {
     console.log('🔍 Testing Supabase connection...');
-    // Basic connection test - check if we can reach the Supabase API
-    const response = await fetch(`${supabaseUrl}/rest/v1/`, {
-      method: 'GET',
-      headers: {
-        'apikey': supabaseAnonKey,
-        'Authorization': `Bearer ${supabaseAnonKey}`
-      }
-    });
     
-    if (response.ok) {
-      console.log('✅ Supabase connection test successful');
-      toast({
-        title: "Database Connected",
-        description: "Successfully connected to Supabase API",
-      });
-      return { success: true };
-    } else {
-      const errorText = await response.text();
-      console.error('❌ Supabase connection test failed:', errorText);
+    // Use the API directly to test connection
+    const { data, error } = await supabase
+      .from('waitlist_interest')
+      .select('id')
+      .limit(1);
+    
+    if (error && error.code !== '42P01') {
+      // If error is not "relation does not exist", it's a connection issue
+      console.error('❌ Supabase connection test failed:', error);
       toast({
         title: "Database Connection Failed",
-        description: `Error: ${errorText}`,
+        description: `Error: ${error.message}`,
         variant: "destructive"
       });
-      return { success: false, error: errorText };
+      return { success: false, error: error.message };
     }
+    
+    console.log('✅ Supabase connection test successful');
+    toast({
+      title: "Database Connected",
+      description: "Successfully connected to Supabase API",
+    });
+    return { success: true };
   } catch (error) {
     console.error('❌ Exception testing Supabase connection:', error);
     toast({

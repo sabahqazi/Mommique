@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
@@ -72,17 +73,21 @@ const Pricing = () => {
       
       // Only attempt to save to Supabase if it's properly configured
       if (supabaseAvailable) {
-        // Fixed: Pass the single waitlistEntry object, not wrapped in an array
+        // Adapt to use the existing waitlist_interest table
         const { error } = await supabase
-          .from('waitlist_entries')
-          .insert(waitlistEntry);
+          .from('waitlist_interest')
+          .insert({
+            email_address: email,
+            pricing: selectedOption,
+            created_at: new Date().toISOString()
+          });
           
         if (error) {
           console.error('Error saving to Supabase:', error);
           // Continue instead of throwing, since we still saved to localStorage and Google Forms
           console.warn('Entry saved to localStorage and Google Form but not to Supabase');
         } else {
-          console.log('Waitlist entry saved to Supabase:', waitlistEntry);
+          console.log('Waitlist entry saved to Supabase waitlist_interest table');
         }
       } else {
         console.log('Supabase not configured. Entry saved to localStorage and Google Form only.');
