@@ -61,9 +61,9 @@ const App = () => {
         console.log('✅ Schema initialization completed');
         setSchemaInitialized(true);
         
-        // Test the table exists after initialization
+        // Test the table exists after initialization - make sure to use waitlist_interest
         const { data, error, count } = await supabase
-          .from('waitlist_entries')
+          .from('waitlist_interest')
           .select('count', { count: 'exact' })
           .limit(0);
         
