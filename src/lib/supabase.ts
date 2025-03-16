@@ -46,9 +46,9 @@ export const testSupabaseConnection = async () => {
   try {
     console.log('🔍 Testing Supabase connection...');
     
-    // Use the API directly to test connection
+    // Use the API directly to test connection with the correct table name
     const { data, error } = await supabase
-      .from('waitlist_interest')
+      .from('waitlist_interest')  // Use the correct table name
       .select('id')
       .limit(1);
     

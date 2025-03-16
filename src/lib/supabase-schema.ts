@@ -2,11 +2,11 @@
 import { supabase, testSupabaseConnection } from './supabase';
 import { toast } from '@/hooks/use-toast';
 
-// Type definition for waitlist entries to match the existing table
+// Type definition for waitlist entries to match the existing waitlist_interest table
 export interface WaitlistEntry {
   id?: number;
-  email: string;
-  pricing_option: string | null;
+  email_address: string;  // Changed from email to email_address to match the table
+  pricing: string | null; // Changed from pricing_option to pricing to match the table
   created_at: string;
   [key: string]: unknown; // Index signature to make it compatible with Record<string, unknown>
 }
@@ -66,14 +66,15 @@ export const createWaitlistTable = async (): Promise<boolean> => {
       return true;
     }
     
-    // If we can't create the table, we'll just use the default table that's already there
-    console.log('ℹ️ Cannot create new tables via API. Using existing waitlist_interest table instead.');
+    // We cannot directly create tables via the API, so we'll notify the user
+    console.log('ℹ️ Cannot create new tables via API. Make sure the waitlist_interest table exists in Supabase.');
     toast({
-      title: "Using Existing Table",
-      description: "Using the existing waitlist_interest table for waitlist entries.",
+      title: "Table Required",
+      description: "Please create a 'waitlist_interest' table in your Supabase project with columns: id, email_address, pricing, created_at.",
+      variant: "destructive"
     });
     
-    return true;
+    return false;
   } catch (error) {
     console.error('Exception creating waitlist table:', error);
     toast({

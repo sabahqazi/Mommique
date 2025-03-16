@@ -43,10 +43,10 @@ const Pricing = () => {
     setIsSubmitting(true);
     
     try {
-      // Create an object with form data
+      // Create a waitlist entry object with field names matching the waitlist_interest table
       const waitlistEntry: WaitlistEntry = {
-        email,
-        pricing_option: selectedOption,
+        email_address: email,          // Using email_address to match the table
+        pricing: selectedOption,       // Using pricing to match the table
         created_at: new Date().toISOString()
       };
       
@@ -73,7 +73,9 @@ const Pricing = () => {
       
       // Only attempt to save to Supabase if it's properly configured
       if (supabaseAvailable) {
-        // Adapt to use the existing waitlist_interest table
+        console.log('Saving to Supabase waitlist_interest table:', waitlistEntry);
+        
+        // Insert into waitlist_interest table with matching field names
         const { error } = await supabase
           .from('waitlist_interest')
           .insert({
@@ -86,6 +88,11 @@ const Pricing = () => {
           console.error('Error saving to Supabase:', error);
           // Continue instead of throwing, since we still saved to localStorage and Google Forms
           console.warn('Entry saved to localStorage and Google Form but not to Supabase');
+          toast({
+            title: "Database Error",
+            description: `Could not save to database: ${error.message}. Your response was still recorded.`,
+            variant: "destructive"
+          });
         } else {
           console.log('Waitlist entry saved to Supabase waitlist_interest table');
         }
