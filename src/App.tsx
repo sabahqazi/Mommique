@@ -11,6 +11,7 @@ import { initializeSchema } from "./lib/supabase-schema";
 import { isSupabaseConfigured, supabase, testSupabaseConnection } from "./lib/supabase";
 import { toast } from "./hooks/use-toast";
 
+// Create the QueryClient instance outside the component
 const queryClient = new QueryClient();
 
 const App = () => {
