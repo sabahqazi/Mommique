@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
@@ -10,20 +9,33 @@ const Pricing = () => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [supabaseAvailable, setSupabaseAvailable] = useState(false);
+  const [tableInitialized, setTableInitialized] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
     // Check if Supabase is configured on component mount
     const isConfigured = isSupabaseConfigured();
     setSupabaseAvailable(isConfigured);
+    console.log('Supabase configuration status:', isConfigured);
     
     // If Supabase is configured, initialize the schema
     if (isConfigured) {
-      initializeSchema().catch(err => {
-        console.error('Failed to initialize schema:', err);
-      });
+      console.log('Initializing Supabase schema...');
+      initializeSchema()
+        .then(() => {
+          console.log('Schema initialization completed');
+          setTableInitialized(true);
+        })
+        .catch(err => {
+          console.error('Failed to initialize schema:', err);
+          toast({
+            title: "Database Setup Issue",
+            description: "There was an issue setting up the database. Data will be stored locally for now.",
+            variant: "destructive"
+          });
+        });
     }
-  }, []);
+  }, [toast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
