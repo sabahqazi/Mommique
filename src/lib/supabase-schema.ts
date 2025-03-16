@@ -1,6 +1,5 @@
 
 import { supabase, testSupabaseConnection } from './supabase';
-import { createWaitlistTableDirectly, createRpcFunction, createTableDirectly, createSqlExecFunction } from './supabase';
 import { toast } from '@/hooks/use-toast';
 
 // Type definition for waitlist entries
@@ -9,10 +8,10 @@ export interface WaitlistEntry {
   email: string;
   pricing_option: string | null;
   created_at: string;
-  [key: string]: unknown; // Add index signature to make it compatible with Record<string, unknown>
+  [key: string]: unknown; // Index signature to make it compatible with Record<string, unknown>
 }
 
-// Function to check if the waitlist_entries table exists
+// Simplify the table check to just use the Supabase API directly
 export const checkWaitlistTableExists = async (): Promise<boolean> => {
   try {
     console.log('🔍 Checking if waitlist table exists...');
@@ -50,65 +49,74 @@ export const checkWaitlistTableExists = async (): Promise<boolean> => {
   }
 };
 
-// Function to create the waitlist_entries table if it doesn't exist
+// Simplified table creation using Supabase API directly
 export const createWaitlistTable = async (): Promise<boolean> => {
   console.log('⏳ Creating waitlist_entries table...');
   
   try {
-    // First try using direct SQL execution 
-    console.log('👉 Using direct table creation...');
+    // We'll use the REST API directly to create the table
+    const url = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/`;
+    const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
     
-    // Create the table using raw SQL via Supabase's REST API
-    const createTableSQL = `
-      CREATE TABLE IF NOT EXISTS public.waitlist_entries (
-        id SERIAL PRIMARY KEY,
-        email TEXT NOT NULL,
-        pricing_option TEXT,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-        UNIQUE(email)
-      );
-      
-      -- Add RLS policies
-      ALTER TABLE public.waitlist_entries ENABLE ROW LEVEL SECURITY;
-      
-      -- Create policy for inserting data
-      CREATE POLICY "Allow anonymous inserts"
-      ON public.waitlist_entries
-      FOR INSERT
-      TO authenticated, anon
-      WITH CHECK (true);
-      
-      -- Create policy for reading data (restricted to authenticated users)
-      CREATE POLICY "Allow authenticated read"
-      ON public.waitlist_entries
-      FOR SELECT
-      TO authenticated
-      USING (true);
-    `;
-    
-    // Try calling a stored function to execute SQL if it exists
-    const { data: functionResult, error: functionError } = await supabase.rpc('exec_sql', {
-      sql: createTableSQL
+    // First try to create the table using the REST API
+    const response = await fetch(`${url}rpc/sql`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': key,
+        'Authorization': `Bearer ${key}`
+      },
+      body: JSON.stringify({
+        query: `
+          CREATE TABLE IF NOT EXISTS public.waitlist_entries (
+            id SERIAL PRIMARY KEY,
+            email TEXT NOT NULL,
+            pricing_option TEXT,
+            created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+            UNIQUE(email)
+          );
+          
+          -- Add RLS policies
+          ALTER TABLE public.waitlist_entries ENABLE ROW LEVEL SECURITY;
+          
+          -- Create policy for inserting data if it doesn't exist
+          DO $$
+          BEGIN
+            IF NOT EXISTS (
+              SELECT FROM pg_policies 
+              WHERE tablename = 'waitlist_entries' AND policyname = 'Allow anonymous inserts'
+            ) THEN
+              CREATE POLICY "Allow anonymous inserts"
+              ON public.waitlist_entries
+              FOR INSERT
+              TO authenticated, anon
+              WITH CHECK (true);
+            END IF;
+          END
+          $$;
+          
+          -- Create policy for reading data if it doesn't exist
+          DO $$
+          BEGIN
+            IF NOT EXISTS (
+              SELECT FROM pg_policies 
+              WHERE tablename = 'waitlist_entries' AND policyname = 'Allow authenticated read'
+            ) THEN
+              CREATE POLICY "Allow authenticated read"
+              ON public.waitlist_entries
+              FOR SELECT
+              TO authenticated
+              USING (true);
+            END IF;
+          END
+          $$;
+        `
+      })
     });
     
-    if (!functionError) {
-      console.log('✅ Table created via RPC function');
-      toast({
-        title: "Table Created",
-        description: "Waitlist table created successfully via RPC function.",
-      });
-      return true;
-    }
-    
-    console.log('RPC function failed, trying direct SQL with custom function...');
-    
-    // Try creating the function first
-    await createSqlExecFunction();
-    
-    // Then try executing the SQL
-    const directResult = await createWaitlistTableDirectly();
-    if (directResult.success) {
-      console.log('✅ Table created via direct SQL');
+    // Check if the SQL execution was successful
+    if (response.ok) {
+      console.log('✅ Table created via SQL API');
       toast({
         title: "Table Created",
         description: "Waitlist table created successfully.",
@@ -116,24 +124,30 @@ export const createWaitlistTable = async (): Promise<boolean> => {
       return true;
     }
     
-    // If all else fails, try a simple POST request
-    const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/waitlist_entries`, {
+    console.log('SQL API response:', await response.text());
+    
+    // As a fallback, try to insert a record directly and let Supabase auto-create the table
+    // This won't work for all Supabase projects, but it's worth trying
+    const insertResponse = await fetch(`${url}waitlist_entries`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        'Prefer': 'return=minimal'
+        'apikey': key,
+        'Authorization': `Bearer ${key}`,
+        'Prefer': 'resolution=merge-duplicates'
       },
-      body: JSON.stringify({})
+      body: JSON.stringify({
+        email: 'test@example.com',
+        pricing_option: 'test',
+        created_at: new Date().toISOString()
+      })
     });
     
-    // If we got a 201 Created or a 409 Conflict (already exists), then it worked
-    if (response.status === 201 || response.status === 409) {
-      console.log('✅ Table confirmed via REST API');
+    if (insertResponse.ok) {
+      console.log('✅ Table created via insertion');
       toast({
-        title: "Table Ready",
-        description: "Waitlist table is ready to use.",
+        title: "Table Created",
+        description: "Waitlist table created successfully via direct insertion.",
       });
       return true;
     }
