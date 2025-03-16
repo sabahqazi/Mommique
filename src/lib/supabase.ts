@@ -26,16 +26,13 @@ try {
       persistSession: true,
       autoRefreshToken: true,
     },
-    db: {
-      schema: 'public',
-    },
   });
   console.log('✅ Supabase client created successfully');
 } catch (error) {
   console.error('❌ Failed to create Supabase client:', error);
 }
 
-export const supabase = supabaseClient || ({} as ReturnType<typeof createClient>);
+export const supabase = supabaseClient || createClient('', '', {});
 
 // Add a simple function to check if Supabase is properly configured
 export const isSupabaseConfigured = () => {
