@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const Footer = () => {
@@ -9,12 +8,9 @@ const Footer = () => {
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div className="md:col-span-2">
-            <a href="#" className="flex items-center mb-6">
-              <img src="/lovable-uploads/05b474ef-dd0c-45f8-9901-743a0422d62d.png" alt="momMique.com Logo" className="h-10 mr-2" />
-              <div className="flex flex-col">
-                <span className="text-xl font-bold text-pink-600">momMique.com</span>
-                <span className="text-xs text-gray-600">Every mom is nique</span>
-              </div>
+            <a href="#" className="flex flex-col mb-6">
+              <span className="font-['Comfortaa'] text-xl font-bold text-pink-600">mommique</span>
+              <span className="font-['Roboto'] text-xs font-bold text-black">every mom is unique</span>
             </a>
             <p className="text-gray-600 mb-6 max-w-md">
               Your AI-powered postpartum companion, providing personalized support and reliable answers when you need them most.
@@ -105,10 +101,10 @@ const Footer = () => {
         
         <div className="border-t border-gray-100 pt-8">
           <p className="text-center text-sm text-gray-500">
-            &copy; {currentYear} momMique.com. All rights reserved.
+            &copy; {currentYear} mommique. All rights reserved.
           </p>
           <p className="text-center text-xs text-gray-400 mt-2">
-            momMique.com is not a substitute for professional medical advice, diagnosis, or treatment. 
+            mommique is not a substitute for professional medical advice, diagnosis, or treatment. 
             Always seek the advice of your physician or other qualified health provider with any questions 
             you may have regarding a medical condition.
           </p>

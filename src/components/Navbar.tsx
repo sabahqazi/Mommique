@@ -24,12 +24,9 @@ const Navbar = () => {
     >
       <div className="container flex items-center justify-between">
         <div className="flex items-center">
-          <a href="#" className="flex items-center">
-            <img src="/lovable-uploads/05b474ef-dd0c-45f8-9901-743a0422d62d.png" alt="momMique.com Logo" className="h-10 mr-2" />
-            <div className="flex flex-col">
-              <span className="text-xl font-bold text-pink-600">momMique.com</span>
-              <span className="text-xs text-gray-600">Every mom is nique</span>
-            </div>
+          <a href="#" className="flex flex-col">
+            <span className="font-['Comfortaa'] text-xl font-bold text-pink-600">mommique</span>
+            <span className="font-['Roboto'] text-xs font-bold text-black">every mom is unique</span>
           </a>
         </div>
         

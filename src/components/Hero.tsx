@@ -38,7 +38,7 @@ const Hero = () => {
           </h2>
           
           <p className="text-base md:text-lg text-gray-700 mb-5 max-w-3xl mx-auto">
-            momMique.com gives research-backed, AI-powered support tailored to you and your baby, 
+            mommique gives research-backed, AI-powered support tailored to you and your baby, 
             guiding your motherhood journey with confidence!
           </p>
         </div>
@@ -92,7 +92,7 @@ const Hero = () => {
               <img src="/lovable-uploads/79afbdd8-32c1-4b06-bca9-c21961dc1e30.png" alt="Mother and baby whale illustration" className="w-full" />
             </div>
             
-            <h2 className="text-3xl font-bold text-[#E04D60] mb-4">
+            <h2 className="font-['Comfortaa'] text-3xl font-bold text-[#E04D60] mb-4">
               So glad to see you here!
             </h2>
             
