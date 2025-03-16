@@ -1,14 +1,20 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 
 const Pricing = () => {
   const [email, setEmail] = useState("");
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [supabaseAvailable, setSupabaseAvailable] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    // Check if Supabase is configured on component mount
+    setSupabaseAvailable(isSupabaseConfigured());
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,14 +49,22 @@ const Pricing = () => {
         body: formData
       });
       
-      // Save to Supabase
-      const { error } = await supabase
-        .from('waitlist_entries')
-        .insert([waitlistEntry]);
-        
-      if (error) {
-        console.error('Error saving to Supabase:', error);
-        throw new Error('Failed to save to database');
+      // Only attempt to save to Supabase if it's properly configured
+      if (supabaseAvailable) {
+        // Save to Supabase
+        const { error } = await supabase
+          .from('waitlist_entries')
+          .insert([waitlistEntry]);
+          
+        if (error) {
+          console.error('Error saving to Supabase:', error);
+          // Continue instead of throwing, since we still saved to localStorage and Google Forms
+          console.warn('Entry saved to localStorage and Google Form but not to Supabase');
+        } else {
+          console.log('Waitlist entry saved to Supabase:', waitlistEntry);
+        }
+      } else {
+        console.log('Supabase not configured. Entry saved to localStorage and Google Form only.');
       }
       
       // Show success message
@@ -63,8 +77,6 @@ const Pricing = () => {
       setEmail("");
       setSelectedOption(null);
       
-      // Log to console for debugging
-      console.log('Waitlist entry saved to Supabase:', waitlistEntry);
     } catch (error) {
       console.error('Error submitting form:', error);
       toast({
