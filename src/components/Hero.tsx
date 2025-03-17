@@ -61,7 +61,7 @@ const Hero = () => {
               {pills.slice(0, 2).map((pill, index) => (
                 <Badge 
                   key={index} 
-                  className="cursor-pointer text-xs py-1.5 px-3 whitespace-normal text-left bg-pink-50 hover:bg-pink-100 text-pink-700"
+                  className="cursor-pointer text-xs py-1.5 px-3 whitespace-normal text-left bg-blue-100 hover:bg-blue-200 text-blue-800"
                   variant="outline"
                   onClick={() => setSearchQuery(pill)}
                 >
@@ -75,7 +75,7 @@ const Hero = () => {
               {pills.slice(2, 5).map((pill, index) => (
                 <Badge 
                   key={index + 2} 
-                  className="cursor-pointer text-xs py-1.5 px-3 whitespace-normal text-left bg-pink-50 hover:bg-pink-100 text-pink-700"
+                  className="cursor-pointer text-xs py-1.5 px-3 whitespace-normal text-left bg-blue-100 hover:bg-blue-200 text-blue-800"
                   variant="outline"
                   onClick={() => setSearchQuery(pill)}
                 >
