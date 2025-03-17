@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
@@ -41,10 +40,7 @@ const Hero = () => {
           </h1>
             
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-gray-900 text-center">
-            <span className="text-pink-600">Your</span>
-            <span className="text-black"> personalized AI partner that adapts to </span>
-            <span className="text-pink-600">your</span>
-            <span className="text-black"> unique postpartum journey</span>
+            <span className="text-pink-600">Personalized AI partner that adapts to your unique postpartum journey</span>
           </h2>
           
           <p className="text-base md:text-lg text-gray-700 mb-5 max-w-3xl mx-auto font-['Open_Sans']">
