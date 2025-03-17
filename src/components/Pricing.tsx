@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
@@ -9,20 +8,46 @@ const Pricing = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Your Google Apps Script URL
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvidTURfNhktIYhxGPC4JLtMcQYKUS06u6hW-CgkyTu2MABXlWsz4O2KGlydjjRLtw1Q/exec";
+  
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      // Prepare form data
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('pricingOption', selectedOption || '');
+
+      // Send data to Google Apps Script as a no-cors request with form data
+      // This uses the URL with parameters approach which works around CORS limitations
+      const url = `${GOOGLE_SCRIPT_URL}?email=${encodeURIComponent(email)}&pricingOption=${encodeURIComponent(selectedOption || '')}`;
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        mode: 'no-cors', // This prevents CORS errors but gives an "opaque" response
+      });
+      
+      // Since we can't access the response body with no-cors,
+      // we assume success if the request doesn't throw an error
       toast({
         title: "Thank you for your interest!",
         description: "We've added you to our waitlist and will notify you when we launch.",
       });
       setEmail("");
       setSelectedOption(null);
-    }, 1500);
+    } catch (error) {
+      toast({
+        title: "Submission failed",
+        description: "There was an error saving your information. Please try again.",
+        variant: "destructive",
+      });
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
