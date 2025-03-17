@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
@@ -13,7 +14,7 @@ const Hero = () => {
     "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?",
     "How do I know if my baby is getting enough milk?",
     "When will my postpartum bleeding stop?",
-    "When can I start exercising again after giving birth?",
+    "When can I start exercising again",
     "Is it normal for my baby to wake up every 2 hours?"
   ];
 
@@ -42,11 +43,6 @@ const Hero = () => {
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-gray-900 text-center">
             <span className="text-pink-600">Personalized AI partner that adapts to your unique postpartum journey</span>
           </h2>
-          
-          <p className="text-base md:text-lg text-gray-700 mb-5 max-w-3xl mx-auto font-['Open_Sans']">
-            mommique gives research-backed, AI-powered support tailored to you and your baby, 
-            guiding your motherhood journey with confidence!
-          </p>
         </div>
         
         <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-5 md:p-6">
