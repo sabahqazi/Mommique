@@ -1,176 +1,28 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
-import { supabase, isSupabaseConfigured } from '@/lib/supabase';
-import { initializeSchema, WaitlistEntry } from '@/lib/supabase-schema';
 
 const Pricing = () => {
   const [email, setEmail] = useState("");
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [supabaseAvailable, setSupabaseAvailable] = useState(false);
-  const [tableInitialized, setTableInitialized] = useState(false);
   const { toast } = useToast();
 
-  useEffect(() => {
-    // Check if Supabase is configured on component mount
-    const isConfigured = isSupabaseConfigured();
-    setSupabaseAvailable(isConfigured);
-    console.log('Supabase configuration status in Pricing component:', isConfigured);
-    
-    // If Supabase is configured, initialize the schema
-    if (isConfigured) {
-      console.log('Initializing Supabase schema from Pricing component...');
-      initializeSchema()
-        .then(() => {
-          console.log('Schema initialization completed in Pricing component');
-          setTableInitialized(true);
-        })
-        .catch(err => {
-          console.error('Failed to initialize schema from Pricing component:', err);
-          toast({
-            title: "Database Setup Issue",
-            description: "There was an issue setting up the database. Data will be stored locally for now.",
-            variant: "destructive"
-          });
-        });
-    }
-  }, [toast]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    console.log('Form submission started with values:', { email, selectedOption });
     
-    try {
-      // Create a waitlist entry object with field names matching the waitlist_interest table
-      const waitlistEntry: WaitlistEntry = {
-        email_address: email,          // Using email_address to match the table
-        pricing: selectedOption,       // Using pricing to match the table
-        created_at: new Date().toISOString()
-      };
-      
-      console.log('Created waitlist entry object:', waitlistEntry);
-      
-      // Save to localStorage as a backup
-      const existingEntries = JSON.parse(localStorage.getItem('waitlistEntries') || '[]');
-      existingEntries.push(waitlistEntry);
-      localStorage.setItem('waitlistEntries', JSON.stringify(existingEntries));
-      console.log('Entry saved to localStorage:', waitlistEntry);
-      
-      // Send to Google Form if configured
-      try {
-        const formUrl = "https://docs.google.com/forms/d/1OUXnGQgO_w9-WdtJKSzPT1ZCj1AdtHzdwlUhLU5bQpU/formResponse";
-        
-        // Map your form fields to Google Form fields with the correct entry IDs
-        const formData = new FormData();
-        formData.append('entry.1776647972', email); // Email field entry ID
-        formData.append('entry.1442464782', selectedOption || 'No option selected'); // Pricing option field entry ID
-        
-        // Send the data to Google Form
-        // Note: Using no-cors mode since Google Forms doesn't support CORS
-        await fetch(formUrl, {
-          method: 'POST',
-          mode: 'no-cors',
-          body: formData
-        });
-        console.log('Data sent to Google Form');
-      } catch (error) {
-        console.warn('Failed to submit to Google Form:', error);
-        // Continue processing as Google Form is just a backup
-      }
-      
-      // Only attempt to save to Supabase if it's properly configured
-      if (supabaseAvailable) {
-        console.log('Attempting to save to Supabase waitlist_interest table:', waitlistEntry);
-        
-        // Double check Supabase configuration
-        if (!isSupabaseConfigured()) {
-          console.error('Supabase was marked as available but configuration check failed');
-          throw new Error('Supabase configuration is incomplete');
-        }
-        
-        console.log('Supabase configuration valid, proceeding with insert');
-        
-        // Let's log the Supabase instance to verify it's properly initialized
-        console.log('Supabase client initialized:', !!supabase);
-        
-        // Insert into waitlist_interest table with matching field names
-        console.log('About to insert record with data:', {
-          email_address: email,
-          pricing: selectedOption,
-          created_at: new Date().toISOString()
-        });
-        
-        const { data, error, status } = await supabase
-          .from('waitlist_interest')
-          .insert([{  // Note: Wrapping in array as required by Supabase
-            email_address: email,
-            pricing: selectedOption,
-            created_at: new Date().toISOString()
-          }])
-          .select();
-          
-        console.log('Supabase insert response - Status:', status);
-        
-        if (error) {
-          console.error('Error saving to Supabase:', error);
-          console.error('Error details:', {
-            code: error.code,
-            message: error.message,
-            details: error.details,
-            hint: error.hint
-          });
-          throw new Error(`Database error: ${error.message}`);
-        } else {
-          console.log('Waitlist entry saved successfully to Supabase!', data);
-          
-          // Verify the record was added by querying it back
-          console.log('Verifying record was added by querying it back...');
-          const { data: verifyData, error: verifyError } = await supabase
-            .from('waitlist_interest')
-            .select('*')
-            .eq('email_address', email)
-            .order('created_at', { ascending: false })
-            .limit(1);
-            
-          if (verifyError) {
-            console.warn('Could not verify record was added:', verifyError);
-          } else {
-            console.log('Verify query result:', verifyData);
-            console.log('Verified record exists in database:', verifyData && verifyData.length > 0);
-          }
-          
-          toast({
-            title: "Success!",
-            description: "Your information has been successfully saved to our database.",
-          });
-        }
-      } else {
-        console.log('Supabase not configured. Entry saved to localStorage and Google Form only.');
-      }
-      
-      // Show success message
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false);
       toast({
         title: "Thank you for your interest!",
         description: "We've added you to our waitlist and will notify you when we launch.",
       });
-      
-      // Reset form
       setEmail("");
       setSelectedOption(null);
-      
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      toast({
-        title: "Submission Error",
-        description: error instanceof Error ? error.message : "There was a problem submitting your information. Please try again.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    }, 1500);
   };
 
   return (
