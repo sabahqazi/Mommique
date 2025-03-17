@@ -16,7 +16,7 @@ const Navbar = () => {
         <div className="flex items-center">
           <a href="#" className="flex flex-col">
             <span className="font-['Poppins'] text-pink-600 font-extrabold text-2xl">mommique</span>
-            <span className="font-['Roboto'] font-bold text-sm text-blue-800 text-center">every mom is unique</span>
+            <span className="font-['poppins'] font-bold text-blue-800 text-center text-sm">every mom is unique</span>
           </a>
         </div>
         
