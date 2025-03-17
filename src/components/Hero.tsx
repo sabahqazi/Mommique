@@ -14,7 +14,7 @@ const Hero = () => {
     "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?",
     "How do I know if my baby is getting enough milk?",
     "When will my postpartum bleeding stop?",
-    "What can I do about postpartum hair loss?",
+    "When can I start exercising again after giving birth?",
     "Is it normal for my baby to wake up every 2 hours?"
   ];
 
@@ -63,27 +63,34 @@ const Hero = () => {
           </div>
           
           {/* Pills row - common questions/topics */}
-          <div className="flex flex-wrap gap-2 mb-4 justify-center">
-            {pills.map((pill, index) => (
-              <Badge 
-                key={index} 
-                className={`cursor-pointer text-xs py-1.5 px-3 whitespace-normal text-left ${
-                  index === 0 
-                    ? 'bg-[#FFDEE2] hover:bg-[#ffcbd1] text-[#E04D60]' 
-                    : index === 1 
-                    ? 'bg-[#D3E4FD] hover:bg-[#c0d8f8] text-[#3b82f6]'
-                    : index === 2
-                    ? 'bg-[#F2FCE2] hover:bg-[#e5f7d0] text-green-700'
-                    : index === 3
-                    ? 'bg-[#E5DEFF] hover:bg-[#d7cdff] text-purple-700'
-                    : 'bg-[#FDE1D3] hover:bg-[#fcd4bc] text-orange-700'
-                }`}
-                variant="outline"
-                onClick={() => setSearchQuery(pill)}
-              >
-                {pill}
-              </Badge>
-            ))}
+          <div className="flex flex-col items-center mb-4">
+            {/* First row - 2 pills */}
+            <div className="flex flex-wrap gap-2 mb-2 justify-center">
+              {pills.slice(0, 2).map((pill, index) => (
+                <Badge 
+                  key={index} 
+                  className="cursor-pointer text-xs py-1.5 px-3 whitespace-normal text-left bg-[#D3E4FD] hover:bg-[#c0d8f8] text-[#3b82f6]"
+                  variant="outline"
+                  onClick={() => setSearchQuery(pill)}
+                >
+                  {pill}
+                </Badge>
+              ))}
+            </div>
+            
+            {/* Second row - 3 pills */}
+            <div className="flex flex-wrap gap-2 justify-center">
+              {pills.slice(2, 5).map((pill, index) => (
+                <Badge 
+                  key={index + 2} 
+                  className="cursor-pointer text-xs py-1.5 px-3 whitespace-normal text-left bg-[#D3E4FD] hover:bg-[#c0d8f8] text-[#3b82f6]"
+                  variant="outline"
+                  onClick={() => setSearchQuery(pill)}
+                >
+                  {pill}
+                </Badge>
+              ))}
+            </div>
           </div>
           
           <div className="relative mb-4">
