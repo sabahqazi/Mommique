@@ -41,7 +41,7 @@ const Hero = () => {
           </h1>
             
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-gray-900 text-center">
-            <span className="text-pink-600">Personalized AI partner that adapts to your unique postpartum journey</span>
+            <span className="text-black">Personalized AI partner that adapts to your unique postpartum journey</span>
           </h2>
         </div>
         

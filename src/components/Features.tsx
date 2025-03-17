@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send, Bot } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
@@ -11,6 +12,7 @@ const Features = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
   const { toast } = useToast();
 
   const mockQuestions = [
@@ -33,6 +35,9 @@ const Features = () => {
     setInputMessage('');
     setIsTyping(true);
     
+    // Scroll to the chat container
+    ensureChatVisible();
+    
     setTimeout(() => {
       simulateResponse(inputMessage);
     }, 1500);
@@ -44,9 +49,22 @@ const Features = () => {
     setMessages(prev => [...prev, newMessage]);
     setIsTyping(true);
     
+    // Scroll to the chat container
+    ensureChatVisible();
+    
     setTimeout(() => {
       simulateResponse(question);
     }, 1500);
+  };
+
+  const ensureChatVisible = () => {
+    // Ensure the chat container is visible by scrolling to it
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center' 
+      });
+    }
   };
 
   const simulateResponse = (question) => {
@@ -245,7 +263,7 @@ const Features = () => {
               </div>
             </div>
             
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" ref={chatContainerRef}>
               <div className="bg-pink-100 p-4 flex items-center">
                 <div className="h-10 w-10 rounded-full bg-pink-200 flex items-center justify-center mr-3">
                   <Bot className="h-6 w-6 text-pink-500" />

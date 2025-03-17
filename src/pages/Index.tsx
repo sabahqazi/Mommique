@@ -26,8 +26,11 @@ const Index = () => {
         const targetElement = document.getElementById(targetId);
         if (!targetElement) return;
         
+        // Modified offset to ensure better positioning
+        const offset = targetId === 'features' ? 100 : 80;
+        
         window.scrollTo({
-          top: targetElement.offsetTop - 80, // Offset for navbar
+          top: targetElement.offsetTop - offset,
           behavior: 'smooth'
         });
       });
