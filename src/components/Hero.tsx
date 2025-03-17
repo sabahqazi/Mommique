@@ -97,11 +97,18 @@ const Hero = () => {
             </h2>
             
             <p className="text-gray-700 text-lg mb-8 font-['Open_Sans']">
-              Your postpartum journey is personal to you!
+              Your postpartum journey is personal to you! I'm here for you 24/7. You don't have to face this journey alone.
             </p>
             
-            <a href="#features" onClick={() => setShowOverlay(false)} className="bg-[#E04D60] hover:bg-[#d03c50] text-white font-medium px-8 py-3 rounded-lg transition-colors font-['Open_Sans']">
-              Try the AI Guide
+            <a href="#" onClick={(e) => {
+              e.preventDefault();
+              setShowOverlay(false);
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+              });
+            }} className="bg-[#E04D60] hover:bg-[#d03c50] text-white font-medium px-8 py-3 rounded-lg transition-colors font-['Open_Sans']">
+              Try the AI partner
             </a>
           </div>
         </DialogContent>
