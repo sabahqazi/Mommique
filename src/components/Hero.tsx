@@ -2,11 +2,21 @@
 import React, { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
 
 // Hero component with popup overlay
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showOverlay, setShowOverlay] = useState(false);
+  
+  // Pills/tags for common questions
+  const pills = [
+    "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?",
+    "How do I know if my baby is getting enough milk?",
+    "When will my postpartum bleeding stop?",
+    "What can I do about postpartum hair loss?",
+    "Is it normal for my baby to wake up every 2 hours?"
+  ];
 
   useEffect(() => {
     // Show overlay after 3 seconds
@@ -50,6 +60,30 @@ const Hero = () => {
               <span className="text-pink-600"> your</span> self-care needs, or <span className="text-pink-600"> your</span> baby's health —
               get answers as to <span className="text-pink-600">your</span> motherhood journey!
             </h3>
+          </div>
+          
+          {/* Pills row - common questions/topics */}
+          <div className="flex flex-wrap gap-2 mb-4 justify-center">
+            {pills.map((pill, index) => (
+              <Badge 
+                key={index} 
+                className={`cursor-pointer text-xs py-1.5 px-3 whitespace-normal text-left ${
+                  index === 0 
+                    ? 'bg-[#FFDEE2] hover:bg-[#ffcbd1] text-[#E04D60]' 
+                    : index === 1 
+                    ? 'bg-[#D3E4FD] hover:bg-[#c0d8f8] text-[#3b82f6]'
+                    : index === 2
+                    ? 'bg-[#F2FCE2] hover:bg-[#e5f7d0] text-green-700'
+                    : index === 3
+                    ? 'bg-[#E5DEFF] hover:bg-[#d7cdff] text-purple-700'
+                    : 'bg-[#FDE1D3] hover:bg-[#fcd4bc] text-orange-700'
+                }`}
+                variant="outline"
+                onClick={() => setSearchQuery(pill)}
+              >
+                {pill}
+              </Badge>
+            ))}
           </div>
           
           <div className="relative mb-4">
