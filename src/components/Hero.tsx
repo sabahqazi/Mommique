@@ -93,11 +93,11 @@ const Hero = () => {
             </div>
             
             <h2 className="font-['Poppins'] text-3xl font-bold text-[#E04D60] mb-4">
-              Hi Mommy, glad to see you here!
+              Hi Mommy,<br />glad to see you here!
             </h2>
             
             <p className="text-gray-700 text-lg mb-8 font-['Open_Sans']">
-              Your postpartum challenges are personal to you! You don't have to face it alone! I'm here 24/7 for you!
+              Your postpartum journey is personal to you!
             </p>
             
             <a href="#features" onClick={() => setShowOverlay(false)} className="bg-[#E04D60] hover:bg-[#d03c50] text-white font-medium px-8 py-3 rounded-lg transition-colors font-['Open_Sans']">
