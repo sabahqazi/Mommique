@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send, Bot } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
@@ -5,12 +6,15 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Features = () => {
   const [messages, setMessages] = useState([
-    { role: 'system', content: 'Hello! I\'m your personal postpartum AI guide, tailored specifically to your needs. How can I help you today?' },
+    { role: 'system', content: 'Hello! I\'m your personal AI guide, tailored specifically to your needs. How can I help you today?' },
+    { role: 'user', content: 'My baby is 2 weeks old and has a really red diaper rash. Is this normal?' },
+    { role: 'system', content: 'Based on your baby's age (2 weeks) and your description, this type of diaper rash is common in newborns. For your specific situation, try these personalized steps:\n\n• Change diapers more frequently, especially for your newborn's sensitive skin\n• Allow air-dry time after each change\n• Apply a thin layer of zinc oxide cream designed for sensitive newborn skin\n\nIf the rash doesn't improve in 2-3 days with these measures or if you notice blisters, pus, or your baby seems uncomfortable, please contact your pediatrician right away.' },
+    { role: 'user', content: 'How often should I be changing diapers for a newborn?' },
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(true);
   const messagesEndRef = useRef(null);
   const chatContainerRef = useRef(null);
   const { toast } = useToast();
@@ -21,6 +25,27 @@ const Features = () => {
     "I'm feeling so exhausted. Is this normal or should I be concerned?",
     "My baby won't latch properly when breastfeeding. What can I do?"
   ];
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    
+    // Simulate typing response to the follow-up question
+    setTimeout(() => {
+      setIsTyping(false);
+      setMessages(prev => [
+        ...prev,
+        { 
+          role: 'system', 
+          content: 'For your newborn, I recommend changing diapers about 8-10 times per day, or roughly every 2-3 hours. Since you're asking about frequency, it's important to note that your baby's individual needs might require more frequent changes, especially after feeding times when they're more likely to soil their diaper. Wet diapers should be changed promptly, and soiled diapers should be changed immediately to prevent diaper rash and keep your specific baby comfortable.'
+        }
+      ]);
+      
+      // Scroll to bottom after adding the response
+      setTimeout(() => {
+        scrollChatToBottom();
+      }, 100);
+    }, 2000);
+  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -87,7 +112,7 @@ const Features = () => {
     } else if (question.toLowerCase().includes("latch") || question.toLowerCase().includes("breastfeed")) {
       response = "I understand how challenging breastfeeding can be for your specific situation. For your latching difficulties, try these personalized techniques:\n\n• Hold your baby skin-to-skin to trigger their natural feeding instincts\n• Ensure your baby's mouth is wide open before latching, like a yawn\n• Position your baby's lower lip as far from the base of your nipple as possible for a deep latch\n• Try the C-hold technique with your thumb and fingers to guide your breast based on your specific anatomy\n\nYour breastfeeding journey is unique, and if these personalized suggestions don't help, I strongly recommend consulting with a lactation consultant who can observe your specific technique and provide customized guidance.";
     } else {
-      response = "Thank you for sharing your specific concern. As your personalized postpartum care specialist, I recommend discussing this particular issue with your healthcare provider at your next visit. In the meantime, you may find it helpful to monitor your symptoms and note any changes unique to your situation. Would you like me to provide some general information tailored to your postpartum recovery journey?";
+      response = "Thank you for sharing your specific concern. As your personalized care specialist, I recommend discussing this particular issue with your healthcare provider at your next visit. In the meantime, you may find it helpful to monitor your symptoms and note any changes unique to your situation. Would you like me to provide some general information tailored to your recovery journey?";
     }
     
     setIsTyping(false);
@@ -289,7 +314,7 @@ const Features = () => {
                   <Bot className="h-6 w-6 text-pink-500" />
                 </div>
                 <div>
-                  <h4 className="font-medium">CaringMommy Assistant</h4>
+                  <h4 className="font-medium">Your Assistant</h4>
                   <p className="text-xs text-gray-600">Online • Responds instantly</p>
                 </div>
               </div>
