@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send, Bot } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
@@ -52,6 +51,11 @@ const Features = () => {
     const newMessage = { role: 'user', content: question };
     setMessages(prev => [...prev, newMessage]);
     setIsTyping(true);
+    
+    // Focus on the chat container without scrolling the page
+    if (chatContainerRef.current) {
+      chatContainerRef.current.focus();
+    }
     
     // Scroll only within the chat container, not the page
     scrollChatToBottom();
@@ -266,7 +270,7 @@ const Features = () => {
                         e.preventDefault(); // Prevent default to stop page scrolling
                         handleMockQuestionClick(question);
                       }}
-                      className="bg-pink-50 hover:bg-pink-100 text-pink-700 text-sm px-3 py-2 rounded-full transition-colors"
+                      className="bg-blue-100 hover:bg-blue-200 text-blue-800 text-sm px-3 py-2 rounded-full transition-colors"
                     >
                       {question.length > 30 ? question.substring(0, 30) + '...' : question}
                     </button>
@@ -275,7 +279,11 @@ const Features = () => {
               </div>
             </div>
             
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" ref={chatContainerRef}>
+            <div 
+              className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col outline-none" 
+              ref={chatContainerRef} 
+              tabIndex={-1} // Makes the container focusable without showing outline
+            >
               <div className="bg-pink-100 p-4 flex items-center">
                 <div className="h-10 w-10 rounded-full bg-pink-200 flex items-center justify-center mr-3">
                   <Bot className="h-6 w-6 text-pink-500" />
