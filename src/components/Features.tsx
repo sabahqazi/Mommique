@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send, Bot } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Features = () => {
   const [messages, setMessages] = useState([
@@ -35,8 +36,8 @@ const Features = () => {
     setInputMessage('');
     setIsTyping(true);
     
-    // Scroll to the chat container
-    ensureChatVisible();
+    // Scroll only within the chat container, not the page
+    scrollChatToBottom();
     
     setTimeout(() => {
       simulateResponse(inputMessage);
@@ -44,25 +45,28 @@ const Features = () => {
   };
 
   const handleMockQuestionClick = (question) => {
+    // Prevent default behavior to avoid scrolling
+    event.preventDefault();
+    
     setInputMessage(question);
     const newMessage = { role: 'user', content: question };
     setMessages(prev => [...prev, newMessage]);
     setIsTyping(true);
     
-    // Scroll to the chat container
-    ensureChatVisible();
+    // Scroll only within the chat container, not the page
+    scrollChatToBottom();
     
     setTimeout(() => {
       simulateResponse(question);
     }, 1500);
   };
 
-  const ensureChatVisible = () => {
-    // Ensure the chat container is visible by scrolling to it
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'center' 
+  const scrollChatToBottom = () => {
+    // Only scroll within the chat container
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'end'
       });
     }
   };
@@ -84,6 +88,11 @@ const Features = () => {
     
     setIsTyping(false);
     setMessages(prev => [...prev, { role: 'system', content: response }]);
+    
+    // After setting messages, scroll chat to bottom without page scrolling
+    setTimeout(() => {
+      scrollChatToBottom();
+    }, 100);
   };
 
   const toggleRecording = () => {
@@ -253,7 +262,10 @@ const Features = () => {
                   {mockQuestions.map((question, index) => (
                     <button 
                       key={index} 
-                      onClick={() => handleMockQuestionClick(question)}
+                      onClick={(e) => {
+                        e.preventDefault(); // Prevent default to stop page scrolling
+                        handleMockQuestionClick(question);
+                      }}
                       className="bg-pink-50 hover:bg-pink-100 text-pink-700 text-sm px-3 py-2 rounded-full transition-colors"
                     >
                       {question.length > 30 ? question.substring(0, 30) + '...' : question}
@@ -287,7 +299,7 @@ const Features = () => {
                 </div>
               </div>
               
-              <div className="flex-1 p-4 overflow-y-auto max-h-80 bg-gray-50">
+              <ScrollArea className="flex-1 p-4 max-h-80 bg-gray-50">
                 <div className="space-y-4">
                   {messages.map((message, index) => (
                     <div 
@@ -318,12 +330,15 @@ const Features = () => {
                   )}
                   <div ref={messagesEndRef} />
                 </div>
-              </div>
+              </ScrollArea>
               
               <form onSubmit={handleSubmit} className="p-4 border-t flex items-center gap-2">
                 <button 
                   type="button" 
-                  onClick={toggleRecording}
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent default to stop page scrolling
+                    toggleRecording();
+                  }}
                   disabled={isProcessing}
                   className={`p-2 rounded-full ${
                     isRecording 
@@ -341,6 +356,7 @@ const Features = () => {
                   onChange={(e) => setInputMessage(e.target.value)} 
                   placeholder="Type your question here..." 
                   className="flex-1 border border-gray-200 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-200"
+                  onClick={(e) => e.stopPropagation()}
                 />
                 <button 
                   type="submit" 

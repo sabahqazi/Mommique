@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 const Footer = () => {
@@ -101,7 +102,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-100 pt-8">
           <p className="text-center text-sm text-gray-500">
-            &copy; {currentYear} mommique. All rights reserved.
+            &copy; {currentYear} mommique. All rights reserved. Content on this page is proprietary.
           </p>
           <p className="text-center text-xs text-gray-400 mt-2">
             mommique is not a substitute for professional medical advice, diagnosis, or treatment. 
