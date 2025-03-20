@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
@@ -11,6 +12,8 @@ const Features = () => {
   ]);
   const [isTyping, setIsTyping] = useState(true);
   const [inputMessage, setInputMessage] = useState('');
+  const [isRecording, setIsRecording] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const messagesEndRef = useRef(null);
   const chatContainerRef = useRef(null);
   const { toast } = useToast();
@@ -291,21 +294,26 @@ const Features = () => {
             </div>
             
             <div className="bg-white rounded-xl shadow-md overflow-hidden">
-              {/* Chat window circles */}
-              <div className="bg-white p-4 flex items-center gap-2">
-                <div className="h-3 w-3 rounded-full bg-red-300"></div>
-                <div className="h-3 w-3 rounded-full bg-yellow-200"></div>
-                <div className="h-3 w-3 rounded-full bg-purple-200"></div>
+              {/* Chat window header with Mommique */}
+              <div className="bg-gradient-to-r from-pink-500 to-purple-500 p-4 flex items-center">
+                <h3 className="text-white font-semibold text-lg">Mommique</h3>
+                <div className="ml-auto flex items-center gap-2">
+                  <div className="h-3 w-3 rounded-full bg-yellow-300"></div>
+                  <div className="h-3 w-3 rounded-full bg-green-400"></div>
+                  <div className="h-3 w-3 rounded-full bg-red-400"></div>
+                </div>
               </div>
               
               {/* Chat messages */}
-              <div className="p-4">
+              <div className="p-4 h-[380px] overflow-y-auto" ref={chatContainerRef}>
+                {/* User question */}
                 <div className="flex justify-end mb-4">
                   <div className="bg-[#f0f1ff] rounded-lg p-4 max-w-[80%]">
                     <p>My baby is 2 weeks old and has a really red diaper rash. Is this normal?</p>
                   </div>
                 </div>
                 
+                {/* Assistant response */}
                 <div className="flex justify-start mb-4">
                   <div className="bg-[#e9f4ff] rounded-lg p-4 max-w-[80%]">
                     <p>Diaper rash is common in newborns. For a 2-week-old, try these steps:</p>
@@ -318,20 +326,25 @@ const Features = () => {
                   </div>
                 </div>
                 
+                {/* User follow-up */}
                 <div className="flex justify-end mb-4">
                   <div className="bg-[#f0f1ff] rounded-lg p-4 max-w-[80%]">
                     <p>Thanks, that's helpful! How often should I change diapers?</p>
                   </div>
                 </div>
                 
-                <div className="flex items-center text-gray-400 mt-6">
-                  <p>CaringMommy is typing</p>
-                  <div className="flex ml-2">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse mx-1" style={{animationDelay: '0.2s'}}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                {/* Typing indicator */}
+                {isTyping && (
+                  <div className="flex items-center text-gray-400 mt-6">
+                    <p>Mommique is typing</p>
+                    <div className="typing-animation flex ml-2">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse mx-1" style={{animationDelay: '0.2s'}}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                    </div>
                   </div>
-                </div>
+                )}
+                <div ref={messagesEndRef} />
               </div>
             </div>
           </div>
