@@ -117,11 +117,21 @@ const Hero = () => {
             </button>
           </div>
           
-          {/* Answer section - now without themed box */}
+          {/* Answer section - friendly, empathetic styling */}
           {showAnswer && (
-            <div className="mb-4 text-gray-800">
+            <div className="mb-4 text-gray-800 px-4 py-3 rounded-lg bg-pink-50 border border-pink-100">
               <p className="text-sm whitespace-pre-line">
-                {answer}
+                <em className="font-medium text-pink-700 block mb-1">Mommique answer:</em>
+                <span className="text-gray-700">I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to:
+                <ul className="mt-2 ml-4 space-y-1">
+                  <li>• Uterus shrinking (takes up to 6 weeks)</li>
+                  <li>• Stretched abdominal muscles</li>
+                  <li>• Possible fluid retention</li>
+                  <li>• Potential diastasis recti (abdominal muscle separation)</li>
+                </ul>
+                
+                <p className="mt-3">When the app is built, I can provide a detailed explanation of these changes and tips for faster recovery. If this is helpful, join the waitlist!</p>
+                </span>
               </p>
             </div>
           )}
