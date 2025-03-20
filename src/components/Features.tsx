@@ -1,8 +1,9 @@
-
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send } from 'lucide-react';
+import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send, Search } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const Features = () => {
   const [messages, setMessages] = useState([
@@ -305,7 +306,7 @@ const Features = () => {
               </div>
               
               {/* Chat messages */}
-              <div className="p-4 h-[380px] overflow-y-auto" ref={chatContainerRef}>
+              <div className="p-4 h-[320px] overflow-y-auto" ref={chatContainerRef}>
                 {/* User question */}
                 <div className="flex justify-end mb-4">
                   <div className="bg-[#f0f1ff] rounded-lg p-4 max-w-[80%]">
@@ -345,6 +346,48 @@ const Features = () => {
                   </div>
                 )}
                 <div ref={messagesEndRef} />
+              </div>
+              
+              {/* Search input with voice and send buttons */}
+              <div className="p-4 border-t border-gray-100">
+                <form onSubmit={handleSubmit} className="flex items-center gap-2">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="text-gray-500 hover:text-pink-500 transition-colors"
+                    onClick={toggleRecording}
+                  >
+                    {isRecording ? (
+                      <MicOff className="h-5 w-5 text-red-500" />
+                    ) : (
+                      <Mic className="h-5 w-5" />
+                    )}
+                  </Button>
+                  
+                  <div className="relative flex-1">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                      <Search className="h-4 w-4" />
+                    </div>
+                    <Input
+                      type="text"
+                      placeholder="Ask a question about your postpartum journey..."
+                      value={inputMessage}
+                      onChange={(e) => setInputMessage(e.target.value)}
+                      className="pl-10 pr-10 py-3 bg-gray-50 border-gray-200 rounded-full focus:ring-1 focus:ring-pink-300 focus:border-pink-300"
+                      disabled={isRecording || isProcessing}
+                    />
+                  </div>
+                  
+                  <Button
+                    type="submit"
+                    size="icon"
+                    className="bg-pink-500 hover:bg-pink-600 text-white rounded-full"
+                    disabled={inputMessage.trim() === '' || isRecording || isProcessing}
+                  >
+                    <Send className="h-4 w-4" />
+                  </Button>
+                </form>
               </div>
             </div>
           </div>
