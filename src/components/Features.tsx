@@ -1,20 +1,16 @@
-
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send, Bot } from 'lucide-react';
+import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Features = () => {
   const [messages, setMessages] = useState([
-    { role: 'system', content: 'Hello! I\'m your personal AI guide, tailored specifically to your needs. How can I help you today?' },
     { role: 'user', content: 'My baby is 2 weeks old and has a really red diaper rash. Is this normal?' },
-    { role: 'system', content: 'Based on your baby's age (2 weeks) and your description, this type of diaper rash is common in newborns. For your specific situation, try these personalized steps:\n\n• Change diapers more frequently, especially for your newborn's sensitive skin\n• Allow air-dry time after each change\n• Apply a thin layer of zinc oxide cream designed for sensitive newborn skin\n\nIf the rash doesn't improve in 2-3 days with these measures or if you notice blisters, pus, or your baby seems uncomfortable, please contact your pediatrician right away.' },
-    { role: 'user', content: 'How often should I be changing diapers for a newborn?' },
+    { role: 'assistant', content: 'Diaper rash is common in newborns. For a 2-week-old, try these steps:\n\n• Change diapers frequently\n\n• Allow air-dry time\n\n• Use zinc oxide cream\n\nCall your pediatrician if it doesn\'t improve in 2-3 days or if you notice blisters, pus, or severe discomfort.' },
+    { role: 'user', content: 'Thanks, that\'s helpful! How often should I change diapers?' },
   ]);
-  const [inputMessage, setInputMessage] = useState('');
-  const [isRecording, setIsRecording] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
   const [isTyping, setIsTyping] = useState(true);
+  const [inputMessage, setInputMessage] = useState('');
   const messagesEndRef = useRef(null);
   const chatContainerRef = useRef(null);
   const { toast } = useToast();
@@ -29,22 +25,12 @@ const Features = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     
-    // Simulate typing response to the follow-up question
-    setTimeout(() => {
+    // Simulate typing response
+    const typingTimeout = setTimeout(() => {
       setIsTyping(false);
-      setMessages(prev => [
-        ...prev,
-        { 
-          role: 'system', 
-          content: 'For your newborn, I recommend changing diapers about 8-10 times per day, or roughly every 2-3 hours. Since you're asking about frequency, it's important to note that your baby's individual needs might require more frequent changes, especially after feeding times when they're more likely to soil their diaper. Wet diapers should be changed promptly, and soiled diapers should be changed immediately to prevent diaper rash and keep your specific baby comfortable.'
-        }
-      ]);
-      
-      // Scroll to bottom after adding the response
-      setTimeout(() => {
-        scrollChatToBottom();
-      }, 100);
-    }, 2000);
+    }, 3000);
+    
+    return () => clearTimeout(typingTimeout);
   }, []);
 
   useEffect(() => {
@@ -116,7 +102,7 @@ const Features = () => {
     }
     
     setIsTyping(false);
-    setMessages(prev => [...prev, { role: 'system', content: response }]);
+    setMessages(prev => [...prev, { role: 'assistant', content: response }]);
     
     // After setting messages, scroll chat to bottom without page scrolling
     setTimeout(() => {
@@ -304,105 +290,49 @@ const Features = () => {
               </div>
             </div>
             
-            <div 
-              className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col outline-none" 
-              ref={chatContainerRef} 
-              tabIndex={-1} // Makes the container focusable without showing outline
-            >
-              <div className="bg-pink-100 p-4 flex items-center">
-                <div className="h-10 w-10 rounded-full bg-pink-200 flex items-center justify-center mr-3">
-                  <Bot className="h-6 w-6 text-pink-500" />
-                </div>
-                <div>
-                  <h4 className="font-medium">Your Assistant</h4>
-                  <p className="text-xs text-gray-600">Online • Responds instantly</p>
-                </div>
+            <div className="bg-white rounded-xl shadow-md overflow-hidden">
+              {/* Chat window circles */}
+              <div className="bg-white p-4 flex items-center gap-2">
+                <div className="h-3 w-3 rounded-full bg-red-300"></div>
+                <div className="h-3 w-3 rounded-full bg-yellow-200"></div>
+                <div className="h-3 w-3 rounded-full bg-purple-200"></div>
               </div>
               
-              <div className="bg-pink-50 p-4 flex justify-center items-center">
-                <div className="relative rounded-lg overflow-hidden w-full max-w-xs aspect-video bg-gradient-to-r from-pink-100 to-pink-200 flex items-center justify-center">
-                  <img 
-                    src="/lovable-uploads/79afbdd8-32c1-4b06-bca9-c21961dc1e30.png" 
-                    alt="Mother and baby whale illustration" 
-                    className="h-24 animate-float"
-                  />
-                  <div className="absolute bottom-2 right-2 bg-pink-100 text-pink-600 text-xs px-2 py-1 rounded-full">
-                    AI Guide
+              {/* Chat messages */}
+              <div className="p-4">
+                <div className="flex justify-end mb-4">
+                  <div className="bg-[#f0f1ff] rounded-lg p-4 max-w-[80%]">
+                    <p>My baby is 2 weeks old and has a really red diaper rash. Is this normal?</p>
+                  </div>
+                </div>
+                
+                <div className="flex justify-start mb-4">
+                  <div className="bg-[#e9f4ff] rounded-lg p-4 max-w-[80%]">
+                    <p>Diaper rash is common in newborns. For a 2-week-old, try these steps:</p>
+                    <ul className="list-disc pl-6 mt-2 space-y-2">
+                      <li>Change diapers frequently</li>
+                      <li>Allow air-dry time</li>
+                      <li>Use zinc oxide cream</li>
+                    </ul>
+                    <p className="mt-4">Call your pediatrician if it doesn't improve in 2-3 days or if you notice blisters, pus, or severe discomfort.</p>
+                  </div>
+                </div>
+                
+                <div className="flex justify-end mb-4">
+                  <div className="bg-[#f0f1ff] rounded-lg p-4 max-w-[80%]">
+                    <p>Thanks, that's helpful! How often should I change diapers?</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center text-gray-400 mt-6">
+                  <p>CaringMommy is typing</p>
+                  <div className="flex ml-2">
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse mx-1" style={{animationDelay: '0.2s'}}></div>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
                   </div>
                 </div>
               </div>
-              
-              <ScrollArea className="flex-1 p-4 max-h-80 bg-gray-50">
-                <div className="space-y-4">
-                  {messages.map((message, index) => (
-                    <div 
-                      key={index} 
-                      className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <div 
-                        className={`max-w-[80%] rounded-lg p-3 ${
-                          message.role === 'user' 
-                            ? 'bg-pink-100 text-gray-800' 
-                            : 'bg-white border border-gray-200 text-gray-800'
-                        }`}
-                      >
-                        <p className="whitespace-pre-line">{message.content}</p>
-                      </div>
-                    </div>
-                  ))}
-                  {isTyping && (
-                    <div className="flex justify-start">
-                      <div className="bg-white border border-gray-200 rounded-lg p-3">
-                        <div className="flex items-center space-x-1">
-                          <div className="w-2 h-2 bg-gray-300 rounded-full animate-pulse"></div>
-                          <div className="w-2 h-2 bg-gray-300 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                          <div className="w-2 h-2 bg-gray-300 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  <div ref={messagesEndRef} />
-                </div>
-              </ScrollArea>
-              
-              <form onSubmit={handleSubmit} className="p-4 border-t flex items-center gap-2">
-                <button 
-                  type="button" 
-                  onClick={(e) => {
-                    e.preventDefault(); // Prevent default to stop page scrolling
-                    toggleRecording();
-                  }}
-                  disabled={isProcessing}
-                  className={`p-2 rounded-full ${
-                    isRecording 
-                      ? 'bg-red-100 text-red-500 animate-pulse' 
-                      : isProcessing 
-                        ? 'bg-gray-100 text-gray-400' 
-                        : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
-                  }`}
-                >
-                  {isRecording ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
-                </button>
-                <input 
-                  type="text" 
-                  value={inputMessage} 
-                  onChange={(e) => setInputMessage(e.target.value)} 
-                  placeholder="Type your question here..." 
-                  className="flex-1 border border-gray-200 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-200"
-                  onClick={(e) => e.stopPropagation()}
-                />
-                <button 
-                  type="submit" 
-                  disabled={!inputMessage.trim()} 
-                  className={`p-2 rounded-full ${
-                    inputMessage.trim() 
-                      ? 'bg-pink-100 text-pink-500 hover:bg-pink-200' 
-                      : 'bg-gray-100 text-gray-400'
-                  }`}
-                >
-                  <Send className="h-5 w-5" />
-                </button>
-              </form>
             </div>
           </div>
         </div>
