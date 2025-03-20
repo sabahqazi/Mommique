@@ -40,6 +40,9 @@ const Hero = () => {
     } else if (searchQuery === "How do I know if my baby is getting enough milk?") {
       setAnswer("Mommique answer: I understand your concerned about the baby. A contented baby who seems satisfied after feeding, with at least 6 wet diapers and 3-4 bowel movements daily, is generally a good indicator of adequate milk intake. Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!");
       setShowAnswer(true);
+    } else if (searchQuery === "When will my postpartum bleeding stop?") {
+      setAnswer("Mommique answer: I understand the bleeding is very painful and discomforting. The Postpartum bleeding (lochia) lasts 4 to 6 weeks after giving birth, though it can sometimes extend up to 8 weeks. The bleeding gradually decreases in flow and changes color. If your bleeding suddenly becomes heavy is accompanied by symptoms like fever or severe pain, contact your healthcare provider.");
+      setShowAnswer(true);
     } else {
       // Reset answer if user searched for something else
       setShowAnswer(false);
@@ -145,6 +148,12 @@ const Hero = () => {
                           I understand your concerned about the baby. A contented baby who seems satisfied after feeding, with at least 6 wet diapers and 3-4 bowel movements daily, is generally a good indicator of adequate milk intake.
                           
                           <p className="mt-3">Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!</p>
+                        </>
+                      ) : searchQuery === "When will my postpartum bleeding stop?" ? (
+                        <>
+                          I understand the bleeding is very painful and discomforting. The Postpartum bleeding (lochia) lasts 4 to 6 weeks after giving birth, though it can sometimes extend up to 8 weeks. The bleeding gradually decreases in flow and changes color.
+                          
+                          <p className="mt-3">If your bleeding suddenly becomes heavy is accompanied by symptoms like fever or severe pain, contact your healthcare provider.</p>
                         </>
                       ) : (
                         answer.substring(answer.indexOf(":") + 1)
