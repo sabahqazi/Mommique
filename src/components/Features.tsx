@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send, Search } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
@@ -10,6 +11,7 @@ const Features = () => {
     { role: 'user', content: 'My baby is 2 weeks old and has a really red diaper rash. Is this normal?' },
     { role: 'assistant', content: 'Diaper rash is common in newborns. For a 2-week-old, try these steps:\n\n• Change diapers frequently\n\n• Allow air-dry time\n\n• Use zinc oxide cream\n\nCall your pediatrician if it doesn\'t improve in 2-3 days or if you notice blisters, pus, or severe discomfort.' },
     { role: 'user', content: 'Thanks, that\'s helpful! How often should I change diapers?' },
+    { role: 'assistant', content: 'I can help answer better by knowing how old is your baby' },
   ]);
   const [isTyping, setIsTyping] = useState(true);
   const [inputMessage, setInputMessage] = useState('');
@@ -240,8 +242,8 @@ const Features = () => {
               <div className="mb-4 text-pink-600 font-medium">Fast. Simple. Personalized For You!</div>
               <h3 className="text-3xl font-bold mb-6">As Easy as Talking to a Friend Who Knows Your Journey</h3>
               <p className="text-gray-700 mb-6">
-                Just type or speak your specific question in your own words, and get thoughtful, 
-                personalized answers tailored to your unique situation within seconds. No complicated menus or 
+                Just <span className="font-bold">type or speak</span> your specific question in your own words, and get 
+                personalized answers tailored to your situation within seconds. No complicated menus or 
                 learning curve.
               </p>
               
@@ -294,7 +296,7 @@ const Features = () => {
               </div>
             </div>
             
-            <div className="bg-white rounded-xl shadow-md overflow-hidden">
+            <div className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
               {/* Chat window header with Mommique */}
               <div className="bg-gradient-to-r from-pink-500 to-purple-500 p-4 flex items-center">
                 <h3 className="text-white font-semibold text-lg">Mommique</h3>
@@ -306,7 +308,7 @@ const Features = () => {
               </div>
               
               {/* Chat messages */}
-              <div className="p-4 h-[320px] overflow-y-auto" ref={chatContainerRef}>
+              <div className="p-4 h-[320px] overflow-y-auto flex-1" ref={chatContainerRef}>
                 {/* User question */}
                 <div className="flex justify-end mb-4">
                   <div className="bg-[#f0f1ff] rounded-lg p-4 max-w-[80%]">
@@ -334,6 +336,13 @@ const Features = () => {
                   </div>
                 </div>
                 
+                {/* Mommique response asking for baby's age */}
+                <div className="flex justify-start mb-4">
+                  <div className="bg-[#e9f4ff] rounded-lg p-4 max-w-[80%]">
+                    <p>I can help answer better by knowing how old is your baby</p>
+                  </div>
+                </div>
+                
                 {/* Typing indicator */}
                 {isTyping && (
                   <div className="flex items-center text-gray-400 mt-6">
@@ -349,7 +358,7 @@ const Features = () => {
               </div>
               
               {/* Search input with voice and send buttons */}
-              <div className="p-4 border-t border-gray-100">
+              <div className="p-4 border-t border-gray-100 mt-auto">
                 <form onSubmit={handleSubmit} className="flex items-center gap-2">
                   <Button
                     type="button"
