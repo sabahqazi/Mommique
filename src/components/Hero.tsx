@@ -8,7 +8,6 @@ import { Badge } from "@/components/ui/badge";
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showOverlay, setShowOverlay] = useState(false);
-  const [showAnswer, setShowAnswer] = useState(false);
   
   // Pills/tags for common questions
   const pills = [
@@ -29,11 +28,6 @@ const Hero = () => {
 
   const handlePillClick = (pill: string) => {
     setSearchQuery(pill);
-    if (pill === "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?") {
-      setShowAnswer(true);
-    } else {
-      setShowAnswer(false);
-    }
   };
 
   return <section className="min-h-screen pt-24 pb-10 relative overflow-hidden bg-[#f8fafc] flex items-center">
@@ -106,18 +100,6 @@ const Hero = () => {
               </div>
             </button>
           </div>
-          
-          {/* Answer section */}
-          {showAnswer && (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4 text-blue-800">
-              <h4 className="font-medium mb-2">Answer:</h4>
-              <p className="text-sm">
-                I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to: Uterus shrinking (takes up to 6 weeks) ; Stretched abdominal muscles ; Possible fluid retention ; Potential diastasis recti (abdominal muscle separation)
-                <br /><br />
-                When the app is built, I can provide a detailed explanation of these changes and tips for faster recovery. If this is helpful, join the waitlist!
-              </p>
-            </div>
-          )}
           
           <div className="text-center">
             <p className="text-gray-700 mb-3 font-['Open_Sans']">Want this experience? Join our waitlist today</p>
