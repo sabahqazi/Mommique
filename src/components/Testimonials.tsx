@@ -9,21 +9,21 @@ const testimonials = [
     name: "Sarah M.",
     role: "First-time mom",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=150&h=150&auto=format&fit=crop&q=60"
+    image: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=150&h=150&auto=format&fit=crop&q=80"
   },
   {
     quote: "The personalized advice based on my C-section recovery was incredibly helpful. Worth every penny for the support it provides.",
     name: "Jessica R.",
     role: "C-section recovery",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=150&h=150&auto=format&fit=crop&q=60"
+    image: "https://images.unsplash.com/photo-1623850835824-62d36e741905?w=150&h=150&auto=format&fit=crop&q=80"
   },
   {
     quote: "I love how it remembers my history and gives consistent advice. Much better than googling symptoms at 3 AM!",
     name: "Michelle K.",
     role: "2 weeks postpartum",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=150&h=150&auto=format&fit=crop&q=60"
+    image: "https://images.unsplash.com/photo-1631110670563-21dbba06ae97?w=150&h=150&auto=format&fit=crop&q=80"
   }
 ];
 
