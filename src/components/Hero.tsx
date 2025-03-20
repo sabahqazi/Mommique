@@ -8,6 +8,8 @@ import { Badge } from "@/components/ui/badge";
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showOverlay, setShowOverlay] = useState(false);
+  const [answer, setAnswer] = useState('');
+  const [showAnswer, setShowAnswer] = useState(false);
   
   // Pills/tags for common questions
   const pills = [
@@ -28,6 +30,17 @@ const Hero = () => {
 
   const handlePillClick = (pill: string) => {
     setSearchQuery(pill);
+    setShowAnswer(false); // Hide any previous answer
+  };
+
+  const handleSearch = () => {
+    if (searchQuery === "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?") {
+      setAnswer("I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to: Uterus shrinking (takes up to 6 weeks) ; Stretched abdominal muscles ; Possible fluid retention ; Potential diastasis recti (abdominal muscle separation)\n\nWhen the app is built, I can provide a detailed explanation of these changes and tips for faster recovery. If this is helpful, join the waitlist!");
+      setShowAnswer(true);
+    } else {
+      // Reset answer if user searched for something else
+      setShowAnswer(false);
+    }
   };
 
   return <section className="min-h-screen pt-24 pb-10 relative overflow-hidden bg-[#f8fafc] flex items-center">
@@ -94,12 +107,24 @@ const Hero = () => {
               <Search className="h-5 w-5 text-gray-400" />
             </div>
             <input type="text" className="pl-10 pr-12 py-3 w-full border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-200 font-['Open_Sans']" placeholder="Example: &quot;Why is my c-section scar still painful after 4 weeks OR what sleeping pattern is normal for my 6-week-old &quot;" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
-            <button className="absolute inset-y-0 right-3 flex items-center">
+            <button 
+              className="absolute inset-y-0 right-3 flex items-center"
+              onClick={handleSearch}
+            >
               <div className="bg-pink-100 p-2 rounded-full">
                 <Search className="h-4 w-4 text-pink-500" />
               </div>
             </button>
           </div>
+          
+          {/* Answer section */}
+          {showAnswer && (
+            <div className="bg-pink-50 border border-pink-100 rounded-lg p-4 mb-4 text-gray-800">
+              <p className="text-sm whitespace-pre-line">
+                {answer}
+              </p>
+            </div>
+          )}
           
           <div className="text-center">
             <p className="text-gray-700 mb-3 font-['Open_Sans']">Want this experience? Join our waitlist today</p>
