@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
@@ -16,7 +15,7 @@ const Hero = () => {
     "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?",
     "How do I know if my baby is getting enough milk?",
     "When will my postpartum bleeding stop?",
-    "When can I start exercising again",
+    "When can I start exercising again after giving birth?",
     "Is it normal for my baby to wake up every 2 hours?"
   ];
 
@@ -42,6 +41,9 @@ const Hero = () => {
       setShowAnswer(true);
     } else if (searchQuery === "When will my postpartum bleeding stop?") {
       setAnswer("Mommique answer: I understand the bleeding is very painful and discomforting. The Postpartum bleeding (lochia) lasts 4 to 6 weeks after giving birth, though it can sometimes extend up to 8 weeks. The bleeding gradually decreases in flow and changes color. If your bleeding suddenly becomes heavy is accompanied by symptoms like fever or severe pain, contact your healthcare provider.");
+      setShowAnswer(true);
+    } else if (searchQuery === "When can I start exercising again after giving birth?") {
+      setAnswer("Mommique answer: If you had vaginal delivery, you can usually start gentle exercises like walking, breathing and pelvic floor exercises within a few days after giving birth, or as soon as you feel comfortable. However, listen to your body. You will get through this strong! Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!");
       setShowAnswer(true);
     } else {
       // Reset answer if user searched for something else
@@ -154,6 +156,12 @@ const Hero = () => {
                           I understand the bleeding is very painful and discomforting. The Postpartum bleeding (lochia) lasts 4 to 6 weeks after giving birth, though it can sometimes extend up to 8 weeks. The bleeding gradually decreases in flow and changes color.
                           
                           <p className="mt-3">If your bleeding suddenly becomes heavy is accompanied by symptoms like fever or severe pain, contact your healthcare provider.</p>
+                        </>
+                      ) : searchQuery === "When can I start exercising again after giving birth?" ? (
+                        <>
+                          If you had vaginal delivery, you can usually start gentle exercises like walking, breathing and pelvic floor exercises within a few days after giving birth, or as soon as you feel comfortable. However, listen to your body. You will get through this strong!
+                          
+                          <p className="mt-3">Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!</p>
                         </>
                       ) : (
                         answer.substring(answer.indexOf(":") + 1)
