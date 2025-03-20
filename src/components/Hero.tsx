@@ -37,6 +37,9 @@ const Hero = () => {
     if (searchQuery === "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?") {
       setAnswer("Mommique answer: I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to: Uterus shrinking (takes up to 6 weeks) ; Stretched abdominal muscles ; Possible fluid retention ; Potential diastasis recti (abdominal muscle separation)\n\nOnce the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!");
       setShowAnswer(true);
+    } else if (searchQuery === "How do I know if my baby is getting enough milk?") {
+      setAnswer("Mommique answer: I understand your concerned about the baby. A contented baby who seems satisfied after feeding, with at least 6 wet diapers and 3-4 bowel movements daily, is generally a good indicator of adequate milk intake. Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!");
+      setShowAnswer(true);
     } else {
       // Reset answer if user searched for something else
       setShowAnswer(false);
@@ -121,17 +124,36 @@ const Hero = () => {
           {showAnswer && (
             <div className="mb-4 text-gray-800 px-4 py-3 rounded-lg bg-pink-50 border border-pink-100">
               <p className="text-sm whitespace-pre-line">
-                <em className="font-medium text-pink-700 block mb-1">Mommique answer:</em>
-                <span className="text-gray-700">I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to:
-                <ul className="mt-2 ml-4 space-y-1">
-                  <li>• Uterus shrinking (takes up to 6 weeks)</li>
-                  <li>• Stretched abdominal muscles</li>
-                  <li>• Possible fluid retention</li>
-                  <li>• Potential diastasis recti (abdominal muscle separation)</li>
-                </ul>
-                
-                <p className="mt-3">Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!</p>
-                </span>
+                {answer.startsWith("Mommique answer:") ? (
+                  <>
+                    <em className="font-medium text-pink-700 block mb-1">Mommique answer:</em>
+                    <span className="text-gray-700">
+                      {searchQuery === "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?" ? (
+                        <>
+                          I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to:
+                          <ul className="mt-2 ml-4 space-y-1">
+                            <li>• Uterus shrinking (takes up to 6 weeks)</li>
+                            <li>• Stretched abdominal muscles</li>
+                            <li>• Possible fluid retention</li>
+                            <li>• Potential diastasis recti (abdominal muscle separation)</li>
+                          </ul>
+                          
+                          <p className="mt-3">Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!</p>
+                        </>
+                      ) : searchQuery === "How do I know if my baby is getting enough milk?" ? (
+                        <>
+                          I understand your concerned about the baby. A contented baby who seems satisfied after feeding, with at least 6 wet diapers and 3-4 bowel movements daily, is generally a good indicator of adequate milk intake.
+                          
+                          <p className="mt-3">Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!</p>
+                        </>
+                      ) : (
+                        answer.substring(answer.indexOf(":") + 1)
+                      )}
+                    </span>
+                  </>
+                ) : (
+                  answer
+                )}
               </p>
             </div>
           )}
