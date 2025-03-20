@@ -35,7 +35,7 @@ const Hero = () => {
 
   const handleSearch = () => {
     if (searchQuery === "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?") {
-      setAnswer("Mommique answer: I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to: Uterus shrinking (takes up to 6 weeks) ; Stretched abdominal muscles ; Possible fluid retention ; Potential diastasis recti (abdominal muscle separation)\n\nWhen the app is built, I can provide a detailed explanation of these changes and tips for faster recovery. If this is helpful, join the waitlist!");
+      setAnswer("Mommique answer: I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to: Uterus shrinking (takes up to 6 weeks) ; Stretched abdominal muscles ; Possible fluid retention ; Potential diastasis recti (abdominal muscle separation)\n\nOnce the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!");
       setShowAnswer(true);
     } else {
       // Reset answer if user searched for something else
@@ -130,7 +130,7 @@ const Hero = () => {
                   <li>• Potential diastasis recti (abdominal muscle separation)</li>
                 </ul>
                 
-                <p className="mt-3">When the app is built, I can provide a detailed explanation of these changes and tips for faster recovery. If this is helpful, join the waitlist!</p>
+                <p className="mt-3">Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!</p>
                 </span>
               </p>
             </div>
