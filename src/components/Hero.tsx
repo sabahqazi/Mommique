@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
@@ -79,11 +80,11 @@ const Hero = () => {
             </h3>
           </div>
           
-          {/* Pills row - common questions/topics */}
-          <div className="flex flex-col items-center mb-4">
-            {/* First row - 2 pills */}
-            <div className="flex flex-wrap gap-2 mb-2 justify-center">
-              {pills.slice(0, 2).map((pill, index) => (
+          {/* Pills row - common questions/topics - reorganized into 2 rows */}
+          <div className="flex flex-col items-center mb-4 space-y-2">
+            {/* First row */}
+            <div className="flex flex-wrap gap-2 justify-center">
+              {pills.slice(0, 3).map((pill, index) => (
                 <Badge 
                   key={index} 
                   className="cursor-pointer text-xs py-1.5 px-3 whitespace-normal text-left bg-blue-100 hover:bg-blue-200 text-blue-800"
@@ -95,11 +96,11 @@ const Hero = () => {
               ))}
             </div>
             
-            {/* Second row - 3 pills */}
+            {/* Second row */}
             <div className="flex flex-wrap gap-2 justify-center">
-              {pills.slice(2, 5).map((pill, index) => (
+              {pills.slice(3, 5).map((pill, index) => (
                 <Badge 
-                  key={index + 2} 
+                  key={index + 3} 
                   className="cursor-pointer text-xs py-1.5 px-3 whitespace-normal text-left bg-blue-100 hover:bg-blue-200 text-blue-800"
                   variant="outline"
                   onClick={() => handlePillClick(pill)}
