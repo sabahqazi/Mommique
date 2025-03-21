@@ -1,10 +1,10 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send, Search } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 const Features = () => {
   const [messages, setMessages] = useState([
@@ -281,16 +281,12 @@ const Features = () => {
                 <p className="font-medium text-gray-700">Try asking about your specific concerns:</p>
                 <div className="flex flex-wrap gap-2">
                   {mockQuestions.map((question, index) => (
-                    <button 
-                      key={index} 
-                      onClick={(e) => {
-                        e.preventDefault(); // Prevent default to stop page scrolling
-                        handleMockQuestionClick(question);
-                      }}
-                      className="bg-blue-100 hover:bg-blue-200 text-blue-800 text-sm px-3 py-2 rounded-full transition-colors"
+                    <span 
+                      key={index}
+                      className="bg-blue-100 text-blue-800 text-sm px-3 py-2 rounded-full"
                     >
                       {question.length > 30 ? question.substring(0, 30) + '...' : question}
-                    </button>
+                    </span>
                   ))}
                 </div>
               </div>
