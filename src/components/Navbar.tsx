@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { cn } from "@/lib/utils";
 const Navbar = () => {
@@ -19,7 +18,7 @@ const Navbar = () => {
             <div className="flex flex-col items-center">
               <span style={{
               textShadow: '0 0 1px rgba(219, 39, 119, 0.5)'
-            }} className="font-['Comfortaa'] text-pink-600 tracking-wider text-4xl font-extrabold">bloom</span>
+            }} className="font-['Comfortaa'] text-pink-600 tracking-wider font-extrabold text-5xl">bloom</span>
               <span className="font-['Open_Sans'] text-blue-800 text-xs font-bold">moms deserve care too</span>
             </div>
           </a>
