@@ -113,7 +113,7 @@ const Hero = () => {
           {showAnswer && <div className="mb-4 text-gray-800 px-4 py-3 rounded-lg bg-pink-50 border border-pink-100">
               <p className="text-sm whitespace-pre-line">
                 {answer.startsWith("Mommique answer:") ? <>
-                    <em className="font-medium text-pink-700 block mb-1">Mommique answer:</em>
+                    <em className="font-medium text-pink-700 block mb-1">bloom answer:</em>
                     <span className="text-gray-700">
                       {searchQuery === "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?" ? <>
                           I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to:
@@ -185,11 +185,12 @@ const Hero = () => {
             e.preventDefault();
             setShowOverlay(false);
           }} className="bg-[#E04D60] hover:bg-[#d03c50] text-white font-medium px-8 rounded-lg transition-colors font-['Open_Sans'] py-[8px] mt-2">
-              Try Mommique
+              Try bloom
             </a>
           </div>
         </DialogContent>
       </Dialog>
     </section>;
 };
+
 export default Hero;

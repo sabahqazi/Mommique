@@ -10,8 +10,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div className="md:col-span-2">
             <a href="#" className="flex flex-col mb-6">
-              <span className="font-['Poppins'] text-xl font-extrabold text-pink-600">mommique</span>
-              <span className="font-['Roboto'] text-xs font-bold text-black text-center">every mom is unique</span>
+              <span className="font-['Poppins'] text-xl font-extrabold text-pink-600">bloom</span>
+              <span className="font-['Roboto'] text-xs font-bold text-black text-center">moms deserve care too</span>
             </a>
             <p className="text-gray-600 mb-6 max-w-md">
               Your AI-powered postpartum companion, providing personalized support and reliable answers when you need them most.
@@ -102,10 +102,10 @@ const Footer = () => {
         
         <div className="border-t border-gray-100 pt-8">
           <p className="text-center text-sm text-gray-500">
-            &copy; {currentYear} mommique. All rights reserved. Content on this page is proprietary.
+            &copy; {currentYear} bloom. All rights reserved. Content on this page is proprietary.
           </p>
           <p className="text-center text-xs text-gray-400 mt-2">
-            mommique is not a substitute for professional medical advice, diagnosis, or treatment. 
+            bloom is not a substitute for professional medical advice, diagnosis, or treatment. 
             Always seek the advice of your physician or other qualified health provider with any questions 
             you may have regarding a medical condition.
           </p>
