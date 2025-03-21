@@ -36,6 +36,9 @@ const Hero = () => {
     } else if (searchQuery === "When can I start exercising again after giving birth?") {
       setAnswer("Mommique answer: If you had vaginal delivery, you can usually start gentle exercises like walking, breathing and pelvic floor exercises within a few days after giving birth, or as soon as you feel comfortable. However, listen to your body. You will get through this strong! Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!");
       setShowAnswer(true);
+    } else if (searchQuery === "Is it normal for my baby to wake up every 2 hours?") {
+      setAnswer("Mommique answer: I know this can feel exhausting for you Momma, but It's completely normal for your baby to wake up every 2 hours, especially in the newborn stage. Newborns have small stomachs and need to feed frequently, which leads to frequent wake-ups. This ensures your baby gets the nourishment and comfort they need.");
+      setShowAnswer(true);
     } else {
       // Reset answer if user searched for something else
       setShowAnswer(false);
@@ -126,6 +129,8 @@ const Hero = () => {
                           If you had vaginal delivery, you can usually start gentle exercises like walking, breathing and pelvic floor exercises within a few days after giving birth, or as soon as you feel comfortable. However, listen to your body. You will get through this strong!
                           
                           <p className="mt-3">Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!</p>
+                        </> : searchQuery === "Is it normal for my baby to wake up every 2 hours?" ? <>
+                          I know this can feel exhausting for you Momma, but It's completely normal for your baby to wake up every 2 hours, especially in the newborn stage. Newborns have small stomachs and need to feed frequently, which leads to frequent wake-ups. This ensures your baby gets the nourishment and comfort they need.
                         </> : answer.substring(answer.indexOf(":") + 1)}
                     </span>
                   </> : answer}
