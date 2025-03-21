@@ -11,7 +11,9 @@ const Pricing = () => {
   const emailInputRef = useRef<HTMLInputElement>(null);
 
   // Your Google Apps Script URL
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvidTURfNhktIYhxGPC4JLtMcQYKUS06u6hW-CgkyTu2MABXlWsz4O2KGlydjjRLtw1Q/exec";
+  const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
+console.log("Script URL:", GOOGLE_SCRIPT_URL); // Check if this is undefined
+  
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
