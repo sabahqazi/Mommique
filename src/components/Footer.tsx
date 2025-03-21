@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 const Footer = () => {
@@ -8,9 +9,13 @@ const Footer = () => {
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div className="md:col-span-2">
-            <a href="#" className="flex flex-col items-center mb-6 inline-block">
-              <span className="font-['Comfortaa'] text-2xl font-bold text-pink-600 tracking-wider">bloom</span>
-              <span className="font-['Open_Sans'] text-xs font-medium text-black -mt-1">moms deserve care too</span>
+            <a href="#" className="flex items-start mb-6 inline-block">
+              <div className="flex flex-col">
+                <span className="font-['Comfortaa'] text-2xl font-bold text-pink-600 tracking-wider">bloom</span>
+                <div className="w-full flex justify-end">
+                  <span className="font-['Open_Sans'] text-xs font-medium text-black -mt-1">moms deserve care too</span>
+                </div>
+              </div>
             </a>
             <p className="text-gray-600 mb-6 max-w-md">
               Your AI-powered postpartum companion, providing personalized support and reliable answers when you need them most.
