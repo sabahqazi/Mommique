@@ -20,7 +20,7 @@ const Navbar = () => {
         <div className="flex items-center">
           <a href="#" className="flex items-center">
             <div className="flex flex-col items-center">
-              <span className="font-['Comfortaa'] text-pink-600 font-extrabold text-2xl tracking-wider">bloom</span>
+              <span className="font-['Comfortaa'] text-pink-600 font-extrabold text-3xl tracking-wider">bloom</span>
               <span className="font-['Open_Sans'] text-blue-800 text-xs font-medium">moms deserve care too</span>
             </div>
           </a>
