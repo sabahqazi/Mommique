@@ -67,7 +67,7 @@ const Hero = () => {
           </h1>
             
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-gray-900 text-center">
-            <span className="text-pink-600">Personalized AI partner that adapts to your unique postpartum journey</span>
+            <span className="text-gray-900">Personalized AI partner that adapts to <span className="text-pink-600">your</span> unique postpartum journey</span>
           </h2>
         </div>
         
@@ -178,7 +178,7 @@ const Hero = () => {
             </h2>
             
             <p className="text-gray-700 text-lg mb-2 font-['Open_Sans']">
-              Your postpartum journey is personal to you! I'm here for you 24/7. You don't have to face this journey alone!
+              <span className="text-pink-600">Your</span> postpartum journey is personal to you! I'm here for you 24/7. You don't have to face this journey alone!
             </p>
             
             <a href="#" onClick={e => {
