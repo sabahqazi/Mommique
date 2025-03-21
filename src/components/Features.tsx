@@ -264,7 +264,7 @@ const Features = () => {
                       <polyline points="22 4 12 14.01 9 11.01"></polyline>
                     </svg>
                   </div>
-                  <div>Use text or voice based on your preference and situation - perfect for those middle-of-the-night concerns</div>
+                  <div>Use <strong>text</strong> or <strong>voice</strong> based on your preference and situation - perfect for those middle-of-the-night concerns</div>
                 </li>
                 <li className="flex items-start">
                   <div className="mr-3 text-red-500 mt-1">
