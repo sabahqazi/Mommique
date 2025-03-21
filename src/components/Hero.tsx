@@ -173,7 +173,7 @@ const Hero = () => {
               <img src="/lovable-uploads/79afbdd8-32c1-4b06-bca9-c21961dc1e30.png" alt="Mother and baby whale illustration" className="w-full" />
             </div>
             
-            <h2 className="font-['Poppins'] text-3xl font-bold text-[#E04D60] mb-4">
+            <h2 className="font-['Comfortaa'] text-3xl font-bold text-[#E04D60] mb-4">
               Hi Mommy,<br />glad to see you here!
             </h2>
             
