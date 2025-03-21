@@ -164,7 +164,7 @@ const Hero = () => {
               Hi Mommy,<br />glad to see you here!
             </h2>
             
-            <p className="text-gray-700 text-lg mb-8 font-['Open_Sans']">
+            <p className="text-gray-700 text-lg mb-5 font-['Open_Sans']">
               Your postpartum journey is personal to you! I'm here for you 24/7. You don't have to face this journey alone!
             </p>
             
@@ -175,7 +175,7 @@ const Hero = () => {
               top: 0,
               behavior: 'smooth'
             });
-          }} className="bg-[#E04D60] hover:bg-[#d03c50] text-white font-medium px-8 rounded-lg transition-colors font-['Open_Sans'] py-[8px]">
+          }} className="bg-[#E04D60] hover:bg-[#d03c50] text-white font-medium px-8 rounded-lg transition-colors font-['Open_Sans'] py-[8px] -mt-2">
               Try Mommique
             </a>
           </div>
