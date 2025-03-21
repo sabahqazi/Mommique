@@ -1,7 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { cn } from "@/lib/utils";
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -11,6 +14,7 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
   return <nav className={cn("fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 bg-white shadow-sm")}>
       <div className="container flex items-center justify-between">
         <div className="flex items-center">
@@ -18,7 +22,7 @@ const Navbar = () => {
             <div className="flex flex-col items-center">
               <span style={{
               textShadow: '0 0 1px rgba(219, 39, 119, 0.5)'
-            }} className="font-['Comfortaa'] text-pink-600 tracking-wider font-extrabold text-5xl">bloom</span>
+            }} className="font-['Comfortaa'] text-pink-600 tracking-wider font-extrabold text-4xl">bloom</span>
               <span className="font-['Open_Sans'] text-blue-800 text-xs font-bold">moms deserve care too</span>
             </div>
           </a>
@@ -42,4 +46,5 @@ const Navbar = () => {
       </div>
     </nav>;
 };
+
 export default Navbar;
