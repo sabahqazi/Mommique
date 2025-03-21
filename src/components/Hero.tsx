@@ -32,24 +32,26 @@ const Hero = () => {
   const handleSearch = (query: string = searchQuery) => {
     const queryToUse = query || searchQuery;
     
+    const waitlistMessage = "Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!";
+    
     if (queryToUse === "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?") {
-      setAnswer("Mommique answer: I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to: Uterus shrinking (takes up to 6 weeks) ; Stretched abdominal muscles ; Possible fluid retention ; Potential diastasis recti (abdominal muscle separation)\n\nOnce the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!");
+      setAnswer(`Mommique answer: I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to: Uterus shrinking (takes up to 6 weeks) ; Stretched abdominal muscles ; Possible fluid retention ; Potential diastasis recti (abdominal muscle separation)\n\n${waitlistMessage}`);
       setShowAnswer(true);
     } else if (queryToUse === "How do I know if my baby is getting enough milk?") {
-      setAnswer("Mommique answer: I understand your concerned about the baby. A contented baby who seems satisfied after feeding, with at least 6 wet diapers and 3-4 bowel movements daily, is generally a good indicator of adequate milk intake. Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!");
+      setAnswer(`Mommique answer: I understand your concerned about the baby. A contented baby who seems satisfied after feeding, with at least 6 wet diapers and 3-4 bowel movements daily, is generally a good indicator of adequate milk intake. ${waitlistMessage}`);
       setShowAnswer(true);
     } else if (queryToUse === "When will my postpartum bleeding stop?") {
-      setAnswer("Mommique answer: I understand the bleeding is very painful and discomforting. The Postpartum bleeding (lochia) lasts 4 to 6 weeks after giving birth, though it can sometimes extend up to 8 weeks. The bleeding gradually decreases in flow and changes color. If your bleeding suddenly becomes heavy is accompanied by symptoms like fever or severe pain, contact your healthcare provider.");
+      setAnswer(`Mommique answer: I understand the bleeding is very painful and discomforting. The Postpartum bleeding (lochia) lasts 4 to 6 weeks after giving birth, though it can sometimes extend up to 8 weeks. The bleeding gradually decreases in flow and changes color. If your bleeding suddenly becomes heavy is accompanied by symptoms like fever or severe pain, contact your healthcare provider.\n\n${waitlistMessage}`);
       setShowAnswer(true);
     } else if (queryToUse === "When can I start exercising again after giving birth?") {
-      setAnswer("Mommique answer: If you had vaginal delivery, you can usually start gentle exercises like walking, breathing and pelvic floor exercises within a few days after giving birth, or as soon as you feel comfortable. However, listen to your body. You will get through this strong! Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!");
+      setAnswer(`Mommique answer: If you had vaginal delivery, you can usually start gentle exercises like walking, breathing and pelvic floor exercises within a few days after giving birth, or as soon as you feel comfortable. However, listen to your body. You will get through this strong! ${waitlistMessage}`);
       setShowAnswer(true);
     } else if (queryToUse === "Is it normal for my baby to wake up every 2 hours?") {
-      setAnswer("Mommique answer: I know this can feel exhausting for you Momma, but It's completely normal for your baby to wake up every 2 hours, especially in the newborn stage. Newborns have small stomachs and need to feed frequently, which leads to frequent wake-ups. This ensures your baby gets the nourishment and comfort they need.");
+      setAnswer(`Mommique answer: I know this can feel exhausting for you Momma, but It's completely normal for your baby to wake up every 2 hours, especially in the newborn stage. Newborns have small stomachs and need to feed frequently, which leads to frequent wake-ups. This ensures your baby gets the nourishment and comfort they need.\n\n${waitlistMessage}`);
       setShowAnswer(true);
     } else if (queryToUse.trim() !== "") {
       // For any non-empty query that doesn't match predefined questions
-      setAnswer("Mommique answer: Thanks for your question! Once our app launches, I'll be able to provide a personalized answer tailored to your specific situation. Join our waitlist to be among the first to experience the full version of Mommique!");
+      setAnswer(`Mommique answer: Thanks for your question! ${waitlistMessage}`);
       setShowAnswer(true);
     } else {
       // Reset answer if user searched with empty query

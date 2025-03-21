@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useRef } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
 
@@ -7,6 +8,7 @@ const Pricing = () => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const emailInputRef = useRef<HTMLInputElement>(null);
 
   // Your Google Apps Script URL
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvidTURfNhktIYhxGPC4JLtMcQYKUS06u6hW-CgkyTu2MABXlWsz4O2KGlydjjRLtw1Q/exec";
@@ -47,6 +49,24 @@ const Pricing = () => {
       console.error("Error submitting form:", error);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handlePricingButtonClick = (option: string) => {
+    // Scroll to the waitlist form
+    const waitlistElement = document.getElementById('waitlist');
+    if (waitlistElement) {
+      waitlistElement.scrollIntoView({ behavior: 'smooth' });
+      
+      // Set the selected pricing option
+      setSelectedOption(option);
+      
+      // Focus on the email input after a short delay to allow scrolling to complete
+      setTimeout(() => {
+        if (emailInputRef.current) {
+          emailInputRef.current.focus();
+        }
+      }, 600);
     }
   };
 
@@ -105,7 +125,7 @@ const Pricing = () => {
               </ul>
               <button 
                 className="w-full bg-blue-100 text-blue-800 font-medium py-3 rounded-lg hover:bg-blue-200 transition-colors"
-                onClick={() => setSelectedOption("monthly")}
+                onClick={() => handlePricingButtonClick("monthly")}
               >
                 Would Pay This Price
               </button>
@@ -122,7 +142,7 @@ const Pricing = () => {
                 <span className="ml-2 text-green-600 text-sm font-medium">Save 33%</span>
               </div>
               <p className="text-gray-600 mb-6">
-                Best value for your entire postpartum journey.
+                Unlimited access and best value for your entire postpartum journey.
               </p>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-2">
@@ -152,7 +172,7 @@ const Pricing = () => {
               </ul>
               <button 
                 className="w-full bg-pink-100 text-pink-700 font-medium py-3 rounded-lg hover:bg-pink-200 transition-colors"
-                onClick={() => setSelectedOption("annual")}
+                onClick={() => handlePricingButtonClick("annual")}
               >
                 Would Pay This Price
               </button>
@@ -176,6 +196,7 @@ const Pricing = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  ref={emailInputRef}
                 />
               </div>
               
