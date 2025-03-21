@@ -19,11 +19,9 @@ const Navbar = () => {
       <div className="container flex items-center justify-between">
         <div className="flex items-center">
           <a href="#" className="flex items-center">
-            <div className="flex flex-col">
-              <span className="font-['Comfortaa'] text-pink-600 font-bold text-2xl tracking-wider">bloom</span>
-              <div className="w-full flex justify-end">
-                <span className="font-['Open_Sans'] text-blue-800 text-xs font-medium -mt-1">moms deserve care too</span>
-              </div>
+            <div className="flex flex-col items-center">
+              <span className="font-['Comfortaa'] text-pink-600 font-extrabold text-2xl tracking-wider">bloom</span>
+              <span className="font-['Open_Sans'] text-blue-800 text-xs font-medium">moms deserve care too</span>
             </div>
           </a>
         </div>
