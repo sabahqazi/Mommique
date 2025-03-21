@@ -10,7 +10,7 @@ const Footer = () => {
           <div className="md:col-span-2">
             <a href="#" className="flex items-start mb-6 inline-block">
               <div className="flex flex-col items-center">
-                <span className="font-['Comfortaa'] text-5xl font-extrabold text-pink-600 tracking-wider" style={{ textShadow: '0 0 1px rgba(219, 39, 119, 0.5)' }}>bloom</span>
+                <span className="font-['Comfortaa'] text-4xl font-extrabold text-pink-600 tracking-wider" style={{ textShadow: '0 0 1px rgba(219, 39, 119, 0.5)' }}>bloom</span>
                 <span className="font-['Open_Sans'] text-xs font-medium text-black">moms deserve care too</span>
               </div>
             </a>
