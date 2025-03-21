@@ -86,11 +86,11 @@ const Hero = () => {
             </h3>
           </div>
           
-          {/* Pills row - common questions/topics - reorganized into 2 balanced rows */}
+          {/* Pills row - common questions/topics - reorganized into 2 rows (2 in first row, 3 in second) */}
           <div className="flex flex-col items-center mb-4 space-y-2">
-            {/* First row with 3 pills */}
+            {/* First row with 2 pills */}
             <div className="flex flex-wrap gap-2 justify-center">
-              {pills.slice(0, 3).map((pill, index) => (
+              {pills.slice(0, 2).map((pill, index) => (
                 <Badge 
                   key={index} 
                   className="cursor-pointer text-xs py-1.5 px-3 whitespace-normal text-left bg-blue-100 hover:bg-blue-200 text-blue-800" 
@@ -102,11 +102,11 @@ const Hero = () => {
               ))}
             </div>
             
-            {/* Second row with 2 pills */}
+            {/* Second row with 3 pills */}
             <div className="flex flex-wrap gap-2 justify-center">
-              {pills.slice(3, 5).map((pill, index) => (
+              {pills.slice(2, 5).map((pill, index) => (
                 <Badge 
-                  key={index + 3} 
+                  key={index + 2} 
                   className="cursor-pointer text-xs py-1.5 px-3 whitespace-normal text-left bg-blue-100 hover:bg-blue-200 text-blue-800" 
                   variant="outline" 
                   onClick={() => handlePillClick(pill)}
