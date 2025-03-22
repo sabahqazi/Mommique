@@ -193,7 +193,7 @@ const Pricing = () => {
             </div>
           </div>
           
-          <div id="waitlist" className="max-w-2xl mx-auto bg-white rounded-xl p-8 shadow-lg">
+          <div id="waitlist" className="max-w-2xl mx-auto bg-white rounded-xl p-8 shadow-lg transition-all duration-500">
             <form onSubmit={handleSubmit}>
               <h3 className="text-xl font-bold mb-2 text-center">Join Our Waitlist</h3>
               <p className="text-gray-600 mb-6 text-center">

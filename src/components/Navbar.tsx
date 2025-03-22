@@ -15,6 +15,32 @@ const Navbar = () => {
     };
   }, []);
 
+  const handleWaitlistClick = (e) => {
+    e.preventDefault();
+    const waitlistElement = document.getElementById('waitlist');
+    if (waitlistElement) {
+      waitlistElement.scrollIntoView({ behavior: 'smooth' });
+      
+      // Add a highlight effect to the waitlist form
+      waitlistElement.classList.add('highlight-pulse');
+      
+      // Center the waitlist element in the viewport
+      const viewportHeight = window.innerHeight;
+      const elementHeight = waitlistElement.offsetHeight;
+      const offset = Math.max(0, (viewportHeight - elementHeight) / 2);
+      
+      window.scrollBy({
+        top: -offset,
+        behavior: 'smooth'
+      });
+      
+      // Remove the highlight effect after animation completes
+      setTimeout(() => {
+        waitlistElement.classList.remove('highlight-pulse');
+      }, 2000);
+    }
+  };
+
   return <nav className={cn("fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 bg-white shadow-sm")}>
       <div className="container flex items-center justify-between">
         <div className="flex items-center">
@@ -40,7 +66,11 @@ const Navbar = () => {
           </a>
         </div>
         
-        <a href="#waitlist" className="bg-blue-100 text-blue-800 px-5 py-2.5 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-300">
+        <a 
+          href="#waitlist" 
+          className="bg-blue-100 text-blue-800 px-5 py-2.5 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-300"
+          onClick={handleWaitlistClick}
+        >
           Join Waitlist
         </a>
       </div>
