@@ -58,7 +58,7 @@ const Navbar = () => {
               <span style={{
               textShadow: '0 0 1px rgba(219, 39, 119, 0.5)'
             }} className="font-['Comfortaa'] text-pink-600 tracking-wider font-extrabold text-4xl">bloom</span>
-              <span className="font-['Open_Sans'] text-blue-800 text-xs font-bold">moms deserve care too</span>
+              <span className="font-['Comfortaa'] text-blue-800 text-xs font-bold">moms deserve care too</span>
             </div>
           </a>
         </div>
