@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
@@ -65,6 +64,24 @@ const Pricing = () => {
     const waitlistElement = document.getElementById('waitlist');
     if (waitlistElement) {
       waitlistElement.scrollIntoView({ behavior: 'smooth' });
+      
+      // Add a highlight effect to the waitlist form
+      waitlistElement.classList.add('highlight-pulse');
+      
+      // Center the waitlist element in the viewport
+      const viewportHeight = window.innerHeight;
+      const elementHeight = waitlistElement.offsetHeight;
+      const offset = Math.max(0, (viewportHeight - elementHeight) / 2);
+      
+      window.scrollBy({
+        top: -offset,
+        behavior: 'smooth'
+      });
+      
+      // Remove the highlight effect after animation completes
+      setTimeout(() => {
+        waitlistElement.classList.remove('highlight-pulse');
+      }, 2000);
       
       // Set the selected pricing option
       setSelectedOption(option);

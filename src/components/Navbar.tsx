@@ -15,7 +15,7 @@ const Navbar = () => {
     };
   }, []);
 
-  const handleWaitlistClick = (e) => {
+  const handleWaitlistClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const waitlistElement = document.getElementById('waitlist');
     if (waitlistElement) {
