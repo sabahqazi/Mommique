@@ -5,96 +5,96 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-
 const Features = () => {
-  const [messages, setMessages] = useState([
-    { role: 'user', content: 'My baby is 2 weeks old and has a really red diaper rash. Is this normal?' },
-    { role: 'assistant', content: 'Diaper rash is common in newborns. For a 2-week-old, try these steps:\n\n• Change diapers frequently\n\n• Allow air-dry time\n\n• Use zinc oxide cream\n\nCall your pediatrician if it doesn\'t improve in 2-3 days or if you notice blisters, pus, or severe discomfort.' },
-    { role: 'user', content: 'Thanks, that\'s helpful! How often should I change diapers?' },
-    { role: 'assistant', content: 'I can help answer better by knowing how old is your baby' },
-  ]);
+  const [messages, setMessages] = useState([{
+    role: 'user',
+    content: 'My baby is 2 weeks old and has a really red diaper rash. Is this normal?'
+  }, {
+    role: 'assistant',
+    content: 'Diaper rash is common in newborns. For a 2-week-old, try these steps:\n\n• Change diapers frequently\n\n• Allow air-dry time\n\n• Use zinc oxide cream\n\nCall your pediatrician if it doesn\'t improve in 2-3 days or if you notice blisters, pus, or severe discomfort.'
+  }, {
+    role: 'user',
+    content: 'Thanks, that\'s helpful! How often should I change diapers?'
+  }, {
+    role: 'assistant',
+    content: 'I can help answer better by knowing how old is your baby'
+  }]);
   const [isTyping, setIsTyping] = useState(true);
   const [inputMessage, setInputMessage] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const messagesEndRef = useRef(null);
   const chatContainerRef = useRef(null);
-  const { toast } = useToast();
-
-  const mockQuestions = [
-    "My baby is 2 weeks old and has a really red diaper rash. Is this normal?",
-    "How often should I change diapers for my newborn?",
-    "I'm feeling so exhausted. Is this normal or should I be concerned?",
-    "My baby won't latch properly when breastfeeding. What can I do?"
-  ];
-
+  const {
+    toast
+  } = useToast();
+  const mockQuestions = ["My baby is 2 weeks old and has a really red diaper rash. Is this normal?", "How often should I change diapers for my newborn?", "I'm feeling so exhausted. Is this normal or should I be concerned?", "My baby won't latch properly when breastfeeding. What can I do?"];
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    
+    messagesEndRef.current?.scrollIntoView({
+      behavior: 'smooth'
+    });
+
     // Simulate typing response
     const typingTimeout = setTimeout(() => {
       setIsTyping(false);
     }, 3000);
-    
     return () => clearTimeout(typingTimeout);
   }, []);
-
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({
+      behavior: 'smooth'
+    });
   }, [messages]);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (inputMessage.trim() === '') return;
-    
-    const newMessage = { role: 'user', content: inputMessage };
+    const newMessage = {
+      role: 'user',
+      content: inputMessage
+    };
     setMessages(prev => [...prev, newMessage]);
     setInputMessage('');
     setIsTyping(true);
-    
+
     // Scroll only within the chat container, not the page
     scrollChatToBottom();
-    
     setTimeout(() => {
       simulateResponse(inputMessage);
     }, 1500);
   };
-
-  const handleMockQuestionClick = (question) => {
+  const handleMockQuestionClick = question => {
     // Prevent default behavior to avoid scrolling
     event.preventDefault();
-    
     setInputMessage(question);
-    const newMessage = { role: 'user', content: question };
+    const newMessage = {
+      role: 'user',
+      content: question
+    };
     setMessages(prev => [...prev, newMessage]);
     setIsTyping(true);
-    
+
     // Focus on the chat container without scrolling the page
     if (chatContainerRef.current) {
       chatContainerRef.current.focus();
     }
-    
+
     // Scroll only within the chat container, not the page
     scrollChatToBottom();
-    
     setTimeout(() => {
       simulateResponse(question);
     }, 1500);
   };
-
   const scrollChatToBottom = () => {
     // Only scroll within the chat container
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ 
+      messagesEndRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'end'
       });
     }
   };
-
-  const simulateResponse = (question) => {
+  const simulateResponse = question => {
     let response = "";
-    
     if (question.toLowerCase().includes("diaper rash")) {
       response = "Based on your baby's age (2 weeks) and your description, this type of diaper rash is common in newborns. For your specific situation, try these personalized steps:\n\n• Change diapers more frequently, especially for your newborn's sensitive skin\n• Allow air-dry time after each change\n• Apply a thin layer of zinc oxide cream designed for sensitive newborn skin\n\nIf the rash doesn't improve in 2-3 days with these measures or if you notice blisters, pus, or your baby seems uncomfortable, please contact your pediatrician right away.";
     } else if (question.toLowerCase().includes("change diaper")) {
@@ -106,16 +106,17 @@ const Features = () => {
     } else {
       response = "Thank you for sharing your specific concern. As your personalized care specialist, I recommend discussing this particular issue with your healthcare provider at your next visit. In the meantime, you may find it helpful to monitor your symptoms and note any changes unique to your situation. Would you like me to provide some general information tailored to your recovery journey?";
     }
-    
     setIsTyping(false);
-    setMessages(prev => [...prev, { role: 'assistant', content: response }]);
-    
+    setMessages(prev => [...prev, {
+      role: 'assistant',
+      content: response
+    }]);
+
     // After setting messages, scroll chat to bottom without page scrolling
     setTimeout(() => {
       scrollChatToBottom();
     }, 100);
   };
-
   const toggleRecording = () => {
     if (isRecording) {
       stopRecording();
@@ -123,42 +124,34 @@ const Features = () => {
       startRecording();
     }
   };
-
   const startRecording = () => {
     setIsRecording(true);
     toast({
       title: "Voice recording started",
-      description: "Speak clearly about your specific concern",
+      description: "Speak clearly about your specific concern"
     });
-    
     setTimeout(() => {
       stopRecording();
     }, 3000);
   };
-
   const stopRecording = () => {
     setIsRecording(false);
     setIsProcessing(true);
-    
     toast({
       title: "Processing your unique question",
-      description: "Converting your specific concern to text...",
+      description: "Converting your specific concern to text..."
     });
-    
     setTimeout(() => {
       setIsProcessing(false);
       const randomQuestion = mockQuestions[Math.floor(Math.random() * mockQuestions.length)];
       setInputMessage(randomQuestion);
-      
       toast({
         title: "Your question processed",
-        description: "Ready to provide personalized guidance for your situation",
+        description: "Ready to provide personalized guidance for your situation"
       });
     }, 2000);
   };
-
-  return (
-    <section id="features" className="py-8 pb-4 bg-[#f8fafc]">
+  return <section id="features" className="py-8 pb-4 bg-[#f8fafc]">
       <div className="container">
         <div className="mb-12 text-center">
           <span className="bg-pink-100 text-pink-600 px-4 py-1.5 rounded-full text-sm font-medium">
@@ -280,14 +273,9 @@ const Features = () => {
               <div className="space-y-2">
                 <p className="font-medium text-gray-700">Try asking about your specific concerns:</p>
                 <div className="flex flex-wrap gap-2">
-                  {mockQuestions.map((question, index) => (
-                    <span 
-                      key={index}
-                      className="bg-blue-100 text-blue-800 text-sm px-3 py-2 rounded-full"
-                    >
+                  {mockQuestions.map((question, index) => <span key={index} className="bg-blue-100 text-blue-800 text-sm px-3 py-2 rounded-full">
                       {question.length > 30 ? question.substring(0, 30) + '...' : question}
-                    </span>
-                  ))}
+                    </span>)}
                 </div>
               </div>
             </div>
@@ -295,7 +283,7 @@ const Features = () => {
             <div className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
               {/* Chat window header with Mommique */}
               <div className="bg-gradient-to-r from-pink-500 to-purple-500 p-4 flex items-center">
-                <h3 className="text-white font-semibold text-lg">Mommique</h3>
+                <h3 className="text-white font-semibold text-lg">bloom</h3>
                 <div className="ml-auto flex items-center gap-2">
                   <div className="h-3 w-3 rounded-full bg-yellow-300"></div>
                   <div className="h-3 w-3 rounded-full bg-green-400"></div>
@@ -340,56 +328,36 @@ const Features = () => {
                 </div>
                 
                 {/* Typing indicator */}
-                {isTyping && (
-                  <div className="flex items-center text-gray-400 mt-6">
+                {isTyping && <div className="flex items-center text-gray-400 mt-6">
                     <p>Mommique is typing</p>
                     <div className="typing-animation flex ml-2">
                       <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse mx-1" style={{animationDelay: '0.2s'}}></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse mx-1" style={{
+                    animationDelay: '0.2s'
+                  }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{
+                    animationDelay: '0.4s'
+                  }}></div>
                     </div>
-                  </div>
-                )}
+                  </div>}
                 <div ref={messagesEndRef} />
               </div>
               
               {/* Search input with voice and send buttons */}
               <div className="p-4 border-t border-gray-100 mt-auto">
                 <form onSubmit={handleSubmit} className="flex items-center gap-2">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="text-gray-500 hover:text-pink-500 transition-colors"
-                    onClick={toggleRecording}
-                  >
-                    {isRecording ? (
-                      <MicOff className="h-5 w-5 text-red-500" />
-                    ) : (
-                      <Mic className="h-5 w-5" />
-                    )}
+                  <Button type="button" variant="ghost" size="icon" className="text-gray-500 hover:text-pink-500 transition-colors" onClick={toggleRecording}>
+                    {isRecording ? <MicOff className="h-5 w-5 text-red-500" /> : <Mic className="h-5 w-5" />}
                   </Button>
                   
                   <div className="relative flex-1">
                     <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                       <Search className="h-4 w-4" />
                     </div>
-                    <Input
-                      type="text"
-                      placeholder="Ask a question about your postpartum journey..."
-                      value={inputMessage}
-                      onChange={(e) => setInputMessage(e.target.value)}
-                      className="pl-10 pr-10 py-3 bg-gray-50 border-gray-200 rounded-full focus:ring-1 focus:ring-pink-300 focus:border-pink-300"
-                      disabled={isRecording || isProcessing}
-                    />
+                    <Input type="text" placeholder="Ask a question about your postpartum journey..." value={inputMessage} onChange={e => setInputMessage(e.target.value)} className="pl-10 pr-10 py-3 bg-gray-50 border-gray-200 rounded-full focus:ring-1 focus:ring-pink-300 focus:border-pink-300" disabled={isRecording || isProcessing} />
                   </div>
                   
-                  <Button
-                    type="submit"
-                    size="icon"
-                    className="bg-pink-500 hover:bg-pink-600 text-white rounded-full"
-                    disabled={inputMessage.trim() === '' || isRecording || isProcessing}
-                  >
+                  <Button type="submit" size="icon" className="bg-pink-500 hover:bg-pink-600 text-white rounded-full" disabled={inputMessage.trim() === '' || isRecording || isProcessing}>
                     <Send className="h-4 w-4" />
                   </Button>
                 </form>
@@ -398,8 +366,6 @@ const Features = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Features;
