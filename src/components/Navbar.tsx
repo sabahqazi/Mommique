@@ -19,6 +19,7 @@ const Navbar = () => {
     e.preventDefault();
     const waitlistElement = document.getElementById('waitlist');
     if (waitlistElement) {
+      // First scroll to the waitlist element
       waitlistElement.scrollIntoView({ behavior: 'smooth' });
       
       // Add a highlight effect to the waitlist form
@@ -29,10 +30,18 @@ const Navbar = () => {
       const elementHeight = waitlistElement.offsetHeight;
       const offset = Math.max(0, (viewportHeight - elementHeight) / 2);
       
-      window.scrollBy({
-        top: -offset,
-        behavior: 'smooth'
-      });
+      setTimeout(() => {
+        window.scrollBy({
+          top: -offset,
+          behavior: 'smooth'
+        });
+        
+        // Focus on the email input if possible
+        const emailInput = waitlistElement.querySelector('input[type="email"]');
+        if (emailInput) {
+          (emailInput as HTMLInputElement).focus();
+        }
+      }, 300); // Short delay to ensure scrollIntoView completes first
       
       // Remove the highlight effect after animation completes
       setTimeout(() => {
