@@ -177,7 +177,7 @@ const Hero = () => {
               Hi Mommy,<br />glad to see you here!
             </h2>
             
-            <p className="text-gray-700 text-lg mb-2 font-['Open_Sans']">
+            <p className="text-black text-lg mb-2 font-['Open_Sans']">
               <span className="text-inherit">Your</span> postpartum journey is personal to you! I'm here for you 24/7. You don't have to face this journey alone!
             </p>
             
