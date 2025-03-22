@@ -1,13 +1,16 @@
+
 import React, { useState, useRef } from 'react';
 import { useToast } from "@/hooks/use-toast";
-import { Check } from 'lucide-react';
+import { Check, Heart } from 'lucide-react';
 import { trackCTAClick, trackFormSubmit, trackPricingSelect } from '../services/analytics';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 const Pricing = () => {
   const [email, setEmail] = useState("");
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [ctaClickCount, setCtaClickCount] = useState(0);
+  const [showThankYouModal, setShowThankYouModal] = useState(false);
   const { toast } = useToast();
   const emailInputRef = useRef<HTMLInputElement>(null);
 
@@ -38,10 +41,10 @@ const Pricing = () => {
       
       // Since we can't access the response body with no-cors,
       // we assume success if the request doesn't throw an error
-      toast({
-        title: "Thank you for your interest!",
-        description: "We've added you to our waitlist and will notify you when we launch.",
-      });
+      
+      // Show the thank you modal instead of toast
+      setShowThankYouModal(true);
+      
       setEmail("");
       setSelectedOption(null);
     } catch (error) {
@@ -103,6 +106,32 @@ const Pricing = () => {
 
   return (
     <section id="pricing" className="py-16 bg-[#f8fafc]">
+      {/* Thank You Modal */}
+      <Dialog open={showThankYouModal} onOpenChange={setShowThankYouModal}>
+        <DialogContent className="bg-white p-6 rounded-lg max-w-md mx-auto">
+          <DialogHeader>
+            <div className="flex justify-center mb-4">
+              <div className="bg-pink-100 p-3 rounded-full">
+                <Heart className="h-6 w-6 text-pink-600" />
+              </div>
+            </div>
+            <DialogTitle className="text-xl font-bold text-center">Thank you for your interest!</DialogTitle>
+            <DialogDescription className="text-center mt-2">
+              We've added you to our waitlist and will notify you when we launch. 
+              We're excited to have you join the bloom mama community!
+            </DialogDescription>
+          </DialogHeader>
+          <div className="mt-6 flex justify-center">
+            <button 
+              onClick={() => setShowThankYouModal(false)}
+              className="font-['Comfortaa'] bg-pink-500 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-pink-600 transition-colors"
+            >
+              Close
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
+      
       <div className="container">
         <div className="text-center mb-8">
           <span className="bg-pink-100 text-pink-600 px-4 py-1.5 rounded-full text-sm font-medium">
