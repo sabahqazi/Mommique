@@ -14,7 +14,7 @@ const Hero = () => {
   const [heroCtaClicks, setHeroCtaClicks] = useState(0);
 
   // Pills/tags for common questions
-  const pills = ["I had a vaginal birth. Why do I still look pregnant even after 3 weeks?", "How do I know if my baby is getting enough milk?", "When will my postpartum bleeding stop?", "When can I start exercising again after giving birth?", "Is it normal for my baby to wake up every 2 hours?"];
+  const pills = ["I had a vaginal birth. Why do I still look pregnant even after 3 weeks?", "How do I know if my baby is getting enough milk?", "When will my postpartum bleeding stop?", "I had a C-section. When can I start exercising again after giving birth?", "Is it normal for my baby to wake up every 2 hours?"];
 
   useEffect(() => {
     // Show overlay after 3 seconds
@@ -43,8 +43,8 @@ const Hero = () => {
     } else if (queryToUse === "When will my postpartum bleeding stop?") {
       setAnswer(`Mommique answer: I understand the bleeding is very painful and discomforting. The Postpartum bleeding (lochia) lasts 4 to 6 weeks after giving birth, though it can sometimes extend up to 8 weeks. The bleeding gradually decreases in flow and changes color. If your bleeding suddenly becomes heavy is accompanied by symptoms like fever or severe pain, contact your healthcare provider.\n\n${waitlistMessage}`);
       setShowAnswer(true);
-    } else if (queryToUse === "When can I start exercising again after giving birth?") {
-      setAnswer(`Mommique answer: If you had vaginal delivery, you can usually start gentle exercises like walking, breathing and pelvic floor exercises within a few days after giving birth, or as soon as you feel comfortable. However, listen to your body. You will get through this strong! ${waitlistMessage}`);
+    } else if (queryToUse === "I had a C-section. When can I start exercising again after giving birth?") {
+      setAnswer(`Mommique answer: After a C-section, you should wait 6-8 weeks before starting any exercise routine. It's essential to let your body heal properly as this is major abdominal surgery. Start with gentle walking when you feel ready, and gradually increase intensity. Always consult with your healthcare provider before beginning any postpartum exercise program.\n\n${waitlistMessage}`);
       setShowAnswer(true);
     } else if (queryToUse === "Is it normal for my baby to wake up every 2 hours?") {
       setAnswer(`Mommique answer: I know this can feel exhausting for you Momma, but It's completely normal for your baby to wake up every 2 hours, especially in the newborn stage. Newborns have small stomachs and need to feed frequently, which leads to frequent wake-ups. This ensures your baby gets the nourishment and comfort they need.\n\n${waitlistMessage}`);
@@ -141,10 +141,10 @@ const Hero = () => {
                           I understand the bleeding is very painful and discomforting. The Postpartum bleeding (lochia) lasts 4 to 6 weeks after giving birth, though it can sometimes extend up to 8 weeks. The bleeding gradually decreases in flow and changes color.
                           
                           <p className="mt-3">If your bleeding suddenly becomes heavy is accompanied by symptoms like fever or severe pain, contact your healthcare provider.</p>
-                        </> : searchQuery === "When can I start exercising again after giving birth?" ? <>
-                          If you had vaginal delivery, you can usually start gentle exercises like walking, breathing and pelvic floor exercises within a few days after giving birth, or as soon as you feel comfortable. However, listen to your body. You will get through this strong!
+                        </> : searchQuery === "I had a C-section. When can I start exercising again after giving birth?" ? <>
+                          After a C-section, you should wait 6-8 weeks before starting any exercise routine. It's essential to let your body heal properly as this is major abdominal surgery. Start with gentle walking when you feel ready, and gradually increase intensity.
                           
-                          <p className="mt-3">Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!</p>
+                          <p className="mt-3">Always consult with your healthcare provider before beginning any postpartum exercise program. Once the app is launched, I will provide more personalized guidance. If you're interested, join the waitlist!</p>
                         </> : searchQuery === "Is it normal for my baby to wake up every 2 hours?" ? <>
                           I know this can feel exhausting for you Momma, but It's completely normal for your baby to wake up every 2 hours, especially in the newborn stage. Newborns have small stomachs and need to feed frequently, which leads to frequent wake-ups. This ensures your baby gets the nourishment and comfort they need.
                         </> : answer.substring(answer.indexOf(":") + 1)}
