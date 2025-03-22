@@ -178,7 +178,7 @@ const Hero = () => {
             </h2>
             
             <p className="text-gray-700 text-lg mb-2 font-['Open_Sans']">
-              <span className="text-pink-600">Your</span> postpartum journey is personal to you! I'm here for you 24/7. You don't have to face this journey alone!
+              <span className="text-inherit">Your</span> postpartum journey is personal to you! I'm here for you 24/7. You don't have to face this journey alone!
             </p>
             
             <a href="#" onClick={e => {
@@ -192,5 +192,4 @@ const Hero = () => {
       </Dialog>
     </section>;
 };
-
 export default Hero;
