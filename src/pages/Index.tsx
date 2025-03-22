@@ -1,14 +1,21 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
 import Testimonials from '../components/Testimonials';
 import Pricing from '../components/Pricing';
 import Footer from '../components/Footer';
+import { trackPageView, getAnalyticsData } from '../services/analytics';
 
 const Index = () => {
+  const [pageViewCount, setPageViewCount] = useState(0);
+
   useEffect(() => {
+    // Track page view
+    const viewCount = trackPageView('home');
+    setPageViewCount(viewCount);
+    
     // Scroll to top when page loads
     window.scrollTo({
       top: 0,
@@ -45,6 +52,13 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">
+      {/* Analytics indicator (visible only in development) */}
+      {import.meta.env.DEV && (
+        <div className="fixed bottom-4 right-4 bg-blue-100 text-blue-800 px-3 py-1 rounded-lg text-xs font-mono z-50 shadow-md">
+          Views: {pageViewCount}
+        </div>
+      )}
+      
       <Navbar />
       <Hero />
       <Features />

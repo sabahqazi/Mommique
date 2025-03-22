@@ -3,6 +3,7 @@ import { Search, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { trackCTAClick } from '../services/analytics';
 
 // Hero component with popup overlay
 const Hero = () => {
@@ -10,9 +11,11 @@ const Hero = () => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [answer, setAnswer] = useState('');
   const [showAnswer, setShowAnswer] = useState(false);
+  const [heroCtaClicks, setHeroCtaClicks] = useState(0);
 
   // Pills/tags for common questions
   const pills = ["I had a vaginal birth. Why do I still look pregnant even after 3 weeks?", "How do I know if my baby is getting enough milk?", "When will my postpartum bleeding stop?", "When can I start exercising again after giving birth?", "Is it normal for my baby to wake up every 2 hours?"];
+
   useEffect(() => {
     // Show overlay after 3 seconds
     const timer = setTimeout(() => {
@@ -20,11 +23,13 @@ const Hero = () => {
     }, 3000);
     return () => clearTimeout(timer);
   }, []);
+
   const handlePillClick = (pill: string) => {
     setSearchQuery(pill);
     // Immediately show the answer when a pill is clicked
     handleSearch(pill);
   };
+
   const handleSearch = (query: string = searchQuery) => {
     const queryToUse = query || searchQuery;
     const waitlistMessage = "Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!";
@@ -52,6 +57,12 @@ const Hero = () => {
       setShowAnswer(false);
     }
   };
+
+  const trackHeroCtaClick = (ctaName: string) => {
+    const clickCount = trackCTAClick('home', ctaName, 'hero-section');
+    setHeroCtaClicks(clickCount);
+  };
+
   return <section className="min-h-screen pt-24 pb-10 relative overflow-hidden bg-[#f8fafc] flex items-center">
       <div className="container relative z-10">
         <div className="max-w-4xl mx-auto text-center mb-5">
@@ -80,16 +91,13 @@ const Hero = () => {
             </h3>
           </div>
           
-          {/* Pills row - common questions/topics - reorganized into 2 rows (2 in first row, 3 in second) */}
           <div className="flex flex-col items-center mb-4 space-y-2">
-            {/* First row with 2 pills */}
             <div className="flex flex-wrap gap-2 justify-center">
               {pills.slice(0, 2).map((pill, index) => <Badge key={index} className="cursor-pointer text-xs py-1.5 px-3 whitespace-normal text-left bg-blue-100 hover:bg-blue-200 text-blue-800" variant="outline" onClick={() => handlePillClick(pill)}>
                   {pill}
                 </Badge>)}
             </div>
             
-            {/* Second row with 3 pills */}
             <div className="flex flex-wrap gap-2 justify-center">
               {pills.slice(2, 5).map((pill, index) => <Badge key={index + 2} className="cursor-pointer text-xs py-1.5 px-3 whitespace-normal text-left bg-blue-100 hover:bg-blue-200 text-blue-800" variant="outline" onClick={() => handlePillClick(pill)}>
                   {pill}
@@ -109,7 +117,6 @@ const Hero = () => {
             </button>
           </div>
           
-          {/* Answer section - friendly, empathetic styling */}
           {showAnswer && <div className="mb-4 text-gray-800 px-4 py-3 rounded-lg bg-pink-50 border border-pink-100">
               <p className="text-sm whitespace-pre-line">
                 {answer.startsWith("Mommique answer:") ? <>
@@ -148,18 +155,31 @@ const Hero = () => {
           <div className="text-center">
             <p className="text-gray-700 mb-3 font-['Open_Sans']">Want this experience? Join our waitlist today</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a href="#waitlist" className="bg-pink-100 hover:bg-pink-200 text-pink-700 px-6 py-3 rounded-lg font-medium transition-colors font-['Open_Sans']">
+              <a 
+                href="#waitlist" 
+                className="bg-pink-100 hover:bg-pink-200 text-pink-700 px-6 py-3 rounded-lg font-medium transition-colors font-['Open_Sans']"
+                onClick={() => trackHeroCtaClick('join-waitlist')}
+              >
                 Join Waitlist
               </a>
-              <a href="#features" className="bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors font-['Open_Sans']">
+              <a 
+                href="#features" 
+                className="bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors font-['Open_Sans']"
+                onClick={() => trackCTAClick('home', 'see-features', 'hero-section')}
+              >
                 See Features
               </a>
             </div>
+            
+            {import.meta.env.DEV && heroCtaClicks > 0 && (
+              <div className="mt-2 text-xs text-blue-500">
+                Hero CTA Clicks: {heroCtaClicks}
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Overlay Dialog - now without interactive elements for "how it works" */}
       <Dialog open={showOverlay} onOpenChange={setShowOverlay}>
         <DialogContent className="bg-[#E8F4FF] border-none p-6 max-w-md mx-auto rounded-xl">
           <DialogTitle className="sr-only">Welcome Message</DialogTitle>
@@ -192,4 +212,5 @@ const Hero = () => {
       </Dialog>
     </section>;
 };
+
 export default Hero;

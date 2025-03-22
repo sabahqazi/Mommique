@@ -1,25 +1,27 @@
-
 import React, { useState, useRef } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
+import { trackCTAClick, trackFormSubmit, trackPricingSelect } from '../services/analytics';
 
 const Pricing = () => {
   const [email, setEmail] = useState("");
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [ctaClickCount, setCtaClickCount] = useState(0);
   const { toast } = useToast();
   const emailInputRef = useRef<HTMLInputElement>(null);
 
   // Your Google Apps Script URL
   const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
-console.log("Script URL:", GOOGLE_SCRIPT_URL); // Check if this is undefined
-  
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
     try {
+      // Track form submission
+      trackFormSubmit('home', 'waitlist', { email, pricingOption: selectedOption || 'none' });
+      
       // Prepare form data
       const formData = new FormData();
       formData.append('email', email);
@@ -55,6 +57,9 @@ console.log("Script URL:", GOOGLE_SCRIPT_URL); // Check if this is undefined
   };
 
   const handlePricingButtonClick = (option: string) => {
+    // Track pricing option selection
+    trackPricingSelect('home', option);
+    
     // Scroll to the waitlist form
     const waitlistElement = document.getElementById('waitlist');
     if (waitlistElement) {
@@ -70,6 +75,12 @@ console.log("Script URL:", GOOGLE_SCRIPT_URL); // Check if this is undefined
         }
       }, 600);
     }
+  };
+  
+  const handleWaitlistCTAClick = () => {
+    // Track CTA click
+    const clickCount = trackCTAClick('home', 'join-waitlist', 'pricing-section');
+    setCtaClickCount(clickCount);
   };
 
   return (
@@ -256,6 +267,7 @@ console.log("Script URL:", GOOGLE_SCRIPT_URL); // Check if this is undefined
                 type="submit" 
                 className="w-full bg-pink-500 text-white font-medium py-3 rounded-lg transition-colors hover:bg-pink-600 disabled:opacity-70"
                 disabled={isSubmitting || !email || !selectedOption}
+                onClick={handleWaitlistCTAClick}
               >
                 {isSubmitting ? "Submitting..." : "Join Waitlist"}
               </button>
@@ -263,6 +275,13 @@ console.log("Script URL:", GOOGLE_SCRIPT_URL); // Check if this is undefined
               <p className="text-xs text-gray-500 mt-4 text-center">
                 We'll notify you when we launch. No spam, we promise.
               </p>
+              
+              {/* Analytics indicator (visible only in development) */}
+              {import.meta.env.DEV && ctaClickCount > 0 && (
+                <div className="mt-2 text-xs text-center text-blue-500">
+                  CTA Clicks: {ctaClickCount}
+                </div>
+              )}
             </form>
           </div>
         </div>
