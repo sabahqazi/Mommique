@@ -1,13 +1,17 @@
+
 import React, { useState, useRef } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Check } from 'lucide-react';
 import { trackCTAClick, trackFormSubmit, trackPricingSelect } from '../services/analytics';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const Pricing = () => {
   const [email, setEmail] = useState("");
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [ctaClickCount, setCtaClickCount] = useState(0);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
   const emailInputRef = useRef<HTMLInputElement>(null);
 
@@ -44,6 +48,7 @@ const Pricing = () => {
       });
       setEmail("");
       setSelectedOption(null);
+      setIsDialogOpen(false);
     } catch (error) {
       toast({
         title: "Submission failed",
@@ -60,28 +65,116 @@ const Pricing = () => {
     // Track pricing option selection
     trackPricingSelect('home', option);
     
-    // Scroll to the waitlist form
-    const waitlistElement = document.getElementById('waitlist');
-    if (waitlistElement) {
-      waitlistElement.scrollIntoView({ behavior: 'smooth' });
-      
-      // Set the selected pricing option
-      setSelectedOption(option);
-      
-      // Focus on the email input after a short delay to allow scrolling to complete
-      setTimeout(() => {
-        if (emailInputRef.current) {
-          emailInputRef.current.focus();
-        }
-      }, 600);
-    }
+    // Set the selected pricing option
+    setSelectedOption(option);
+    
+    // Open the dialog with the waitlist form
+    setIsDialogOpen(true);
+    
+    // Focus on the email input after a short delay to allow the dialog to open
+    setTimeout(() => {
+      if (emailInputRef.current) {
+        emailInputRef.current.focus();
+      }
+    }, 300);
   };
   
   const handleWaitlistCTAClick = () => {
     // Track CTA click
     const clickCount = trackCTAClick('home', 'join-waitlist', 'pricing-section');
     setCtaClickCount(clickCount);
+    
+    // Open the dialog
+    setIsDialogOpen(true);
   };
+
+  const WaitlistForm = () => (
+    <form onSubmit={handleSubmit}>
+      <div className="mb-6">
+        <label htmlFor="email" className="block text-sm font-medium mb-1">Email Address</label>
+        <input 
+          type="email" 
+          id="email" 
+          className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-200"
+          placeholder="your.email@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          ref={emailInputRef}
+        />
+      </div>
+      
+      <div className="mb-6">
+        <p className="block text-sm font-medium mb-2">Would you pay for this service?</p>
+        <div className="space-y-2">
+          <label className="flex items-center space-x-2 cursor-pointer">
+            <input 
+              type="radio" 
+              name="pricing" 
+              value="monthly"
+              checked={selectedOption === "monthly"}
+              onChange={() => setSelectedOption("monthly")}
+              className="h-4 w-4 text-pink-500 focus:ring-pink-500 border-gray-300"
+            />
+            <span>Yes, I would pay $9.99/month</span>
+          </label>
+          <label className="flex items-center space-x-2 cursor-pointer">
+            <input 
+              type="radio" 
+              name="pricing" 
+              value="annual"
+              checked={selectedOption === "annual"}
+              onChange={() => setSelectedOption("annual")}
+              className="h-4 w-4 text-pink-500 focus:ring-pink-500 border-gray-300"
+            />
+            <span>Yes, I would pay $79.99/year</span>
+          </label>
+          <label className="flex items-center space-x-2 cursor-pointer">
+            <input 
+              type="radio" 
+              name="pricing" 
+              value="too_expensive"
+              checked={selectedOption === "too_expensive"}
+              onChange={() => setSelectedOption("too_expensive")}
+              className="h-4 w-4 text-pink-500 focus:ring-pink-500 border-gray-300"
+            />
+            <span>These prices are too high for me</span>
+          </label>
+          <label className="flex items-center space-x-2 cursor-pointer">
+            <input 
+              type="radio" 
+              name="pricing" 
+              value="not_pay"
+              checked={selectedOption === "not_pay"}
+              onChange={() => setSelectedOption("not_pay")}
+              className="h-4 w-4 text-pink-500 focus:ring-pink-500 border-gray-300"
+            />
+            <span>I would not pay for this service</span>
+          </label>
+        </div>
+      </div>
+      
+      <Button 
+        type="submit" 
+        className="w-full bg-pink-500 text-white font-medium py-3 rounded-lg transition-colors hover:bg-pink-600 disabled:opacity-70"
+        disabled={isSubmitting || !email || !selectedOption}
+        onClick={handleWaitlistCTAClick}
+      >
+        {isSubmitting ? "Submitting..." : "Join Waitlist"}
+      </Button>
+      
+      <p className="text-xs text-gray-500 mt-4 text-center">
+        We'll notify you when we launch. No spam, we promise.
+      </p>
+      
+      {/* Analytics indicator (visible only in development) */}
+      {import.meta.env.DEV && ctaClickCount > 0 && (
+        <div className="mt-2 text-xs text-center text-blue-500">
+          CTA Clicks: {ctaClickCount}
+        </div>
+      )}
+    </form>
+  );
 
   return (
     <section id="pricing" className="py-16 bg-[#f8fafc]">
@@ -192,98 +285,29 @@ const Pricing = () => {
             </div>
           </div>
           
-          <div id="waitlist" className="max-w-2xl mx-auto bg-white rounded-xl p-8 shadow-lg">
-            <form onSubmit={handleSubmit}>
-              <h3 className="text-xl font-bold mb-2 text-center">Join Our Waitlist</h3>
-              <p className="text-gray-600 mb-6 text-center">
-                Be the first to know when we launch and get exclusive early access.
-              </p>
-              
-              <div className="mb-6">
-                <label htmlFor="email" className="block text-sm font-medium mb-1">Email Address</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-200"
-                  placeholder="your.email@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  ref={emailInputRef}
-                />
-              </div>
-              
-              <div className="mb-6">
-                <p className="block text-sm font-medium mb-2">Would you pay for this service?</p>
-                <div className="space-y-2">
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input 
-                      type="radio" 
-                      name="pricing" 
-                      value="monthly"
-                      checked={selectedOption === "monthly"}
-                      onChange={() => setSelectedOption("monthly")}
-                      className="h-4 w-4 text-pink-500 focus:ring-pink-500 border-gray-300"
-                    />
-                    <span>Yes, I would pay $9.99/month</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input 
-                      type="radio" 
-                      name="pricing" 
-                      value="annual"
-                      checked={selectedOption === "annual"}
-                      onChange={() => setSelectedOption("annual")}
-                      className="h-4 w-4 text-pink-500 focus:ring-pink-500 border-gray-300"
-                    />
-                    <span>Yes, I would pay $79.99/year</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input 
-                      type="radio" 
-                      name="pricing" 
-                      value="too_expensive"
-                      checked={selectedOption === "too_expensive"}
-                      onChange={() => setSelectedOption("too_expensive")}
-                      className="h-4 w-4 text-pink-500 focus:ring-pink-500 border-gray-300"
-                    />
-                    <span>These prices are too high for me</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input 
-                      type="radio" 
-                      name="pricing" 
-                      value="not_pay"
-                      checked={selectedOption === "not_pay"}
-                      onChange={() => setSelectedOption("not_pay")}
-                      className="h-4 w-4 text-pink-500 focus:ring-pink-500 border-gray-300"
-                    />
-                    <span>I would not pay for this service</span>
-                  </label>
-                </div>
-              </div>
-              
-              <button 
-                type="submit" 
-                className="w-full bg-pink-500 text-white font-medium py-3 rounded-lg transition-colors hover:bg-pink-600 disabled:opacity-70"
-                disabled={isSubmitting || !email || !selectedOption}
-                onClick={handleWaitlistCTAClick}
-              >
-                {isSubmitting ? "Submitting..." : "Join Waitlist"}
-              </button>
-              
-              <p className="text-xs text-gray-500 mt-4 text-center">
-                We'll notify you when we launch. No spam, we promise.
-              </p>
-              
-              {/* Analytics indicator (visible only in development) */}
-              {import.meta.env.DEV && ctaClickCount > 0 && (
-                <div className="mt-2 text-xs text-center text-blue-500">
-                  CTA Clicks: {ctaClickCount}
-                </div>
-              )}
-            </form>
+          <div className="text-center">
+            <Button 
+              className="bg-pink-500 hover:bg-pink-600 text-white font-medium px-8 py-3 rounded-lg text-lg"
+              onClick={handleWaitlistCTAClick}
+            >
+              Join Waitlist
+            </Button>
           </div>
+          
+          {/* Dialog for the centered waitlist form */}
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle className="text-xl font-bold">Join Our Waitlist</DialogTitle>
+                <DialogDescription>
+                  Be the first to know when we launch and get exclusive early access.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="py-4">
+                <WaitlistForm />
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </section>
