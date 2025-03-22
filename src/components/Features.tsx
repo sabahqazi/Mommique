@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send, Search } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
@@ -158,7 +159,7 @@ const Features = () => {
   };
 
   return (
-    <section id="features" className="py-16 bg-[#f8fafc]">
+    <section id="features" className="py-8 bg-[#f8fafc]">
       <div className="container">
         <div className="mb-12 text-center">
           <span className="bg-pink-100 text-pink-600 px-4 py-1.5 rounded-full text-sm font-medium">

@@ -61,7 +61,7 @@ const Index = () => {
       
       <Navbar />
       {/* Reduced vertical spacing by adjusting gap between components */}
-      <div className="space-y-8 md:space-y-12">
+      <div className="space-y-4 md:space-y-8">
         <Hero />
         <Features />
         <Testimonials />
