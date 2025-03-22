@@ -33,6 +33,7 @@ const Hero = () => {
   const handleSearch = (query: string = searchQuery) => {
     const queryToUse = query || searchQuery;
     const waitlistMessage = "Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!";
+    
     if (queryToUse === "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?") {
       setAnswer(`Mommique answer: I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to: Uterus shrinking (takes up to 6 weeks) ; Stretched abdominal muscles ; Possible fluid retention ; Potential diastasis recti (abdominal muscle separation)\n\n${waitlistMessage}`);
       setShowAnswer(true);
@@ -63,7 +64,7 @@ const Hero = () => {
     setHeroCtaClicks(clickCount);
   };
 
-  return <section className="min-h-screen pt-24 pb-10 relative overflow-hidden bg-[#f8fafc] flex items-center">
+  return <section className="min-h-screen pt-20 pb-8 relative overflow-hidden bg-[#f8fafc] flex items-center">
       <div className="container relative z-10">
         <div className="max-w-4xl mx-auto text-center mb-5">
           <div className="mb-3 inline-block">
@@ -117,10 +118,10 @@ const Hero = () => {
             </button>
           </div>
           
-          {showAnswer && <div className="mb-4 text-gray-800 px-4 py-3 rounded-lg bg-pink-50 border border-pink-100">
+          {showAnswer && <div className="mb-4 text-gray-800 px-4 py-3 rounded-lg bg-blue-50 border border-blue-100">
               <p className="text-sm whitespace-pre-line">
                 {answer.startsWith("Mommique answer:") ? <>
-                    <em className="font-medium text-pink-700 block mb-1">bloom answer:</em>
+                    <em className="font-medium text-blue-700 block mb-1">bloom answer:</em>
                     <span className="text-gray-700">
                       {searchQuery === "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?" ? <>
                           I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to:
