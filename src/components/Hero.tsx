@@ -184,10 +184,6 @@ const Hero = () => {
       <Dialog open={showOverlay} onOpenChange={setShowOverlay}>
         <DialogContent className="bg-[#E8F4FF] border-none p-6 max-w-md mx-auto rounded-xl">
           <DialogTitle className="sr-only">Welcome Message</DialogTitle>
-          <DialogClose className="absolute right-4 top-4 text-gray-500 hover:text-gray-700">
-            <X className="h-5 w-5" />
-            <span className="sr-only">Close</span>
-          </DialogClose>
           
           <div className="flex flex-col items-center text-center">
             <div className="mb-4 w-60 mx-auto">
