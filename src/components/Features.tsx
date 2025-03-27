@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send, Search } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
@@ -202,7 +203,7 @@ const Features = () => {
             Your Unique Postpartum Questions, Answered Instantly
           </h2>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            Thrive Mama combines medical expertise with advanced AI to provide 
+            Bloom combines research-backed expertise with advanced AI to provide 
             support tailored specifically to <span className="italic">your</span> needs and <span className="italic">your</span> baby, 
             helping you navigate <span className="italic">your</span> unique motherhood journey with confidence.
           </p>
