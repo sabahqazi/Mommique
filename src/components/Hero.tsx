@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
@@ -6,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { trackCTAClick } from '../services/analytics';
 
-// Hero component with popup overlay
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showOverlay, setShowOverlay] = useState(false);
@@ -14,11 +12,9 @@ const Hero = () => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [heroCtaClicks, setHeroCtaClicks] = useState(0);
 
-  // Pills/tags for common questions
   const pills = ["I had a vaginal birth. Why do I still look pregnant even after 3 weeks?", "How do I know if my baby is getting enough milk?", "When will my postpartum bleeding stop?", "I had a C-section. When can I start exercising again after giving birth?", "Is it normal for my baby to wake up every 2 hours?"];
 
   useEffect(() => {
-    // Show overlay after 3 seconds
     const timer = setTimeout(() => {
       setShowOverlay(true);
     }, 3000);
@@ -27,7 +23,6 @@ const Hero = () => {
 
   const handlePillClick = (pill: string) => {
     setSearchQuery(pill);
-    // Immediately show the answer when a pill is clicked
     handleSearch(pill);
   };
 
@@ -51,11 +46,9 @@ const Hero = () => {
       setAnswer(`Mommique answer: I know this can feel exhausting for you Momma, but It's completely normal for your baby to wake up every 2 hours, especially in the newborn stage. Newborns have small stomachs and need to feed frequently, which leads to frequent wake-ups. This ensures your baby gets the nourishment and comfort they need.\n\n${waitlistMessage}`);
       setShowAnswer(true);
     } else if (queryToUse.trim() !== "") {
-      // For any non-empty query that doesn't match predefined questions
       setAnswer(`Mommique answer: Thanks for your question! ${waitlistMessage}`);
       setShowAnswer(true);
     } else {
-      // Reset answer if user searched with empty query
       setShowAnswer(false);
     }
   };
