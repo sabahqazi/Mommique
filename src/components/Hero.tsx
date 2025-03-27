@@ -30,11 +30,9 @@ const Hero = () => {
     const queryToUse = query || searchQuery;
     const waitlistMessage = "Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!";
     
-    // Check if the query matches any of the predefined pills
     const isPredefinedQuery = pills.includes(queryToUse);
     
     if (!isPredefinedQuery && queryToUse.trim() !== "") {
-      // Custom message for manually typed queries
       setAnswer(`Mommique answer: Thanks for your question! Try the experience by choosing the questions above! Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!\n\n${waitlistMessage}`);
       setShowAnswer(true);
       return;
@@ -71,8 +69,8 @@ const Hero = () => {
   return <section className="min-h-screen pt-20 pb-8 relative overflow-hidden bg-[#f8fafc] flex items-center">
       <div className="container relative z-10">
         <div className="max-w-4xl mx-auto text-center mb-5">
-          <div className="mb-3 inline-block">
-            <span className="bg-pink-100 text-pink-600 px-4 py-1.5 rounded-full text-sm font-medium">
+          <div className="mb-4 inline-block">
+            <span className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-sm font-medium">
               Early Access Coming Soon
             </span>
           </div>
@@ -82,8 +80,9 @@ const Hero = () => {
             We've got you!
           </h1>
             
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-gray-900 text-center">
-            <span className="text-gray-900">Personalized AI partner that adapts to <span className="text-pink-600">your</span> unique postpartum journey</span>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-gray-900 text-center leading-tight">
+            <span className="text-gray-900">Personalized AI partner that adapts to <span className="text-pink-600">your</span> unique</span><br />
+            <span className="text-pink-600">postpartum</span> journey
           </h2>
         </div>
         
