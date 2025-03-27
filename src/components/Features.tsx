@@ -153,29 +153,56 @@ const Features = () => {
     }, 2000);
   };
 
-  // New function to scroll to waitlist form
-  const scrollToWaitlist = () => {
+  // Improved function to scroll to waitlist form with more reliable behavior
+  const scrollToWaitlist = (e) => {
+    // Prevent default if it's an event
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
+    
+    // Find the waitlist element
     const waitlistElement = document.getElementById('waitlist');
     if (waitlistElement) {
-      waitlistElement.scrollIntoView({ behavior: 'smooth' });
-      
-      // Center the waitlist element in the viewport
-      const viewportHeight = window.innerHeight;
-      const elementHeight = waitlistElement.offsetHeight;
-      const offset = Math.max(0, (viewportHeight - elementHeight) / 2);
-      
-      window.scrollBy({
-        top: -offset,
-        behavior: 'smooth'
-      });
-      
-      // Add a highlight effect to the waitlist form
-      waitlistElement.classList.add('highlight-pulse');
-      
-      // Remove the highlight effect after animation completes
-      setTimeout(() => {
-        waitlistElement.classList.remove('highlight-pulse');
-      }, 2000);
+      // First ensure we're on the pricing section which contains the waitlist
+      const pricingSection = document.getElementById('pricing');
+      if (pricingSection) {
+        // First scroll to the pricing section to ensure the waitlist is in the DOM
+        pricingSection.scrollIntoView({ behavior: 'smooth' });
+        
+        // Then use a timeout to ensure the initial scroll completes
+        setTimeout(() => {
+          // Now scroll directly to the waitlist with a more targeted approach
+          waitlistElement.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'center' // This centers the element in the viewport
+          });
+          
+          // Add a highlight effect to the waitlist form
+          waitlistElement.classList.add('highlight-pulse');
+          
+          // Focus on the email input after scrolling completes
+          setTimeout(() => {
+            const emailInput = waitlistElement.querySelector('input[type="email"]');
+            if (emailInput) {
+              emailInput.focus();
+            }
+            
+            // Ensure the form is actually visible by doing one final check
+            const rect = waitlistElement.getBoundingClientRect();
+            if (rect.top < 0 || rect.bottom > window.innerHeight) {
+              waitlistElement.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+              });
+            }
+          }, 800);
+          
+          // Remove the highlight effect after animation completes
+          setTimeout(() => {
+            waitlistElement.classList.remove('highlight-pulse');
+          }, 2000);
+        }, 300);
+      }
     }
   };
 
@@ -385,7 +412,14 @@ const Features = () => {
                     >
                       <Search className="h-4 w-4" />
                     </div>
-                    <Input type="text" placeholder="Ask a question about your postpartum journey..." value={inputMessage} onChange={e => setInputMessage(e.target.value)} className="pl-10 pr-10 py-3 bg-gray-50 border-gray-200 rounded-full focus:ring-1 focus:ring-pink-300 focus:border-pink-300" disabled={isRecording || isProcessing} />
+                    <Input 
+                      type="text" 
+                      placeholder="Ask a question about your postpartum journey..." 
+                      value={inputMessage} 
+                      onChange={e => setInputMessage(e.target.value)} 
+                      className="pl-10 pr-10 py-3 bg-gray-50 border-gray-200 rounded-full focus:ring-1 focus:ring-pink-300 focus:border-pink-300" 
+                      disabled={isRecording || isProcessing} 
+                    />
                   </div>
                   
                   <Button type="submit" size="icon" className="bg-pink-500 hover:bg-pink-600 text-white rounded-full" disabled={inputMessage.trim() === '' || isRecording || isProcessing}>
