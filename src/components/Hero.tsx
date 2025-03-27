@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
@@ -36,7 +35,7 @@ const Hero = () => {
     
     if (!isPredefinedQuery && queryToUse.trim() !== "") {
       // Custom message for manually typed queries
-      setAnswer(`bloom mama's answer:\nThanks for your question! Try the experience by choosing the questions above! Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!`);
+      setAnswer(`Mommique answer: Thanks for your question! Try the experience by choosing the questions above! Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!\n\n${waitlistMessage}`);
       setShowAnswer(true);
       return;
     }
