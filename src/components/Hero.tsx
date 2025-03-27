@@ -51,16 +51,6 @@ const Hero = () => {
     } else {
       setShowAnswer(false);
     }
-
-    const waitlistSection = document.getElementById('waitlist');
-    if (waitlistSection) {
-      waitlistSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      waitlistSection.classList.add('ring-2', 'ring-pink-300');
-      
-      setTimeout(() => {
-        waitlistSection.classList.remove('ring-2', 'ring-pink-300');
-      }, 3000);
-    }
   };
 
   const trackHeroCtaClick = (ctaName: string) => {
