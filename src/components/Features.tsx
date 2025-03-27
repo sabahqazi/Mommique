@@ -5,6 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+
 const Features = () => {
   const [messages, setMessages] = useState([{
     role: 'user',
@@ -151,6 +152,33 @@ const Features = () => {
       });
     }, 2000);
   };
+
+  // New function to scroll to waitlist form
+  const scrollToWaitlist = () => {
+    const waitlistElement = document.getElementById('waitlist');
+    if (waitlistElement) {
+      waitlistElement.scrollIntoView({ behavior: 'smooth' });
+      
+      // Center the waitlist element in the viewport
+      const viewportHeight = window.innerHeight;
+      const elementHeight = waitlistElement.offsetHeight;
+      const offset = Math.max(0, (viewportHeight - elementHeight) / 2);
+      
+      window.scrollBy({
+        top: -offset,
+        behavior: 'smooth'
+      });
+      
+      // Add a highlight effect to the waitlist form
+      waitlistElement.classList.add('highlight-pulse');
+      
+      // Remove the highlight effect after animation completes
+      setTimeout(() => {
+        waitlistElement.classList.remove('highlight-pulse');
+      }, 2000);
+    }
+  };
+
   return <section id="features" className="py-8 pb-4 bg-[#f8fafc]">
       <div className="container">
         <div className="mb-12 text-center">
@@ -351,7 +379,10 @@ const Features = () => {
                   </Button>
                   
                   <div className="relative flex-1">
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                    <div 
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer hover:text-pink-500 transition-colors"
+                      onClick={scrollToWaitlist}
+                    >
                       <Search className="h-4 w-4" />
                     </div>
                     <Input type="text" placeholder="Ask a question about your postpartum journey..." value={inputMessage} onChange={e => setInputMessage(e.target.value)} className="pl-10 pr-10 py-3 bg-gray-50 border-gray-200 rounded-full focus:ring-1 focus:ring-pink-300 focus:border-pink-300" disabled={isRecording || isProcessing} />
@@ -368,4 +399,5 @@ const Features = () => {
       </div>
     </section>;
 };
+
 export default Features;
