@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
@@ -29,6 +30,16 @@ const Hero = () => {
   const handleSearch = (query: string = searchQuery) => {
     const queryToUse = query || searchQuery;
     const waitlistMessage = "Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!";
+    
+    // Check if the query matches any of the predefined pills
+    const isPredefinedQuery = pills.includes(queryToUse);
+    
+    if (!isPredefinedQuery && queryToUse.trim() !== "") {
+      // Custom message for manually typed queries
+      setAnswer(`bloom mama's answer:\nThanks for your question! Try the experience by choosing the questions above! Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!`);
+      setShowAnswer(true);
+      return;
+    }
     
     if (queryToUse === "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?") {
       setAnswer(`Mommique answer: I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to: Uterus shrinking (takes up to 6 weeks) ; Stretched abdominal muscles ; Possible fluid retention ; Potential diastasis recti (abdominal muscle separation)\n\n${waitlistMessage}`);
