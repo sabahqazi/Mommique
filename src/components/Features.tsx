@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send, Search } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
@@ -154,7 +155,7 @@ const Features = () => {
   };
 
   // Improved function to scroll to waitlist form with more reliable behavior
-  const scrollToWaitlist = (e) => {
+  const scrollToWaitlist = (e?: React.MouseEvent) => {
     // Prevent default if it's an event
     if (e && e.preventDefault) {
       e.preventDefault();
@@ -182,7 +183,8 @@ const Features = () => {
           
           // Focus on the email input after scrolling completes
           setTimeout(() => {
-            const emailInput = waitlistElement.querySelector('input[type="email"]');
+            // Fix: properly type the email input element
+            const emailInput = waitlistElement.querySelector('input[type="email"]') as HTMLInputElement;
             if (emailInput) {
               emailInput.focus();
             }
