@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, Clock, ShieldCheck, BookOpen, Heart, Zap, Mic, MicOff, Send, Search } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
@@ -163,48 +162,33 @@ const Features = () => {
     
     // Find the waitlist element
     const waitlistElement = document.getElementById('waitlist');
-    if (waitlistElement) {
-      // First ensure we're on the pricing section which contains the waitlist
-      const pricingSection = document.getElementById('pricing');
-      if (pricingSection) {
-        // First scroll to the pricing section to ensure the waitlist is in the DOM
-        pricingSection.scrollIntoView({ behavior: 'smooth' });
+    const pricingSection = document.getElementById('pricing');
+
+    if (waitlistElement && pricingSection) {
+      // First scroll to the pricing section
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+      
+      // Then scroll to the waitlist with a slight delay to ensure pricing section is in view
+      setTimeout(() => {
+        waitlistElement.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'center' 
+        });
         
-        // Then use a timeout to ensure the initial scroll completes
+        // Add a highlight effect
+        waitlistElement.classList.add('highlight-pulse');
+        
+        // Focus on the email input after scrolling
+        const emailInput = waitlistElement.querySelector('input[type="email"]') as HTMLInputElement;
+        if (emailInput) {
+          emailInput.focus();
+        }
+        
+        // Remove highlight after 2 seconds
         setTimeout(() => {
-          // Now scroll directly to the waitlist with a more targeted approach
-          waitlistElement.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'center' // This centers the element in the viewport
-          });
-          
-          // Add a highlight effect to the waitlist form
-          waitlistElement.classList.add('highlight-pulse');
-          
-          // Focus on the email input after scrolling completes
-          setTimeout(() => {
-            // Fix: properly type the email input element
-            const emailInput = waitlistElement.querySelector('input[type="email"]') as HTMLInputElement;
-            if (emailInput) {
-              emailInput.focus();
-            }
-            
-            // Ensure the form is actually visible by doing one final check
-            const rect = waitlistElement.getBoundingClientRect();
-            if (rect.top < 0 || rect.bottom > window.innerHeight) {
-              waitlistElement.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'center'
-              });
-            }
-          }, 800);
-          
-          // Remove the highlight effect after animation completes
-          setTimeout(() => {
-            waitlistElement.classList.remove('highlight-pulse');
-          }, 2000);
-        }, 300);
-      }
+          waitlistElement.classList.remove('highlight-pulse');
+        }, 2000);
+      }, 300);
     }
   };
 
