@@ -8,7 +8,7 @@ const Features = () => {
         <div className="mb-10 inline-block">
           <span 
             id="how-it-works"
-            className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-sm font-medium"
+            className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300"
           >
             How it works
           </span>

@@ -8,6 +8,19 @@ import Pricing from '../components/Pricing';
 import Footer from '../components/Footer';
 import { trackPageView, getAnalyticsData } from '../services/analytics';
 
+// Add CSS for highlight effect
+const highlightKeyframes = `
+  @keyframes highlight-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(219, 39, 119, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(219, 39, 119, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(219, 39, 119, 0); }
+  }
+
+  .highlight-pulse {
+    animation: highlight-pulse 1.5s ease-out;
+  }
+`;
+
 const Index = () => {
   const [pageViewCount, setPageViewCount] = useState(0);
 
@@ -21,6 +34,11 @@ const Index = () => {
       top: 0,
       behavior: 'smooth'
     });
+    
+    // Add highlight effect CSS to document
+    const styleElement = document.createElement('style');
+    styleElement.textContent = highlightKeyframes;
+    document.head.appendChild(styleElement);
     
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -47,6 +65,9 @@ const Index = () => {
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.removeEventListener('click', function() {});
       });
+      if (styleElement && document.head.contains(styleElement)) {
+        document.head.removeChild(styleElement);
+      }
     };
   }, []);
 

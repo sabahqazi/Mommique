@@ -54,14 +54,23 @@ const Navbar = () => {
     e.preventDefault();
     const howItWorksElement = document.getElementById('how-it-works');
     if (howItWorksElement) {
+      // Use smooth scrolling to navigate to the features section
       howItWorksElement.scrollIntoView({ behavior: 'smooth' });
       
-      // Add some padding to ensure the section is visible below the navbar
+      // Add a highlight effect to the "How it works" button
+      howItWorksElement.classList.add('highlight-pulse');
+      
+      // Adjust the scroll position for better visibility below the navbar
       setTimeout(() => {
         window.scrollBy({
-          top: -80, // Adjust if needed based on navbar height
+          top: -80, // Adjust based on navbar height
           behavior: 'smooth'
         });
+        
+        // Remove the highlight effect after animation completes
+        setTimeout(() => {
+          howItWorksElement.classList.remove('highlight-pulse');
+        }, 1500);
       }, 300);
     }
   };
