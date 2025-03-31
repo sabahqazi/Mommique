@@ -1,44 +1,35 @@
-
 import React, { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { trackCTAClick } from '../services/analytics';
-
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showOverlay, setShowOverlay] = useState(false);
   const [answer, setAnswer] = useState('');
   const [showAnswer, setShowAnswer] = useState(false);
   const [heroCtaClicks, setHeroCtaClicks] = useState(0);
-
   const pills = ["I had a vaginal birth. Why do I still look pregnant even after 3 weeks?", "How do I know if my baby is getting enough milk?", "When will my postpartum bleeding stop?", "I had a C-section. When can I start exercising again after giving birth?", "Is it normal for my baby to wake up every 2 hours?"];
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowOverlay(true);
     }, 3000);
     return () => clearTimeout(timer);
   }, []);
-
   const handlePillClick = (pill: string) => {
     setSearchQuery(pill);
     handleSearch(pill);
   };
-
   const handleSearch = (query: string = searchQuery) => {
     const queryToUse = query || searchQuery;
     const defaultAnswer = "Thanks for your question! Try the experience by choosing the questions above! Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!";
-    
     const isPredefinedQuery = pills.includes(queryToUse);
-    
     if (!isPredefinedQuery && queryToUse.trim() !== "") {
       setAnswer(defaultAnswer);
       setShowAnswer(true);
       return;
     }
-    
     if (queryToUse === "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?") {
       setAnswer(`Mommique answer: I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to: Uterus shrinking (takes up to 6 weeks) ; Stretched abdominal muscles ; Possible fluid retention ; Potential diastasis recti (abdominal muscle separation)\n\n${defaultAnswer}`);
       setShowAnswer(true);
@@ -61,17 +52,15 @@ const Hero = () => {
       setShowAnswer(false);
     }
   };
-
   const trackHeroCtaClick = (ctaName: string) => {
     const clickCount = trackCTAClick('home', ctaName, 'hero-section');
     setHeroCtaClicks(clickCount);
   };
-
   return <section className="min-h-screen pt-20 pb-8 relative overflow-hidden bg-[#f8fafc] flex items-center">
       <div className="container relative z-10">
         <div className="max-w-4xl mx-auto text-center mb-5">
           <div className="mb-4 inline-block">
-            <span className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-sm font-medium">
+            <span className="bg-pink-100 text-pink-600 px-4 rounded-full text-sm font-medium py-[16px]">
               Early Access Coming Soon
             </span>
           </div>
@@ -160,27 +149,17 @@ const Hero = () => {
           <div className="text-center">
             <p className="text-gray-700 mb-3 font-['Open_Sans']">Want this experience? Join our waitlist today</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a 
-                href="#waitlist" 
-                className="bg-pink-100 hover:bg-pink-200 text-pink-700 px-6 py-3 rounded-lg font-medium transition-colors font-['Open_Sans']"
-                onClick={() => trackHeroCtaClick('join-waitlist')}
-              >
+              <a href="#waitlist" className="bg-pink-100 hover:bg-pink-200 text-pink-700 px-6 py-3 rounded-lg font-medium transition-colors font-['Open_Sans']" onClick={() => trackHeroCtaClick('join-waitlist')}>
                 Join Waitlist
               </a>
-              <a 
-                href="#features" 
-                className="bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors font-['Open_Sans']"
-                onClick={() => trackCTAClick('home', 'see-features', 'hero-section')}
-              >
+              <a href="#features" className="bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors font-['Open_Sans']" onClick={() => trackCTAClick('home', 'see-features', 'hero-section')}>
                 See Features
               </a>
             </div>
             
-            {import.meta.env.DEV && heroCtaClicks > 0 && (
-              <div className="mt-2 text-xs text-blue-500">
+            {import.meta.env.DEV && heroCtaClicks > 0 && <div className="mt-2 text-xs text-blue-500">
                 Hero CTA Clicks: {heroCtaClicks}
-              </div>
-            )}
+              </div>}
           </div>
         </div>
       </div>
@@ -213,5 +192,4 @@ const Hero = () => {
       </Dialog>
     </section>;
 };
-
 export default Hero;
