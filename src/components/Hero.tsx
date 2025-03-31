@@ -28,33 +28,33 @@ const Hero = () => {
 
   const handleSearch = (query: string = searchQuery) => {
     const queryToUse = query || searchQuery;
-    const waitlistMessage = "Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!";
+    const defaultAnswer = "Thanks for your question! Try the experience by choosing the questions above! Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!";
     
     const isPredefinedQuery = pills.includes(queryToUse);
     
     if (!isPredefinedQuery && queryToUse.trim() !== "") {
-      setAnswer(`Mommique answer: Thanks for your question! Try the experience by choosing the questions above! Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!\n\n${waitlistMessage}`);
+      setAnswer(defaultAnswer);
       setShowAnswer(true);
       return;
     }
     
     if (queryToUse === "I had a vaginal birth. Why do I still look pregnant even after 3 weeks?") {
-      setAnswer(`Mommique answer: I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to: Uterus shrinking (takes up to 6 weeks) ; Stretched abdominal muscles ; Possible fluid retention ; Potential diastasis recti (abdominal muscle separation)\n\n${waitlistMessage}`);
+      setAnswer(`Mommique answer: I understand looking pregnant 3 weeks after giving birth can be concerning! It's normal due to: Uterus shrinking (takes up to 6 weeks) ; Stretched abdominal muscles ; Possible fluid retention ; Potential diastasis recti (abdominal muscle separation)\n\n${defaultAnswer}`);
       setShowAnswer(true);
     } else if (queryToUse === "How do I know if my baby is getting enough milk?") {
-      setAnswer(`Mommique answer: I understand your concerned about the baby. A contented baby who seems satisfied after feeding, with at least 6 wet diapers and 3-4 bowel movements daily, is generally a good indicator of adequate milk intake. ${waitlistMessage}`);
+      setAnswer(`Mommique answer: I understand your concerned about the baby. A contented baby who seems satisfied after feeding, with at least 6 wet diapers and 3-4 bowel movements daily, is generally a good indicator of adequate milk intake. ${defaultAnswer}`);
       setShowAnswer(true);
     } else if (queryToUse === "When will my postpartum bleeding stop?") {
-      setAnswer(`Mommique answer: I understand the bleeding is very painful and discomforting. The Postpartum bleeding (lochia) lasts 4 to 6 weeks after giving birth, though it can sometimes extend up to 8 weeks. The bleeding gradually decreases in flow and changes color. If your bleeding suddenly becomes heavy is accompanied by symptoms like fever or severe pain, contact your healthcare provider.\n\n${waitlistMessage}`);
+      setAnswer(`Mommique answer: I understand the bleeding is very painful and discomforting. The Postpartum bleeding (lochia) lasts 4 to 6 weeks after giving birth, though it can sometimes extend up to 8 weeks. The bleeding gradually decreases in flow and changes color. If your bleeding suddenly becomes heavy is accompanied by symptoms like fever or severe pain, contact your healthcare provider.\n\n${defaultAnswer}`);
       setShowAnswer(true);
     } else if (queryToUse === "I had a C-section. When can I start exercising again after giving birth?") {
-      setAnswer(`Mommique answer: After a C-section, you should wait 6-8 weeks before starting any exercise routine. It's essential to let your body heal properly as this is major abdominal surgery. Start with gentle walking when you feel ready, and gradually increase intensity. Always consult with your healthcare provider before beginning any postpartum exercise program.\n\n${waitlistMessage}`);
+      setAnswer(`Mommique answer: After a C-section, you should wait 6-8 weeks before starting any exercise routine. It's essential to let your body heal properly as this is major abdominal surgery. Start with gentle walking when you feel ready, and gradually increase intensity. Always consult with your healthcare provider before beginning any postpartum exercise program.\n\n${defaultAnswer}`);
       setShowAnswer(true);
     } else if (queryToUse === "Is it normal for my baby to wake up every 2 hours?") {
-      setAnswer(`Mommique answer: I know this can feel exhausting for you Momma, but It's completely normal for your baby to wake up every 2 hours, especially in the newborn stage. Newborns have small stomachs and need to feed frequently, which leads to frequent wake-ups. This ensures your baby gets the nourishment and comfort they need.\n\n${waitlistMessage}`);
+      setAnswer(`Mommique answer: I know this can feel exhausting for you Momma, but It's completely normal for your baby to wake up every 2 hours, especially in the newborn stage. Newborns have small stomachs and need to feed frequently, which leads to frequent wake-ups. This ensures your baby gets the nourishment and comfort they need.\n\n${defaultAnswer}`);
       setShowAnswer(true);
     } else if (queryToUse.trim() !== "") {
-      setAnswer(`Mommique answer: Thanks for your question! ${waitlistMessage}`);
+      setAnswer(defaultAnswer);
       setShowAnswer(true);
     } else {
       setShowAnswer(false);
