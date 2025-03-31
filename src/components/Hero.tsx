@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
@@ -204,7 +205,7 @@ const Hero = () => {
             <a href="#" onClick={e => {
             e.preventDefault();
             setShowOverlay(false);
-          }} className="bg-[#E04D60] hover:bg-[#d03c50] text-white font-medium px-8 rounded-lg transition-colors font-['Comfortaa'] py-[8px] mt-2">
+          }} className="bg-[#E04D60] hover:bg-[#d03c50] text-white font-bold px-8 rounded-lg transition-colors font-['Comfortaa'] py-[8px] mt-2">
               try bloom
             </a>
           </div>
