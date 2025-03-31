@@ -50,6 +50,24 @@ const Navbar = () => {
     }
   };
 
+  const handleNavLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      // Scroll to the element
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+      
+      // Additional offset to account for fixed navbar
+      const offset = 100;
+      setTimeout(() => {
+        window.scrollBy({
+          top: -offset,
+          behavior: 'smooth'
+        });
+      }, 300);
+    }
+  };
+
   return <nav className={cn("fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 bg-white shadow-sm")}>
       <div className="container flex items-center justify-between">
         <div className="flex items-center">
@@ -64,13 +82,25 @@ const Navbar = () => {
         </div>
         
         <div className="hidden md:flex items-center space-x-10 mx-auto">
-          <a href="#features" className="text-gray-700 hover:text-pink-600 transition-colors font-medium">
+          <a 
+            href="#features" 
+            className="text-gray-700 hover:text-pink-600 transition-colors font-medium"
+            onClick={(e) => handleNavLinkClick(e, 'features')}
+          >
             Features
           </a>
-          <a href="#testimonials" className="text-gray-700 hover:text-pink-600 transition-colors font-medium">
+          <a 
+            href="#testimonials" 
+            className="text-gray-700 hover:text-pink-600 transition-colors font-medium"
+            onClick={(e) => handleNavLinkClick(e, 'testimonials')}
+          >
             Testimonials
           </a>
-          <a href="#pricing" className="text-gray-700 hover:text-pink-600 transition-colors font-medium">
+          <a 
+            href="#pricing" 
+            className="text-gray-700 hover:text-pink-600 transition-colors font-medium"
+            onClick={(e) => handleNavLinkClick(e, 'pricing')}
+          >
             Pricing
           </a>
         </div>
