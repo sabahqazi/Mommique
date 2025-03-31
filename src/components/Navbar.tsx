@@ -15,24 +15,6 @@ const Navbar = () => {
     };
   }, []);
 
-  const handleNavLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
-    e.preventDefault();
-    const sectionElement = document.getElementById(sectionId);
-    if (sectionElement) {
-      // First scroll to the section element
-      sectionElement.scrollIntoView({ behavior: 'smooth' });
-      
-      // Adjust scroll position to account for fixed navbar
-      setTimeout(() => {
-        const offset = sectionId === 'features' ? 100 : 80;
-        window.scrollBy({
-          top: -offset,
-          behavior: 'smooth'
-        });
-      }, 300);
-    }
-  };
-
   const handleWaitlistClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const waitlistElement = document.getElementById('waitlist');
@@ -82,25 +64,13 @@ const Navbar = () => {
         </div>
         
         <div className="hidden md:flex items-center space-x-10 mx-auto">
-          <a 
-            href="#features" 
-            className="text-gray-700 hover:text-pink-600 transition-colors font-medium"
-            onClick={(e) => handleNavLinkClick(e, 'features')}
-          >
+          <a href="#features" className="text-gray-700 hover:text-pink-600 transition-colors font-medium">
             Features
           </a>
-          <a 
-            href="#testimonials" 
-            className="text-gray-700 hover:text-pink-600 transition-colors font-medium"
-            onClick={(e) => handleNavLinkClick(e, 'testimonials')}
-          >
+          <a href="#testimonials" className="text-gray-700 hover:text-pink-600 transition-colors font-medium">
             Testimonials
           </a>
-          <a 
-            href="#pricing" 
-            className="text-gray-700 hover:text-pink-600 transition-colors font-medium"
-            onClick={(e) => handleNavLinkClick(e, 'pricing')}
-          >
+          <a href="#pricing" className="text-gray-700 hover:text-pink-600 transition-colors font-medium">
             Pricing
           </a>
         </div>
