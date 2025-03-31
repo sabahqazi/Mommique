@@ -1,9 +1,8 @@
-
 import React from 'react';
 
 const Features = () => {
   return (
-    <section id="features" className="section bg-white">
+    <section className="section bg-white">
       <div className="container text-center">
         <div className="mb-12">
           <h2 className="text-4xl font-bold mb-6 text-gray-800">
