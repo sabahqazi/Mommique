@@ -1,10 +1,18 @@
-
 import React from 'react';
 
 const Features = () => {
   return (
     <section id="features" className="section bg-white">
       <div className="container text-center">
+        <div className="flex justify-center mb-10">
+          <button 
+            id="how-it-works"
+            className="bg-blue-100 text-blue-800 px-5 py-2.5 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-300"
+          >
+            How it works
+          </button>
+        </div>
+        
         <div className="mb-12">
           <h2 className="text-4xl font-bold mb-6 text-gray-800">
             Your Unique Postpartum Questions, Answered Instantly
@@ -41,16 +49,6 @@ const Features = () => {
               Benefit from AI-driven insights grounded in the latest research and recommendations from postpartum experts.
             </p>
           </div>
-        </div>
-        
-        {/* Pink pill separator button */}
-        <div className="flex justify-center mb-12">
-          <button 
-            id="how-it-works"
-            className="bg-pink-100 text-pink-600 px-6 py-2.5 rounded-full font-medium shadow-sm hover:shadow-md transition-all duration-300"
-          >
-            How it works
-          </button>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
