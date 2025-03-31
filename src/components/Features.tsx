@@ -1,16 +1,17 @@
+
 import React from 'react';
 
 const Features = () => {
   return (
     <section id="features" className="section bg-white">
       <div className="container text-center">
-        <div className="flex justify-center mb-10">
-          <button 
+        <div className="mb-10 inline-block">
+          <span 
             id="how-it-works"
-            className="bg-blue-100 text-blue-800 px-5 py-2.5 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-300"
+            className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-sm font-medium"
           >
             How it works
-          </button>
+          </span>
         </div>
         
         <div className="mb-12">
