@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { FileCheck, BookOpen, Star, Heart } from 'lucide-react';
+import { FileCheck, BookOpen, Star, Heart, MessageSquare, Clock } from 'lucide-react';
 
 const Features = () => {
   return (
@@ -25,6 +25,30 @@ const Features = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+            <div className="flex justify-center mb-4">
+              <MessageSquare size={36} className="text-pink-600" />
+            </div>
+            <h3 className="text-2xl font-semibold mb-4 text-gray-800">
+              Personalized Q&A
+            </h3>
+            <p className="text-gray-600">
+              Get answers tailored to your unique situation with our AI-powered Q&A system, designed specifically for new mothers.
+            </p>
+          </div>
+          
+          <div className="p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+            <div className="flex justify-center mb-4">
+              <Clock size={36} className="text-pink-600" />
+            </div>
+            <h3 className="text-2xl font-semibold mb-4 text-gray-800">
+              24/7 Support
+            </h3>
+            <p className="text-gray-600">
+              Access help whenever you need it with our round-the-clock support system, ensuring assistance is always just a click away.
+            </p>
+          </div>
+          
           <div className="p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             <div className="flex justify-center mb-4">
               <FileCheck size={36} className="text-pink-600" />
