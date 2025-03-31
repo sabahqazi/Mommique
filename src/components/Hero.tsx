@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { trackCTAClick } from '../services/analytics';
+
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showOverlay, setShowOverlay] = useState(false);
@@ -11,16 +12,19 @@ const Hero = () => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [heroCtaClicks, setHeroCtaClicks] = useState(0);
   const pills = ["I had a vaginal birth. Why do I still look pregnant even after 3 weeks?", "How do I know if my baby is getting enough milk?", "When will my postpartum bleeding stop?", "I had a C-section. When can I start exercising again after giving birth?", "Is it normal for my baby to wake up every 2 hours?"];
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowOverlay(true);
     }, 3000);
     return () => clearTimeout(timer);
   }, []);
+
   const handlePillClick = (pill: string) => {
     setSearchQuery(pill);
     handleSearch(pill);
   };
+
   const handleSearch = (query: string = searchQuery) => {
     const queryToUse = query || searchQuery;
     const defaultAnswer = "Thanks for your question! Try the experience by choosing the questions above! Once the app is launched, I will provide a detailed breakdown of these changes along with tips for a faster recovery. If you're interested, join the waitlist!";
@@ -52,14 +56,16 @@ const Hero = () => {
       setShowAnswer(false);
     }
   };
+
   const trackHeroCtaClick = (ctaName: string) => {
     const clickCount = trackCTAClick('home', ctaName, 'hero-section');
     setHeroCtaClicks(clickCount);
   };
+
   return <section className="min-h-screen pt-20 pb-8 relative overflow-hidden bg-[#f8fafc] flex items-center">
       <div className="container relative z-10">
         <div className="max-w-4xl mx-auto text-center mb-5">
-          <div className="mb-4 inline-block">
+          <div className="mb-6 inline-block">
             <span className="bg-pink-100 text-pink-600 px-4 rounded-full text-sm font-medium py-[8px]">
               Early Access Coming Soon
             </span>
@@ -192,4 +198,5 @@ const Hero = () => {
       </Dialog>
     </section>;
 };
+
 export default Hero;
