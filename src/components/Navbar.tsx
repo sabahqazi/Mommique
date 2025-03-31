@@ -50,6 +50,22 @@ const Navbar = () => {
     }
   };
 
+  const handleFeaturesClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const howItWorksElement = document.getElementById('how-it-works');
+    if (howItWorksElement) {
+      howItWorksElement.scrollIntoView({ behavior: 'smooth' });
+      
+      // Add some padding to ensure the section is visible below the navbar
+      setTimeout(() => {
+        window.scrollBy({
+          top: -80, // Adjust if needed based on navbar height
+          behavior: 'smooth'
+        });
+      }, 300);
+    }
+  };
+
   return <nav className={cn("fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 bg-white shadow-sm")}>
       <div className="container flex items-center justify-between">
         <div className="flex items-center">
@@ -64,7 +80,11 @@ const Navbar = () => {
         </div>
         
         <div className="hidden md:flex items-center space-x-10 mx-auto">
-          <a href="#features" className="text-gray-700 hover:text-pink-600 transition-colors font-medium">
+          <a 
+            href="#features" 
+            className="text-gray-700 hover:text-pink-600 transition-colors font-medium"
+            onClick={handleFeaturesClick}
+          >
             Features
           </a>
           <a href="#testimonials" className="text-gray-700 hover:text-pink-600 transition-colors font-medium">

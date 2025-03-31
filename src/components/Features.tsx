@@ -1,8 +1,9 @@
+
 import React from 'react';
 
 const Features = () => {
   return (
-    <section className="section bg-white">
+    <section id="features" className="section bg-white">
       <div className="container text-center">
         <div className="mb-12">
           <h2 className="text-4xl font-bold mb-6 text-gray-800">
@@ -13,7 +14,7 @@ const Features = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           <div className="p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             <h3 className="text-2xl font-semibold mb-4 text-gray-800">
               Personalized Q&A
@@ -40,7 +41,19 @@ const Features = () => {
               Benefit from AI-driven insights grounded in the latest research and recommendations from postpartum experts.
             </p>
           </div>
-
+        </div>
+        
+        {/* Pink pill separator button */}
+        <div className="flex justify-center mb-12">
+          <button 
+            id="how-it-works"
+            className="bg-pink-100 text-pink-600 px-6 py-2.5 rounded-full font-medium shadow-sm hover:shadow-md transition-all duration-300"
+          >
+            How it works
+          </button>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             <h3 className="text-2xl font-semibold mb-4 text-gray-800">
               Symptom Tracking
